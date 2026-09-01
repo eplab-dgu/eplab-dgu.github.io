@@ -1,0 +1,24 @@
+[
+  {
+    "publish": "TRUE",
+    "order": "10",
+    "country": "US",
+    "status": "Registered",
+    "title": "End Coil Cooling Structure for an Induction Motor",
+    "year": "2023",
+    "patent_no": "US 11,848,598 B2",
+    "inventors": "",
+    "notes": ""
+  },
+  {
+    "publish": "TRUE",
+    "order": "20",
+    "country": "US",
+    "status": "Registered",
+    "title": "Apparatus for Controlling Variable Magnetic Flux Motor",
+    "year": "2023",
+    "patent_no": "US 11,757,383 B2",
+    "inventors": "",
+    "notes": ""
+  }
+]

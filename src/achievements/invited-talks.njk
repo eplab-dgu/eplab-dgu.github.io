@@ -1,0 +1,46 @@
+---
+layout: base.njk
+title: Invited Talks
+permalink: /achievements/invited-talks/
+hasScript: true
+---
+{#
+  Achievements > Invited Talks — dc.html L378–398 이식.
+  2025년 이후는 바로 보이고, 그 이전은 토글로 펼친다(원본 showOldTalks).
+  토글은 <details>/JS 대신 버튼 + hidden 속성으로 — JS 가 없어도
+  '이전 목록'이 DOM 에 남아 검색·접근이 가능하도록 site.js 가 초기에 접는다.
+#}
+{% set recent = cms.Invited_Talks | yearFrom(2025) %}
+{% set past = cms.Invited_Talks | yearBefore(2025) %}
+
+<div class="page">
+  <span class="eyebrow">Achievements</span>
+  <h1 class="h-page">Invited Talks</h1>
+
+  <div class="talks">
+    <div class="datalist">
+      {% for k in recent %}
+      <div class="talk-row">
+        <span class="talk-row__date">{{ k.date }}</span>
+        <span>{{ k.title }}{% if k.host %}<span class="talk-row__host"> ({{ k.host }})</span>{% endif %}</span>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if past.length %}
+    <button type="button" class="btn-line toggle" data-toggle="old-talks"
+            data-label-show="+ 2024년 이전 Talks 보기 ({{ past.length }})"
+            data-label-hide="− 2024년 이전 Talks 접기">
+      + 2024년 이전 Talks 보기 ({{ past.length }})
+    </button>
+    <div class="datalist talks--past" id="old-talks">
+      {% for k in past %}
+      <div class="talk-row">
+        <span class="talk-row__date">{{ k.date }}</span>
+        <span>{{ k.title }}{% if k.host %}<span class="talk-row__host"> ({{ k.host }})</span>{% endif %}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>

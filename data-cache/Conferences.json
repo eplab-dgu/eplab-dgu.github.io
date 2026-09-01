@@ -1,0 +1,13 @@
+[
+  {
+    "publish": "FALSE",
+    "order": "10",
+    "year": "2025",
+    "authors": "(예: 홍길동, 박수환)",
+    "title": "(발표 논문 제목)",
+    "venue": "(학술대회명, 예: KSAE 춘계학술대회)",
+    "location": "(예: 제주)",
+    "date": "2025.05",
+    "notes": "발표 목록 데이터 입력 필요 — 원본 디자인은 placeholder"
+  }
+]

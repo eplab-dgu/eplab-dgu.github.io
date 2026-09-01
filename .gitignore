@@ -1,0 +1,20 @@
+node_modules/
+_site/
+.env
+.env.*
+!.env.example
+
+# 서비스 계정 키는 절대 커밋 금지
+*service-account*.json
+*credentials*.json
+gcp-key*.json
+
+.DS_Store
+Thumbs.db
+.cache/
+
+# Claude Code 로컬 설정 (사용자별 권한 목록 — 공유 대상 아님)
+.claude/settings.local.json
+
+# design/ 에 이미 풀려 있는 디자인 아티팩트의 압축본 (내용 동일한 중복)
+웹사이트 재설계 프로젝트.zip

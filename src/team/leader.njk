@@ -1,0 +1,78 @@
+---
+layout: base.njk
+title: Leader
+permalink: /team/leader/
+---
+{#
+  Team > Leader — dc.html L136–210 이식.
+  원본은 이력이 마크업에 하드코딩되어 있었다. 여기서는 Leader_CV 탭(section별)과
+  Members(Faculty) · Site_Config 에서 읽는다.
+#}
+{% set leader = (cms.Members | where("category", "Faculty"))[0] %}
+<div class="page">
+  <span class="eyebrow">Team</span>
+  <h1 class="h-page">Leader</h1>
+
+  <div class="leader">
+    <div class="leader__aside">
+      <div class="imgslot leader__portrait{% if leader.photo_url %} has-img{% endif %}">
+        {% if leader.photo_url %}<img src="{{ leader.photo_url }}" alt="{{ leader.name_en }}">
+        {% else %}[ PORTRAIT ]{% endif %}
+      </div>
+      <div class="leader__card">
+        <div class="leader__name">{{ leader.name_en }}{% if leader.name_ko %}, {{ leader.name_ko }}{% endif %}</div>
+        <div class="leader__role">{{ leader.position | upper }}</div>
+        <div class="rule"></div>
+        <div>{{ cms.config.dept }}</div>
+        <div>{{ cms.config.university }}</div>
+        <div class="rule"></div>
+        <div><span class="dim">e-mail&nbsp;&nbsp;</span>{{ leader.email or cms.config.email }}</div>
+        <div><span class="dim">tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ cms.config.tel }}</div>
+        {% set scholar = leader.scholar_url or cms.config.scholar_url %}
+        {% if scholar %}<a class="leader__scholar" href="{{ scholar }}">GOOGLE SCHOLAR →</a>{% endif %}
+      </div>
+    </div>
+
+    <div class="leader__main">
+      {% set interests = cms.Leader_CV | where("section", "ResearchInterest") %}
+      {% if interests.length %}
+      <div>
+        <div class="cv__label">RESEARCH INTERESTS</div>
+        <ul class="cv__interests">
+          {% for i in interests %}<li>{{ i.title }}</li>{% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {#
+        나머지 섹션은 "날짜 + 내용" 행 구조가 같고 날짜 칸 폭만 다르다.
+        원본의 폭(Education 70 / Experience 130 / Award 56 / Activity 130)을 그대로 유지한다.
+      #}
+      {% set cvSections = [
+        { key: "Education",  label: "EDUCATION",             mod: "cv--education"  },
+        { key: "Experience", label: "PROFESSIONAL EXPERIENCE", mod: "cv--experience" },
+        { key: "Award",      label: "AWARDS",                mod: "cv--award"      },
+        { key: "Activity",   label: "ACADEMIC ACTIVITIES",   mod: "cv--activity"   }
+      ] %}
+      {% for s in cvSections %}
+        {% set rows = cms.Leader_CV | where("section", s.key) %}
+        {% if rows.length %}
+        <div class="{{ s.mod }}">
+          <div class="cv__label">{{ s.label }}</div>
+          <div class="cv__rows">
+            {% for r in rows %}
+            <div class="cv__row">
+              <span class="cv__date">{{ r.date }}</span>
+              <span>
+                {{ r.title }}
+                {% for line in r.detailLines %}<span class="cv__detail">{{ line }}</span>{% endfor %}
+              </span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

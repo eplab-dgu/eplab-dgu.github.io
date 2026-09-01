@@ -1,0 +1,36 @@
+---
+layout: base.njk
+title: Conferences
+permalink: /achievements/conferences/
+---
+{#
+  Achievements > Conferences — dc.html L342–358 이식.
+  원본은 데이터가 없어 회색 막대 placeholder 였다. 시트에 행이 들어오면 실제
+  목록이 나오고, 비어 있으면 원본과 같은 안내 박스만 남는다.
+#}
+<div class="page">
+  <span class="eyebrow">Achievements</span>
+  <h1 class="h-page">Conferences</h1>
+
+  <div class="talks">
+    {% if cms.Conferences.length %}
+    <div class="conf-list">
+      {% for c in cms.Conferences | groupBy("year") | sortGroups("desc") %}
+        {% for item in c.items %}
+        <div class="conf-row">
+          <span class="conf-row__year">{{ item.date or item.year }}</span>
+          <div class="conf-row__body">
+            <span class="conf-row__title">{{ item.title }}</span>
+            <span class="conf-row__meta">{{ item.authors }}</span>
+            <span class="conf-row__meta">{{ item.venue }}{% if item.location %} · {{ item.location }}{% endif %}</span>
+          </div>
+        </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+    {% else %}
+    <p style="margin:0;font-size:14px;color:var(--text-label)">국내/국제 학술대회 발표 목록이 들어갈 영역입니다. 시트의 <code>Conferences</code> 탭에 행을 추가하고 <code>publish</code>를 체크하면 연도별 목록이 표시됩니다.</p>
+    <div class="note">[ CONFERENCE LIST — 발표 목록 데이터 필요 ]</div>
+    {% endif %}
+  </div>
+</div>

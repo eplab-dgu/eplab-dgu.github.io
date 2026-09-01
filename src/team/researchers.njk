@@ -1,0 +1,74 @@
+---
+layout: base.njk
+title: Researchers
+permalink: /team/researchers/
+---
+{# Team > Researchers — dc.html L212–258 이식. Members 탭을 category 로 나눈다. #}
+{% set grads = cms.Members | where("category", "Graduate") %}
+{% set undergrads = cms.Members | where("category", "Undergraduate") %}
+{% set alumni = cms.Members | where("category", "Alumni") %}
+
+<div class="page">
+  <span class="eyebrow">Team</span>
+  <h1 class="h-page">Researchers</h1>
+
+  <div class="team-block">
+    {% if grads.length %}
+    <div>
+      <div class="cv__label">GRADUATE STUDENTS</div>
+      <div class="cardgrid team-grid-grad">
+        {% for p in grads %}
+        <div class="person">
+          <div class="imgslot imgslot-sm person__photo{% if p.photo_url %} has-img{% endif %}">
+            {% if p.photo_url %}<img src="{{ p.photo_url }}" alt="{{ p.name_en }}" loading="lazy">
+            {% else %}[ PHOTO ]{% endif %}
+          </div>
+          <div class="person__lines">
+            <span class="person__ko">{{ p.name_ko or p.name_en }}</span>
+            <span class="person__en">{{ p.name_en }}</span>
+            <span class="person__role">{{ p.position }}</span>
+            <span class="person__email">{{ p.email }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if undergrads.length %}
+    <div>
+      <div class="cv__label">UNDERGRADUATE STUDENTS</div>
+      <div class="cardgrid team-grid-ug">
+        {% for p in undergrads %}
+        <div class="person person--ug">
+          <div class="imgslot imgslot-sm person__photo{% if p.photo_url %} has-img{% endif %}">
+            {% if p.photo_url %}<img src="{{ p.photo_url }}" alt="{{ p.name_en }}" loading="lazy">
+            {% else %}[ PHOTO ]{% endif %}
+          </div>
+          <div class="person__lines">
+            <span class="person__ko">{{ p.name_ko or p.name_en }}</span>
+            <span class="person__en">{{ p.name_en }}</span>
+            <span class="person__role">{{ p.position }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if alumni.length %}
+    <div>
+      <div class="cv__label">ALUMNI</div>
+      <div class="datalist">
+        {% for p in alumni %}
+        <div class="alumni__row">
+          <span>{{ p.name_ko or p.name_en }} <span class="dim">{{ p.name_en }}</span></span>
+          <span class="alumni__role">{{ p.position }}{% if p.cohort_period %} ({{ p.cohort_period }}){% endif %}</span>
+          <span class="alumni__next">{{ p.current_affiliation }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>

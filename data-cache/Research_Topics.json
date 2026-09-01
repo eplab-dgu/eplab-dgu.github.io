@@ -1,0 +1,62 @@
+[
+  {
+    "publish": "TRUE",
+    "order": "10",
+    "no": "T-01",
+    "title_en": "Design of electric machinery",
+    "title_ko": "전기기기 설계",
+    "description": "전자기 등가회로와 유한요소해석을 기반으로 IPMSM, SPMSM, WFSM, 축방향자속 전동기의 초기 사이징부터 형상 최적설계까지 수행합니다.",
+    "tags": "IPMSM, Sizing, Optimization",
+    "image_url": ""
+  },
+  {
+    "publish": "TRUE",
+    "order": "20",
+    "no": "T-02",
+    "title_en": "Multi-physics analysis for electric machinery",
+    "title_ko": "전기기기 다물리 해석",
+    "description": "전자기-열-구조-제어 영역을 연계한 해석 체계를 구축하여, 실제 운전 조건에서의 손실과 성능을 예측하고 시험 결과와의 정합성을 향상시킵니다.",
+    "tags": "Coupled analysis, AC copper loss, Iron loss",
+    "image_url": ""
+  },
+  {
+    "publish": "TRUE",
+    "order": "30",
+    "no": "T-03",
+    "title_en": "NVH analysis of electric machinery",
+    "title_ko": "전기기기 진동·소음 해석",
+    "description": "극/슬롯 조합에 따른 전자기 가진력과 모드 특성을 분석하여 구동모터 및 압축기의 진동·소음을 저감하는 설계 방법을 연구합니다.",
+    "tags": "Radial force, Modal analysis, Vibration",
+    "image_url": ""
+  },
+  {
+    "publish": "TRUE",
+    "order": "40",
+    "no": "T-04",
+    "title_en": "Thermal analysis of electric machinery",
+    "title_ko": "전기기기 열해석",
+    "description": "권선·자석·회전자의 발열 특성과 냉각 구조를 열등가회로 및 CFD로 해석하여 연속/최대 출력 성능의 한계를 규명합니다.",
+    "tags": "LPTN, Cooling, Demagnetization",
+    "image_url": ""
+  },
+  {
+    "publish": "TRUE",
+    "order": "50",
+    "no": "T-05",
+    "title_en": "Thermal management of electrified powertrain",
+    "title_ko": "전동화 파워트레인 열관리",
+    "description": "인버터-모터-감속기를 포함한 전동화 파워트레인의 1-D 시스템 모델을 구축하고, 차량 열관리 전략과 비효율 제어 기반 발열 모드를 검토합니다.",
+    "tags": "1-D system, e-Powertrain, VTM",
+    "image_url": ""
+  },
+  {
+    "publish": "TRUE",
+    "order": "60",
+    "no": "T-06",
+    "title_en": "AI-assisted acceleration of designing electric machinery",
+    "title_ko": "AI 기반 전기기기 설계 가속",
+    "description": "심층전이학습과 능동학습, 다중충실도 대체모델을 활용하여 해석 비용이 큰 설계 문제의 탐색 시간을 획기적으로 단축합니다.",
+    "tags": "Transfer learning, Active learning, Surrogate",
+    "image_url": ""
+  }
+]

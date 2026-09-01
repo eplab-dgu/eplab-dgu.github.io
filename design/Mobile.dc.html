@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body { margin: 0; background: #FFFFFF; }
+    a { color: #EA5514; text-decoration: none; }
+    a:hover { color: #B8400C; }
+  </style>
+</helmet>
+<div style="width: 390px; background: #FFFFFF; color: #14110F; font-family: Inter, 'Pretendard', 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.6;">
+
+  <div style="display: flex; align-items: center; gap: 10px; height: 60px; padding: 0 20px; border-bottom: 1px solid #E7E2DE;">
+    <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true">
+      <circle cx="32" cy="32" r="24" fill="none" stroke="#14110F" stroke-width="5.4"></circle>
+      <g fill="#14110F"><polygon points="41.75,32.78 38.24,41.86 30.65,44.7 33.02,32.51"></polygon><polygon points="27.05,42.7 18.05,38.99 15.07,31.46 27.21,34.08"></polygon><polygon points="21.98,27.35 25.49,18.27 33.08,15.43 30.71,27.62"></polygon><polygon points="36.68,17.43 45.68,21.14 48.66,28.67 36.52,26.05"></polygon></g>
+      <g fill="#EA5514"><polygon points="38.24,41.86 31.98,48.4 24.44,45.32 33.02,36.44"></polygon><polygon points="18.05,38.99 15.6,30.2 20.79,23.79 25.14,35.44"></polygon><polygon points="25.49,18.27 31.75,11.73 39.29,14.81 30.71,23.69"></polygon><polygon points="45.68,21.14 48.13,29.93 42.94,36.34 38.59,24.69"></polygon></g>
+      <circle cx="32" cy="32" r="6.6" fill="#14110F"></circle><circle cx="32" cy="32" r="2.5" fill="#FFFFFF"></circle>
+    </svg>
+    <span style="font-size: 14px; font-weight: 700; letter-spacing: -0.02em; flex-grow: 1;">eP Lab</span>
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#14110F" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path></svg>
+  </div>
+
+  <div style="padding: 52px 20px 40px;">
+    <h1 style="margin: 0 0 20px; font-size: 40px; font-weight: 300; letter-spacing: -0.042em; line-height: 1.04; text-transform: uppercase;">Electrified<br>Propulsion<br>Systems</h1>
+    <p style="margin: 0; font-size: 14.5px; line-height: 1.78; color: #77706B;">Electric machine design, electromagnetic&ndash;thermal coupled analysis, and surrogate modeling at Dongguk University.</p>
+  </div>
+
+  <div style="height: 210px; background: linear-gradient(168deg, #F7F1EC, #FBF8F5 55%, #F4EFEA); border-top: 1px solid #E7E2DE; border-bottom: 1px solid #E7E2DE; display: flex; align-items: center; justify-content: center; color: #A9A29C; font-family: Inconsolata, Consolas, monospace; font-size: 11px; letter-spacing: 0.14em;">[HERO ILLUSTRATION]</div>
+
+  <div style="padding: 40px 20px;">
+    <h2 style="margin: 0 0 6px; font-size: 26px; font-weight: 300; letter-spacing: -0.03em;">Research Areas</h2>
+    <div style="font-family: Inconsolata, Consolas, monospace; font-size: 11.5px; letter-spacing: 0.14em; color: {{accent}}; margin-bottom: 18px;">04 AREAS</div>
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; padding: 18px 0; border-top: 1px solid #E7E2DE;">
+      <div>
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.18em; color: {{accent}}; margin-bottom: 5px;">AREA 01</div>
+        <h3 style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.4; letter-spacing: -0.018em;">Design of electric machinery</h3>
+      </div>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="{{accent}}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="M13 6l6 6-6 6"></path></svg>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; padding: 18px 0; border-top: 1px solid #E7E2DE;">
+      <div>
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.18em; color: {{accent}}; margin-bottom: 5px;">AREA 02</div>
+        <h3 style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.4; letter-spacing: -0.018em;">Multi-physics analysis for electric machinery</h3>
+      </div>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="{{accent}}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="M13 6l6 6-6 6"></path></svg>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; padding: 18px 0; border-top: 1px solid #E7E2DE;">
+      <div>
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.18em; color: {{accent}}; margin-bottom: 5px;">AREA 03</div>
+        <h3 style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.4; letter-spacing: -0.018em;">Thermal management of electrified powertrain</h3>
+      </div>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="{{accent}}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="M13 6l6 6-6 6"></path></svg>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; padding: 18px 0; border-top: 1px solid #E7E2DE; border-bottom: 1px solid #E7E2DE;">
+      <div>
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.18em; color: {{accent}}; margin-bottom: 5px;">AREA 04</div>
+        <h3 style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.4; letter-spacing: -0.018em;">AI-assisted acceleration of designing electric machinery</h3>
+      </div>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="{{accent}}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="M13 6l6 6-6 6"></path></svg>
+    </div>
+  </div>
+
+  <div style="background: #FAF8F6; border-top: 1px solid #E7E2DE; padding: 40px 20px;">
+    <h2 style="margin: 0 0 6px; font-size: 26px; font-weight: 300; letter-spacing: -0.03em;">Recent News</h2>
+    <div style="font-family: Inconsolata, Consolas, monospace; font-size: 11.5px; letter-spacing: 0.14em; color: {{accent}}; margin-bottom: 18px;">16 ENTRIES</div>
+    <div style="padding: 16px 0; border-top: 1px solid #E7E2DE;">
+      <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 6px;">
+        <span style="font-family: Inconsolata, Consolas, monospace; font-size: 12px; color: #77706B;">2026.03</span>
+        <span style="padding: 4px 11px; border-radius: 99px; background: {{accent}}; color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">Paper</span>
+      </div>
+      <h3 style="margin: 0; font-size: 14.5px; font-weight: 700; line-height: 1.45;">A paper first-authored by M.S. student Jae-Kyung Ryu, &quot;Efficient multi-objective design optimization</h3>
+    </div>
+    <div style="padding: 16px 0; border-top: 1px solid #E7E2DE;">
+      <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 6px;">
+        <span style="font-family: Inconsolata, Consolas, monospace; font-size: 12px; color: #77706B;">2026.03</span>
+        <span style="padding: 4px 11px; border-radius: 99px; background: #F1EDE9; color: #77706B; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">Research</span>
+      </div>
+      <h3 style="margin: 0; font-size: 14.5px; font-weight: 700; line-height: 1.45;">Launched a Hyundai Motor project: &quot;Current command map extraction based on measured data for improvi</h3>
+    </div>
+    <div style="padding: 16px 0; border-top: 1px solid #E7E2DE; border-bottom: 1px solid #E7E2DE;">
+      <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 6px;">
+        <span style="font-family: Inconsolata, Consolas, monospace; font-size: 12px; color: #77706B;">2026.03</span>
+        <span style="padding: 4px 11px; border-radius: 99px; background: #F1EDE9; color: #77706B; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">Research</span>
+      </div>
+      <h3 style="margin: 0; font-size: 14.5px; font-weight: 700; line-height: 1.45;">Launched a Hyundai Motor project: &quot;Analysis model for vehicle thermal management under PE inefficien</h3>
+    </div>
+  </div>
+
+  <div style="background: #14110F; color: #F6F3F1; padding: 44px 20px;">
+    <h2 style="margin: 0 0 14px; font-size: 30px; font-weight: 300; letter-spacing: -0.032em; line-height: 1.12;">Join the Lab.</h2>
+    <p style="margin: 0 0 24px; font-size: 14px; line-height: 1.8; color: #B5ADA7;">The lab pursues self-motivated engineers. Students interested in electrified propulsion systems for future mobility (EVs, electric aircraft, electric ships), home appliances, and robots are welcome to send a CV to Prof. Park by e-mail.</p>
+    <span style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 99px; background: {{accent}}; color: #FFFFFF; font-size: 13.5px; font-weight: 700;">parksh@dgu.ac.kr &nearr;</span>
+  </div>
+
+  <div style="padding: 28px 20px 34px; font-size: 11.5px; color: #77706B; line-height: 1.8;">
+    Dept. of Mechanical, Robotics, and Energy Engineering<br>Dongguk University<br>&copy; 2025 electrified Propulsion Lab.
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#EA5514","options":["#EA5514","#D94A0F","#F26522","#111111"],"section":"Theme"}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#EA5514' };
+  }
+}
+</script>
+</body>
+</html>

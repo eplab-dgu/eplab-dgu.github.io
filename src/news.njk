@@ -1,0 +1,88 @@
+---
+layout: base.njk
+title: News
+permalink: /news/
+hasScript: true
+---
+{#
+  News + Gallery — dc.html L423–474 이식.
+  올해(현재 연도) 소식은 바로, 나머지는 토글로. Gallery 는 8개/페이지 + 항목별 사진 캐러셀.
+  페이지 전환·캐러셀은 site.js 가 처리하고, JS 없이도 첫 페이지·첫 사진은 보인다.
+#}
+{% set thisYear = cms.News[0].year if cms.News.length else 0 %}
+{% set current = cms.News | yearFrom(thisYear) %}
+{% set past = cms.News | yearBefore(thisYear) %}
+{% set galleryPages = cms.Gallery | chunk(8) %}
+
+<div class="page">
+  <span class="eyebrow">News</span>
+  <h1 class="h-page">News</h1>
+
+  <div class="datalist">
+    {% for n in current %}
+    <div class="datalist__row">
+      <span class="datalist__date">{{ n.date }}</span>
+      <span class="datalist__text">{{ n.text }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if past.length %}
+  <button type="button" class="btn-line toggle" data-toggle="old-news" style="margin-top:24px"
+          data-label-show="+ 지난 News 보기 ({{ past.length }})"
+          data-label-hide="− 지난 News 접기">
+    + 지난 News 보기 ({{ past.length }})
+  </button>
+  <div class="datalist datalist--past" id="old-news" style="margin-top:24px">
+    {% for n in past %}
+    <div class="datalist__row">
+      <span class="datalist__date">{{ n.date }}</span>
+      <span class="datalist__text">{{ n.text }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if cms.Gallery.length %}
+  <div class="gallery-wrap" data-gallery>
+    <div class="gallery__head">
+      <div class="eyebrow">Gallery</div>
+      <div class="gallery__nav">
+        <span class="gallery__page" data-gallery-label>1 / {{ galleryPages.length }}</span>
+        <button type="button" class="btn-line gallery__btn" data-gallery-prev>← PREV</button>
+        <button type="button" class="btn-line gallery__btn" data-gallery-next>NEXT →</button>
+      </div>
+    </div>
+
+    {% for pageItems in galleryPages %}
+    {# 접기는 site.js 가 한다 — JS 가 없으면 모든 페이지가 그대로 보여야 한다 (토글과 같은 원칙) #}
+    <div class="cardgrid gallery" data-gallery-page="{{ loop.index0 }}">
+      {% for g in pageItems %}
+      {# photo_count 는 사진 URL 이 아직 없을 때의 개수 표기용. URL 이 들어오면 그 개수를 쓴다. #}
+      {% set shots = g.image_urls.length or g.photo_count or 1 %}
+      <div class="gal" data-shots="{{ shots }}">
+        <div class="gal__frame imgslot imgslot-sm{% if g.image_urls.length %} has-img{% endif %}">
+          {% if g.image_urls.length %}
+            {% for src in g.image_urls %}
+            <img src="{{ src }}" alt="{{ g.title }}" loading="lazy" data-shot="{{ loop.index0 }}"{% if not loop.first %} hidden{% endif %}>
+            {% endfor %}
+          {% else %}
+            <span class="gal__label" data-shot-label>[ PHOTO 1 / {{ shots }} ]</span>
+          {% endif %}
+          {% if shots > 1 %}
+          <button type="button" class="gal__arrow gal__arrow--prev" data-shot-prev aria-label="이전 사진">‹</button>
+          <button type="button" class="gal__arrow gal__arrow--next" data-shot-next aria-label="다음 사진">›</button>
+          {% endif %}
+        </div>
+        <div class="gal__lines">
+          <span class="gal__date">{{ g.date }}</span>
+          <span class="gal__title">{{ g.title }}</span>
+          <span class="gal__who">{{ g.participants }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

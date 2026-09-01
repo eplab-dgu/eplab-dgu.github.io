@@ -1,0 +1,161 @@
+{
+  "pages": [
+    {
+      "id": "page-1",
+      "name": "Site tree"
+    },
+    {
+      "id": "page-2",
+      "name": "Detail & mobile"
+    }
+  ],
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "title": "About Us  /",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 3500,
+      "page": "page-1"
+    },
+    {
+      "file": "TeamLeader.dc.html",
+      "title": "Team › Leader  /team/leader",
+      "x": 1580,
+      "y": 0,
+      "w": 1440,
+      "h": 4200,
+      "page": "page-1"
+    },
+    {
+      "file": "TeamResearchers.dc.html",
+      "title": "Team › Researchers  /team/researchers",
+      "x": 3160,
+      "y": 0,
+      "w": 1440,
+      "h": 3200,
+      "page": "page-1"
+    },
+    {
+      "file": "ResearchTopics.dc.html",
+      "title": "Research › Topics  /research/topics",
+      "x": 0,
+      "y": 4400,
+      "w": 1440,
+      "h": 1600,
+      "page": "page-1"
+    },
+    {
+      "file": "ResearchProjects.dc.html",
+      "title": "Research › Projects  /research/projects",
+      "x": 1580,
+      "y": 4400,
+      "w": 1440,
+      "h": 1700,
+      "page": "page-1"
+    },
+    {
+      "file": "Publications.dc.html",
+      "title": "Achievements › Publications",
+      "x": 3160,
+      "y": 4400,
+      "w": 1440,
+      "h": 3200,
+      "page": "page-1"
+    },
+    {
+      "file": "Conferences.dc.html",
+      "title": "Achievements › Conferences",
+      "x": 0,
+      "y": 7800,
+      "w": 1440,
+      "h": 2100,
+      "page": "page-1"
+    },
+    {
+      "file": "Patents.dc.html",
+      "title": "Achievements › Patents",
+      "x": 1580,
+      "y": 7800,
+      "w": 1440,
+      "h": 1100,
+      "page": "page-1"
+    },
+    {
+      "file": "Teaching.dc.html",
+      "title": "Teaching  /teaching",
+      "x": 3160,
+      "y": 7800,
+      "w": 1440,
+      "h": 1500,
+      "page": "page-1"
+    },
+    {
+      "file": "News.dc.html",
+      "title": "News  /news",
+      "x": 0,
+      "y": 10100,
+      "w": 1440,
+      "h": 1800,
+      "page": "page-1"
+    },
+    {
+      "file": "Contact.dc.html",
+      "title": "Contact  /contact",
+      "x": 1580,
+      "y": 10100,
+      "w": 1440,
+      "h": 1500,
+      "page": "page-1"
+    },
+    {
+      "file": "TopicDetail.dc.html",
+      "title": "Topic detail — 링크 목적지",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 2200,
+      "page": "page-2"
+    },
+    {
+      "file": "Mobile.dc.html",
+      "title": "About — mobile 390",
+      "x": 1580,
+      "y": 0,
+      "w": 390,
+      "h": 2100,
+      "page": "page-2"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-theme",
+      "page": "page-1",
+      "x": 0,
+      "y": -330,
+      "w": 520,
+      "text": "테마 — 동국대 검정/주황\n\n검정 #14110F (주황 쪽으로 살짝 따뜻하게 기울인 근사 검정), 주황 #EA5514.\n\n주황은 가정값입니다. 각 아티보드 위 Theme 칩에서 accent 색을 바꾸면 강조색이 한 번에 따라갑니다 — 공식 CI 값을 확인하시면 그 값으로 맞추면 됩니다.\n\n레이아웃은 imweb 레퍼런스의 문법입니다: 좌측 대형 제목 + 우측 내용 2단, 하이라인 행 리스트, 알약 버튼, 다단 푸터."
+    },
+    {
+      "id": "note-conf",
+      "page": "page-1",
+      "x": 0,
+      "y": 7470,
+      "w": 520,
+      "text": "Conferences 가 이번 트리의 최대 쟁점입니다.\n\n시트에 학회 논문 데이터가 아예 없습니다. Publications 는 학술지 34편 전용, News 의 Conference 4건은 참가 소식, Leader_CV 의 InvitedTalk 24건은 초청강연입니다.\n\n→ Conferences 탭 신설이 필요합니다."
+    },
+    {
+      "id": "note-schema",
+      "page": "page-1",
+      "x": 3160,
+      "y": -330,
+      "w": 520,
+      "text": "이 트리가 요구하는 스키마 변경\n\n1. Conferences 탭 신설 (데이터 자체가 없음)\n2. Research_Topics: slug · description · featured\n3. Research_Projects / Publications: topic 참조 열\n4. Members: photo_url · scholar_url (전원 미입력)\n5. Collaborators: 6행 전부 공란\n6. Patents: inventors 2건 공란\n\n시트를 아직 올리지 않으셨으니 지금 바꾸는 게 가장 쌉니다."
+    }
+  ],
+  "launch": {
+    "view": "canvas",
+    "page": "page-1"
+  }
+}

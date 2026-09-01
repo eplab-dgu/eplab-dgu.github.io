@@ -1,0 +1,32 @@
+---
+layout: base.njk
+title: Research Topics
+permalink: /research/topics/
+---
+{# Research > Topics — dc.html L269–288 이식. #}
+<div class="page">
+  <span class="eyebrow">Research</span>
+  <h1 class="h-page">Research Topics</h1>
+
+  <div class="topics">
+    {% for t in cms.Research_Topics %}
+    <div class="topic">
+      <div class="imgslot topic__slot{% if t.image_url %} has-img{% endif %}">
+        {% if t.image_url %}<img src="{{ t.image_url }}" alt="{{ t.title_en }}" loading="lazy">
+        {% else %}[ {{ t.title_en | upper }} ]{% endif %}
+      </div>
+      <div class="topic__body">
+        <span class="topic__no">{{ t.no }}</span>
+        <h2 class="topic__en">{{ t.title_en }}</h2>
+        <span class="topic__ko">{{ t.title_ko }}</span>
+        <p class="topic__desc">{{ t.description }}</p>
+        {% if t.tags.length %}
+        <div class="topic__tags">
+          {% for g in t.tags %}<span class="chip">{{ g }}</span>{% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>

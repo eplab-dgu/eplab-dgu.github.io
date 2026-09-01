@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body { margin: 0; background: #FFFFFF; }
+    a { color: #EA5514; text-decoration: none; }
+    a:hover { color: #B8400C; }
+  </style>
+</helmet>
+<div style="width: 1440px; background: #FFFFFF; color: #14110F; font-family: Inter, 'Pretendard', 'Segoe UI', system-ui, sans-serif; font-size: 16px; line-height: 1.6;">
+
+  <div style="display: flex; align-items: center; gap: 22px; height: 74px; padding: 0 110px; border-bottom: 1px solid #E7E2DE;">
+    <div style="display: flex; align-items: center; gap: 9px; flex-grow: 1;"><svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true">
+      <circle cx="32" cy="32" r="24" fill="none" stroke="#14110F" stroke-width="5.4"></circle>
+      <g fill="#14110F"><polygon points="41.75,32.78 38.24,41.86 30.65,44.7 33.02,32.51"></polygon><polygon points="27.05,42.7 18.05,38.99 15.07,31.46 27.21,34.08"></polygon><polygon points="21.98,27.35 25.49,18.27 33.08,15.43 30.71,27.62"></polygon><polygon points="36.68,17.43 45.68,21.14 48.66,28.67 36.52,26.05"></polygon></g>
+      <g fill="#EA5514"><polygon points="38.24,41.86 31.98,48.4 24.44,45.32 33.02,36.44"></polygon><polygon points="18.05,38.99 15.6,30.2 20.79,23.79 25.14,35.44"></polygon><polygon points="25.49,18.27 31.75,11.73 39.29,14.81 30.71,23.69"></polygon><polygon points="45.68,21.14 48.13,29.93 42.94,36.34 38.59,24.69"></polygon></g>
+      <circle cx="32" cy="32" r="6.6" fill="#14110F"></circle><circle cx="32" cy="32" r="2.5" fill="#FFFFFF"></circle>
+    </svg>
+      <span style="font-size: 14px; font-weight: 700; letter-spacing: -0.02em;">eP Lab</span>
+    </div>
+    <div style="display: flex; gap: 28px; font-size: 13.5px; font-weight: 500; color: #77706B;">
+      <span>About</span>
+      <span>Team</span>
+      <span>Research</span>
+      <span>Achievements</span>
+      <span>Teaching</span>
+      <span style="color: #14110F; font-weight: 600; border-bottom: 2px solid {{accent}}; padding-bottom: 4px;">News</span>
+      <span>Contact</span>
+    </div>
+    <span style="font-size: 12.5px; font-weight: 600; color: #77706B; letter-spacing: 0.04em;">ENG</span>
+  </div>
+
+  <div style="padding: 92px 110px 66px; display: grid; grid-template-columns: 1fr 1.45fr; gap: 60px; align-items: end;">
+    <div>
+      <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12px; letter-spacing: 0.2em; color: {{accent}}; margin-bottom: 18px;">NEWS</div>
+      <h1 style="margin: 0; font-size: 54px; font-weight: 300; letter-spacing: -0.038em; line-height: 1.05;">News</h1>
+    </div>
+    <div>
+      <p style="margin: 0 0 12px; font-size: 16px; line-height: 1.8; color: #77706B; max-width: 54ch;">16 updates on papers, projects, conferences, and people.</p>
+      <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12px; color: #A9A29C;">/news</div>
+    </div>
+  </div>
+
+  <div style="padding: 68px 110px;">
+    <div style="display: grid; grid-template-columns: 1fr 1.45fr; gap: 60px; align-items: start;">
+      <div>
+        <h2 style="margin: 0 0 10px; font-size: 34px; font-weight: 300; letter-spacing: -0.032em; line-height: 1.15;">All<br>Updates</h2>
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12px; letter-spacing: 0.14em; color: {{accent}};">16 ENTRIES</div>
+      </div>
+      <div>
+      <div style="display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
+        <span style="padding: 8px 16px; border-radius: 99px; background: #14110F; color: #FFFFFF; font-size: 12.5px; font-weight: 600;">All 16</span>
+        <span style="padding: 8px 16px; border-radius: 99px; border: 1px solid #E7E2DE; color: #77706B; font-size: 12.5px; font-weight: 600;">Paper 1</span>
+        <span style="padding: 8px 16px; border-radius: 99px; border: 1px solid #E7E2DE; color: #77706B; font-size: 12.5px; font-weight: 600;">Research 4</span>
+        <span style="padding: 8px 16px; border-radius: 99px; border: 1px solid #E7E2DE; color: #77706B; font-size: 12.5px; font-weight: 600;">People 3</span>
+        <span style="padding: 8px 16px; border-radius: 99px; border: 1px solid #E7E2DE; color: #77706B; font-size: 12.5px; font-weight: 600;">Event 4</span>
+        <span style="padding: 8px 16px; border-radius: 99px; border: 1px solid #E7E2DE; color: #77706B; font-size: 12.5px; font-weight: 600;">Conference 4</span>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 116px 1fr auto; gap: 24px; padding: 21px 0; border-top: 1px solid #E7E2DE; align-items: start;">
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12.5px; color: #77706B; line-height: 1.55;">2026.03</div>
+        <div>
+          <h3 style="margin: 0 0 0; font-size: 15.5px; font-weight: 700; line-height: 1.45; letter-spacing: -0.012em;">A paper first-authored by M.S. student Jae-Kyung Ryu, &quot;Efficient multi-objective design optimization of axial-flux permanent magnet machines for drone propulsion system using multi-fidelity gaussian process,&quot; was accepted to Structural and Multidisciplinary Optimization. Congratulations!</h3>
+          
+        </div>
+        <div style="justify-self: end; display: flex; align-items: center; gap: 12px;"><span style="padding: 4px 11px; border-radius: 99px; background: {{accent}}; color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">Paper</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 116px 1fr auto; gap: 24px; padding: 21px 0; border-top: 1px solid #E7E2DE; align-items: start;">
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12.5px; color: #77706B; line-height: 1.55;">2026.03</div>
+        <div>
+          <h3 style="margin: 0 0 0; font-size: 15.5px; font-weight: 700; line-height: 1.45; letter-spacing: -0.012em;">Launched a Hyundai Motor project: &quot;Current command map extraction based on measured data for improving motor system efficiency.&quot;</h3>
+          
+        </div>
+        <div style="justify-self: end; display: flex; align-items: center; gap: 12px;"><span style="padding: 4px 11px; border-radius: 99px; background: #F1EDE9; color: #77706B; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">Research</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 116px 1fr auto; gap: 24px; padding: 21px 0; border-top: 1px solid #E7E2DE; align-items: start;">
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12.5px; color: #77706B; line-height: 1.55;">2026.03</div>
+        <div>
+          <h3 style="margin: 0 0 0; font-size: 15.5px; font-weight: 700; line-height: 1.45; letter-spacing: -0.012em;">Launched a Hyundai Motor project: &quot;Analysis model for vehicle thermal management under PE inefficiency control.&quot;</h3>
+          
+        </div>
+        <div style="justify-self: end; display: flex; align-items: center; gap: 12px;"><span style="padding: 4px 11px; border-radius: 99px; background: #F1EDE9; color: #77706B; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">Research</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 116px 1fr auto; gap: 24px; padding: 21px 0; border-top: 1px solid #E7E2DE; align-items: start;">
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12.5px; color: #77706B; line-height: 1.55;">2026.03</div>
+        <div>
+          <h3 style="margin: 0 0 0; font-size: 15.5px; font-weight: 700; line-height: 1.45; letter-spacing: -0.012em;">Launched a Hyundai Motor project: &quot;PE system optimization for low-cost motors.&quot;</h3>
+          
+        </div>
+        <div style="justify-self: end; display: flex; align-items: center; gap: 12px;"><span style="padding: 4px 11px; border-radius: 99px; background: #F1EDE9; color: #77706B; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">Research</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 116px 1fr auto; gap: 24px; padding: 21px 0; border-top: 1px solid #E7E2DE; align-items: start;">
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12.5px; color: #77706B; line-height: 1.55;">2026.03</div>
+        <div>
+          <h3 style="margin: 0 0 0; font-size: 15.5px; font-weight: 700; line-height: 1.45; letter-spacing: -0.012em;">Launched an HD Hyundai Heavy Industries project: &quot;LECM fault analysis and design for eco-fuel HiMSEN engine solenoid valves.&quot;</h3>
+          
+        </div>
+        <div style="justify-self: end; display: flex; align-items: center; gap: 12px;"><span style="padding: 4px 11px; border-radius: 99px; background: #F1EDE9; color: #77706B; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">Research</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 116px 1fr auto; gap: 24px; padding: 21px 0; border-top: 1px solid #E7E2DE; align-items: start;">
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12.5px; color: #77706B; line-height: 1.55;">2026.01</div>
+        <div>
+          <h3 style="margin: 0 0 0; font-size: 15.5px; font-weight: 700; line-height: 1.45; letter-spacing: -0.012em;">Na-Kyung Yu joined the lab as an undergraduate researcher. Welcome!</h3>
+          
+        </div>
+        <div style="justify-self: end; display: flex; align-items: center; gap: 12px;"><span style="padding: 4px 11px; border-radius: 99px; background: #F1EDE9; color: #77706B; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">People</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 116px 1fr auto; gap: 24px; padding: 21px 0; border-top: 1px solid #E7E2DE; align-items: start;">
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12.5px; color: #77706B; line-height: 1.55;">2025.09~10</div>
+        <div>
+          <h3 style="margin: 0 0 0; font-size: 15.5px; font-weight: 700; line-height: 1.45; letter-spacing: -0.012em;">Happy Birthday — Young-Ju Seo (M.S.), Jae-Kyung Ryu (M.S.)</h3>
+          
+        </div>
+        <div style="justify-self: end; display: flex; align-items: center; gap: 12px;"><span style="padding: 4px 11px; border-radius: 99px; background: #F1EDE9; color: #77706B; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">Event</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 116px 1fr auto; gap: 24px; padding: 21px 0; border-top: 1px solid #E7E2DE; border-bottom: 1px solid #E7E2DE; align-items: start;">
+        <div style="font-family: Inconsolata, Consolas, monospace; font-size: 12.5px; color: #77706B; line-height: 1.55;">2025.09</div>
+        <div>
+          <h3 style="margin: 0 0 0; font-size: 15.5px; font-weight: 700; line-height: 1.45; letter-spacing: -0.012em;">New-member &amp; semester-opening dinner</h3>
+          
+        </div>
+        <div style="justify-self: end; display: flex; align-items: center; gap: 12px;"><span style="padding: 4px 11px; border-radius: 99px; background: #F1EDE9; color: #77706B; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap;">Event</span></div>
+      </div>
+      <div style="margin-top: 24px;"><span style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 23px; border-radius: 99px; border: 1px solid #E7E2DE; color: #77706B; font-size: 13.5px; font-weight: 600;">Show all 16 &rarr;</span></div>
+      
+      <div style="margin: 20px 0 0; padding: 15px 18px; background: #F4F2F0; border-left: 3px solid #3A332E; font-family: Inconsolata, Consolas, monospace; font-size: 12.5px; color: #3A332E; line-height: 1.65;">[DECISION] 뉴스 상세 페이지를 둘지 미정입니다. image_url 이 16건 전부 비어 있어 지금은 목록만으로 충분해 보입니다.</div></div>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid #E7E2DE; background: #FAF8F6; padding: 54px 110px 40px;">
+    <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) auto; gap: 26px; align-items: start;">
+      <div>
+        <h4 style="margin: 0 0 14px; font-size: 11.5px; font-weight: 700; color: #77706B; letter-spacing: 0.1em; text-transform: uppercase;">About</h4>
+        <div style="display: grid; gap: 9px;"><span style="font-size: 13px; font-weight: 500;">Overview</span><span style="font-size: 13px; font-weight: 500;">Collaborators</span><span style="font-size: 13px; font-weight: 500;">Contact</span></div>
+      </div>
+      <div>
+        <h4 style="margin: 0 0 14px; font-size: 11.5px; font-weight: 700; color: #77706B; letter-spacing: 0.1em; text-transform: uppercase;">Team</h4>
+        <div style="display: grid; gap: 9px;"><span style="font-size: 13px; font-weight: 500;">Leader</span><span style="font-size: 13px; font-weight: 500;">Researchers</span><span style="font-size: 13px; font-weight: 500;">Alumni</span></div>
+      </div>
+      <div>
+        <h4 style="margin: 0 0 14px; font-size: 11.5px; font-weight: 700; color: #77706B; letter-spacing: 0.1em; text-transform: uppercase;">Research</h4>
+        <div style="display: grid; gap: 9px;"><span style="font-size: 13px; font-weight: 500;">Topics</span><span style="font-size: 13px; font-weight: 500;">Projects</span></div>
+      </div>
+      <div>
+        <h4 style="margin: 0 0 14px; font-size: 11.5px; font-weight: 700; color: #77706B; letter-spacing: 0.1em; text-transform: uppercase;">Achievements</h4>
+        <div style="display: grid; gap: 9px;"><span style="font-size: 13px; font-weight: 500;">Publications</span><span style="font-size: 13px; font-weight: 500;">Conferences</span><span style="font-size: 13px; font-weight: 500;">Patents</span></div>
+      </div>
+      <div>
+        <h4 style="margin: 0 0 14px; font-size: 11.5px; font-weight: 700; color: #77706B; letter-spacing: 0.1em; text-transform: uppercase;">More</h4>
+        <div style="display: grid; gap: 9px;"><span style="font-size: 13px; font-weight: 500;">Teaching</span><span style="font-size: 13px; font-weight: 500;">News</span><span style="font-size: 13px; font-weight: 500;">Google Scholar</span></div>
+      </div>
+      <div><span style="display: inline-block; padding: 10px 19px; border-radius: 99px; border: 1px solid #E7E2DE; font-size: 12.5px; font-weight: 600; color: #77706B;">Back to top &uarr;</span></div>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: 44px; padding-top: 20px; border-top: 1px solid #E7E2DE; font-size: 12px; color: #77706B;">
+      <span>Dept. of Mechanical, Robotics, and Energy Engineering &middot; Dongguk University</span>
+      <span>&copy; 2025 electrified Propulsion Lab.</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#EA5514","options":["#EA5514","#D94A0F","#F26522","#111111"],"section":"Theme"}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#EA5514' };
+  }
+}
+</script>
+</body>
+</html>

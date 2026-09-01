@@ -1,0 +1,32 @@
+---
+layout: base.njk
+title: Teaching
+permalink: /teaching/
+---
+{#
+  Teaching — dc.html L403–420 이식.
+  원본은 과목명이 "[ 과목명 ]" placeholder 였다. 실제 강의는 Teaching 탭에서 채운다.
+  term/description 은 아직 비어 있어 있는 것만 렌더한다 (빈 줄을 만들지 않는다).
+#}
+<div class="page">
+  <span class="eyebrow">Teaching</span>
+  <h1 class="h-page">Teaching</h1>
+
+  <div class="cardgrid course-grid">
+    {% for c in cms.Teaching %}
+    <div class="course">
+      <span class="course__level">{{ c.level | upper }}</span>
+      <span class="course__name">{{ c.title_en }}</span>
+      {% if c.title_ko %}<span class="course__code">{{ c.title_ko }}</span>{% endif %}
+      <span class="course__code">{{ c.course_code }}{% if c.term %} · {{ c.term }}{% endif %}</span>
+      <span class="rule"></span>
+      <span class="course__desc">{{ c.description }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% set missing = cms.Teaching | countWhere("description", "") %}
+  {% if missing %}
+  <div class="note" style="margin-top:24px">[ COURSE LIST — {{ missing }}개 과목의 학기·강의 개요 입력 필요 ]</div>
+  {% endif %}
+</div>

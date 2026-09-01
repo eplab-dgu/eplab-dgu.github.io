@@ -1,0 +1,501 @@
+/* ==========================================================================
+   eP Lab — 전역 스타일
+   design/tokens.css (디자인 토큰) + design/eP Lab Website.dc.html 의 인라인
+   스타일을 클래스로 정리한 것. 새로 디자인하지 않았고, 원본 값을 그대로 옮겼다.
+   ========================================================================== */
+
+/* ─── Design tokens (design/tokens.css) ─────────────────────────────────── */
+:root {
+  --accent:        #FF6A1F;
+  --accent-2:      #FF8A4C;
+
+  --bg:            #0B0B0C;
+  --bg-alt:        #0E0E10;
+  --bg-elev:       #101012;
+  --bg-hover:      #141416;
+  --bg-hover-2:    #17171A;
+
+  --line:          #212124;
+  --line-soft:     #1C1C1F;
+  --line-box:      #26262A;
+  --line-btn:      #2E2E33;
+  --line-dashed:   #303035;
+
+  --text:          #EDEDED;
+  --text-body:     #C4C4C9;
+  --text-muted:    #B7B7BC;
+  --text-dim:      #9A9AA0;
+  --text-label:    #8A8A90;
+  --text-faint:    #78787E;
+  --text-ghost:    #5F5F65;
+
+  --font: Consolas, Menlo, "DejaVu Sans Mono", "Malgun Gothic", "Apple SD Gothic Neo", monospace;
+  --lh:   1.6;
+
+  --maxw:     1240px;
+  --pad-x:    28px;
+  --sec-y:    84px;
+  --page-top: 56px;
+  --page-bot: 96px;
+}
+
+* { box-sizing: border-box; }
+
+/* 이 파일이 .datalist{display:flex} · .cardgrid{display:grid} 처럼 display 를 지정하기
+   때문에, 작성자 스타일이 UA 스타일시트의 [hidden]{display:none} 을 덮어쓴다.
+   그러면 site.js 가 el.hidden = true 로 접어도 화면에는 그대로 남는다. 명시적으로 이긴다. */
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-2); }
+::selection { background: var(--accent); color: var(--bg); }
+
+/* 원본은 min-height:100vh 인 flex 컬럼으로 푸터를 바닥에 붙인다 */
+.shell { min-height: 100vh; display: flex; flex-direction: column; }
+.shell > main { flex: 1; }
+
+/* ─── 공통 유틸 ─────────────────────────────────────────────────────────── */
+.container { max-width: var(--maxw); margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
+.section   { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+.page      { max-width: var(--maxw); margin: 0 auto; padding: var(--page-top) var(--pad-x) var(--page-bot); }
+
+.eyebrow { font-size: 11px; color: var(--accent); letter-spacing: .2em; text-transform: uppercase; }
+.h-page  { font-size: 34px; font-weight: 700; margin: 12px 0 24px; }
+.h-sec   { font-size: 26px; font-weight: 700; line-height: 1.3; margin: 14px 0 0; }
+
+/* hairline 카드 그리드 — 카드 사이가 1px 선으로만 갈린다 */
+.cardgrid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.cardgrid > * { background: var(--bg); }
+
+/* 점선 + 대각 줄무늬 이미지 placeholder */
+.imgslot {
+  border: 1px dashed var(--line-dashed);
+  background: repeating-linear-gradient(135deg, #131315 0 10px, #0F0F11 10px 20px);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--text-ghost); letter-spacing: .12em; text-align: center;
+}
+/* 작은 슬롯은 줄무늬 간격도 좁다 (원본 8px/16px) */
+.imgslot-sm { background: repeating-linear-gradient(135deg, #111113 0 8px, #0E0E10 8px 16px); }
+
+.imgslot img, .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.has-img { border: 0; background: none; }
+
+.chip {
+  font-size: 11px; letter-spacing: .04em; padding: 3px 8px;
+  border: 1px solid var(--line-box); color: var(--text-label);
+  white-space: nowrap; flex: none; display: inline-flex; align-items: center;
+}
+.chip-hot { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+
+/* 클릭 가능한 박스형 버튼(토글·페이지네이션·DOI) */
+.btn-line {
+  border: 1px solid var(--line-box); color: var(--text-body);
+  font-size: 12px; letter-spacing: .1em; font-family: inherit;
+  background: none; cursor: pointer; user-select: none;
+}
+.btn-line:hover { border-color: var(--accent); color: var(--accent); }
+
+.dim { color: var(--text-faint); }
+.rule { height: 1px; background: var(--line); margin: 4px 0; }
+
+/* ─── 헤더 / 네비 (dc.html L24–46) ──────────────────────────────────────── */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(11, 11, 12, .96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.site-header__inner {
+  max-width: var(--maxw); margin: 0 auto; padding: 14px var(--pad-x);
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: 12px; color: var(--text); }
+.brand:hover { color: var(--text); }
+.brand__mark {
+  width: 36px; height: 36px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.brand__mark img { width: 100%; height: 100%; object-fit: contain; }
+.brand__text { display: flex; flex-direction: column; line-height: 1.25; }
+.brand__name { font-size: 13px; letter-spacing: .02em; }
+.brand__name em { color: var(--accent); font-style: normal; }
+.brand__org { font-size: 10px; color: var(--text-faint); letter-spacing: .08em; }
+
+.nav {
+  display: flex; gap: 22px; flex-wrap: wrap; margin-left: auto;
+  font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase;
+}
+/* padding-bottom/margin-bottom 상쇄로 링크와 드롭다운 사이에 hover 사각지대를 없앤다 (원본과 동일) */
+.nav__item { position: relative; padding-bottom: 14px; margin-bottom: -14px; }
+.nav__link {
+  color: var(--text); padding: 4px 0;
+  border-bottom: 1px solid transparent; display: inline-block;
+}
+.nav__link:hover { color: var(--accent-2); }
+/* 활성 상위 메뉴 — 빌드 타임에 현재 URL로 판정해 클래스를 붙인다 (JS 불필요) */
+.nav__item.is-active > .nav__link { color: var(--accent); border-bottom-color: var(--accent); }
+
+.nav__panel {
+  position: absolute; top: 100%; left: -14px;
+  display: none; flex-direction: column; min-width: 210px;
+  background: var(--bg-elev); border: 1px solid var(--line-box);
+  padding: 8px 0; text-transform: none; letter-spacing: .02em;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .5);
+}
+/* 드롭다운은 CSS :hover 만으로 (support.js 의 onMouseEnter/Leave 대체) */
+.nav__item:hover > .nav__panel,
+.nav__item:focus-within > .nav__panel { display: flex; }
+
+.nav__sub { padding: 9px 18px; font-size: 12.5px; color: var(--text-body); white-space: nowrap; }
+.nav__sub:hover { color: var(--accent); background: var(--bg-hover-2); }
+.nav__sub.is-current { color: var(--accent); }
+
+/* ─── 푸터 (dc.html L511–530) ───────────────────────────────────────────── */
+.site-footer { border-top: 1px solid var(--line); background: var(--bg-alt); }
+.site-footer__inner {
+  max-width: var(--maxw); margin: 0 auto; padding: 48px var(--pad-x);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 36px;
+}
+.site-footer__col { display: flex; flex-direction: column; gap: 12px; }
+.site-footer__brand { display: flex; align-items: center; gap: 12px; font-size: 12.5px; }
+.site-footer__brand .brand__mark { width: 32px; height: 32px; }
+.site-footer__addr { font-size: 11.5px; color: var(--text-faint); line-height: 1.7; }
+.site-footer__contact { display: flex; flex-direction: column; gap: 10px; font-size: 12px; }
+.site-footer__contact span { color: var(--text-muted); }
+.site-footer__contact a { color: var(--text-muted); }
+.site-footer__contact a:hover { color: var(--accent); }
+.site-footer__label { color: var(--text-faint) !important; letter-spacing: .14em; font-size: 10.5px; }
+.site-footer__legal {
+  display: flex; flex-direction: column; gap: 10px;
+  font-size: 11.5px; color: var(--text-ghost); justify-content: flex-end;
+}
+
+/* ─── HOME (dc.html L50–126) ────────────────────────────────────────────── */
+.hero { position: relative; border-bottom: 1px solid var(--line); }
+.hero__media {
+  height: clamp(340px, 52vh, 520px);
+  background: repeating-linear-gradient(135deg, #131315 0 10px, #0F0F11 10px 20px);
+  overflow: hidden;
+}
+.hero__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* 좌측이 짙은 그라디언트 — 히어로 문구의 가독성을 확보한다 */
+.hero__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(11,11,12,.94) 0%, rgba(11,11,12,.72) 55%, rgba(11,11,12,.35) 100%);
+}
+.hero__body { position: absolute; inset: 0; display: flex; align-items: center; }
+.hero__inner { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad-x); width: 100%; }
+.hero__text { max-width: 700px; display: flex; flex-direction: column; gap: 18px; }
+.hero__eyebrow { font-size: 11px; color: var(--accent); letter-spacing: .22em; }
+.hero__title {
+  margin: 0; font-size: clamp(30px, 4.4vw, 54px); font-weight: 700;
+  line-height: 1.15; letter-spacing: -.01em;
+}
+.hero__title em { color: var(--accent); font-style: normal; }
+.hero__sub { margin: 0; font-size: 15px; color: var(--text-muted); }
+
+.about {
+  max-width: var(--maxw); margin: 0 auto; padding: var(--sec-y) var(--pad-x);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 56px;
+}
+.about__body {
+  display: flex; flex-direction: column; gap: 20px;
+  font-size: 14.5px; color: var(--text-body); text-wrap: pretty;
+}
+.about__body p { margin: 0; }
+.stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 8px;
+}
+.stats > div { background: var(--bg); padding: 18px 20px; }
+.stats__num { font-size: 24px; color: var(--accent); }
+.stats__label { font-size: 11px; color: var(--text-label); letter-spacing: .1em; }
+
+.band { border-top: 1px solid var(--line); }
+.band-alt { border-top: 1px solid var(--line); background: var(--bg-alt); }
+.band__inner { max-width: var(--maxw); margin: 0 auto; padding: var(--sec-y) var(--pad-x); }
+.band__head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap; margin-bottom: 36px;
+}
+.band__more { font-size: 12px; letter-spacing: .1em; }
+
+.topic-cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.topic-card {
+  padding: 26px 24px; display: flex; flex-direction: column; gap: 14px; color: var(--text);
+}
+.topic-card:hover { background: var(--bg-hover); color: var(--text); }
+.topic-card__no { font-size: 11px; color: var(--accent); letter-spacing: .16em; }
+.topic-card__slot { height: 120px; }
+.topic-card__en { font-size: 15px; line-height: 1.4; }
+.topic-card__ko { font-size: 12px; color: var(--text-label); }
+
+/* 날짜 + 본문 2열 리스트 — News(홈/목록), Talks, Conferences 가 공유 */
+.datalist { display: flex; flex-direction: column; }
+.datalist__row {
+  display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 24px;
+  padding: 20px 0; border-top: 1px solid var(--line-soft);
+}
+.datalist__date { font-size: 12.5px; color: var(--accent); letter-spacing: .06em; padding-top: 2px; }
+.datalist__text { font-size: 14px; color: var(--text-body); text-wrap: pretty; }
+.datalist--past .datalist__text { color: var(--text-dim); }
+
+/* ─── TEAM / Leader (L136–210) ──────────────────────────────────────────── */
+.leader { display: grid; grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); gap: 56px; align-items: start; }
+.leader__aside { display: flex; flex-direction: column; gap: 20px; }
+.leader__portrait { width: 100%; aspect-ratio: 4/3; }
+.leader__card {
+  border: 1px solid var(--line); padding: 22px;
+  display: flex; flex-direction: column; gap: 10px;
+  font-size: 13px; color: var(--text-body);
+}
+.leader__name { font-size: 19px; color: var(--text); }
+.leader__role { color: var(--accent); font-size: 12px; letter-spacing: .08em; }
+.leader__scholar { font-size: 12px; letter-spacing: .08em; margin-top: 6px; }
+.leader__main { display: flex; flex-direction: column; gap: 48px; min-width: 0; }
+.cv__label { font-size: 11px; color: var(--accent); letter-spacing: .2em; margin-bottom: 16px; }
+.cv__interests {
+  margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px;
+  font-size: 14px; color: var(--text-body);
+}
+.cv__rows { display: flex; flex-direction: column; }
+.cv__row {
+  display: grid; grid-template-columns: var(--cv-date-w, 130px) minmax(0, 1fr); gap: 18px;
+  padding: 13px 0; border-top: 1px solid var(--line-soft);
+  font-size: 13.5px; color: var(--text-body);
+}
+.cv__date { color: var(--accent); }
+.cv__detail { color: var(--text-faint); font-size: 12.5px; display: block; }
+/* 원본은 섹션마다 날짜 칸 폭이 다르다 (Education 70 / Experience·Activity 130 / Award 56) */
+.cv--education { --cv-date-w: 70px; }
+.cv--education .cv__row { padding: 14px 0; font-size: 14px; }
+.cv--experience { --cv-date-w: 130px; }
+.cv--experience .cv__row { font-size: 14px; }
+.cv--award { --cv-date-w: 56px; }
+.cv--activity { --cv-date-w: 130px; }
+
+/* ─── TEAM / Researchers (L212–258) ─────────────────────────────────────── */
+.team-block { display: flex; flex-direction: column; gap: 64px; }
+.team-grid-grad { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+.team-grid-ug   { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+.person { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.person--ug { padding: 18px; gap: 12px; }
+.person__photo { aspect-ratio: 1/1; }
+.person__lines { display: flex; flex-direction: column; gap: 5px; }
+.person--ug .person__lines { gap: 4px; }
+.person__ko { font-size: 15px; }
+.person--ug .person__ko { font-size: 14px; }
+.person__en { font-size: 12px; color: var(--text-label); }
+.person--ug .person__en { font-size: 11.5px; }
+.person__role { font-size: 11px; color: var(--accent); letter-spacing: .06em; }
+.person__email { font-size: 11.5px; color: var(--text-faint); word-break: break-all; }
+
+.alumni__row {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 20px; padding: 16px 0; border-top: 1px solid var(--line-soft);
+  font-size: 13.5px; color: var(--text-body);
+}
+.alumni__role { color: var(--text-label); }
+.alumni__next { color: var(--accent); }
+
+/* ─── RESEARCH / Topics (L269–288) ──────────────────────────────────────── */
+.topics { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.topic {
+  background: var(--bg); padding: 40px 34px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px; align-items: center;
+}
+.topic__slot { aspect-ratio: 16/10; }
+.topic__body { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.topic__no { font-size: 11px; color: var(--accent); letter-spacing: .16em; }
+.topic__en { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.3; }
+.topic__ko { font-size: 13px; color: var(--text-label); }
+.topic__desc { margin: 0; font-size: 14px; color: var(--text-body); text-wrap: pretty; }
+.topic__tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.topic__tags .chip { padding: 5px 10px; letter-spacing: .06em; }
+
+/* ─── RESEARCH / Projects (L290–305) ────────────────────────────────────── */
+.projects { display: flex; flex-direction: column; }
+.proj-head, .proj-row {
+  display: grid; grid-template-columns: 110px 160px 52px 180px minmax(0, 1fr); gap: 18px;
+}
+.proj-head {
+  padding-bottom: 12px; font-size: 11px; color: var(--text-faint);
+  letter-spacing: .14em; border-bottom: 1px solid var(--line);
+}
+.proj-head span:nth-child(3) { grid-column: span 2; }
+.proj-row {
+  padding: 18px 0; border-bottom: 1px solid var(--line-soft);
+  font-size: 13.5px; color: var(--text-body); align-items: center;
+}
+.badge {
+  font-size: 10.5px; letter-spacing: .1em; padding: 4px 8px; justify-self: start;
+  border: 1px solid var(--line-box); color: var(--text-label);
+}
+.badge-on { border-color: var(--accent); color: var(--accent); }
+.proj-row__period { color: var(--accent); font-size: 12.5px; }
+.proj-row__logo {
+  width: 40px; height: 40px; border: 1px dashed var(--line-dashed);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8px; color: var(--text-ghost); letter-spacing: .04em; overflow: hidden;
+}
+.proj-row__logo img { width: 100%; height: 100%; object-fit: contain; }
+.proj-row__logo.has-img { border: 0; }
+.proj-row__partner { color: var(--text); font-size: 13px; }
+.proj-row__title { text-wrap: pretty; }
+
+/* ─── ACHIEVEMENTS / Publications (L316–340) ────────────────────────────── */
+.pub-scholar { font-size: 12px; letter-spacing: .08em; margin-bottom: 24px; display: inline-block; }
+.pub-years { display: flex; flex-direction: column; gap: 14px; }
+.pub-year {
+  display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 24px;
+  padding: 28px 0; border-top: 1px solid var(--line);
+}
+.pub-year__label { font-size: 22px; color: var(--accent); }
+.pub-year__items { display: flex; flex-direction: column; gap: 26px; min-width: 0; }
+.pub { display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; }
+.pub__title { color: var(--text); line-height: 1.5; text-wrap: pretty; }
+.pub__authors { color: var(--text-dim); line-height: 1.6; }
+/* 저자 문자열의 "S. H. Park" 강조 — 빌드 타임 필터가 이 태그를 넣는다 */
+.pub__authors mark { background: none; color: var(--accent); font-weight: 700; }
+.pub__venue { color: var(--text-body); }
+.pub__meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 2px; }
+.pub__doi {
+  font-size: 11px; letter-spacing: .08em; padding: 3px 8px;
+  border: 1px solid var(--line-btn); color: var(--text-muted);
+  white-space: nowrap; flex: none; display: inline-flex; align-items: center;
+}
+.pub__doi:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ─── ACHIEVEMENTS / Conferences · Patents ──────────────────────────────── */
+.note {
+  border: 1px dashed var(--line-dashed); padding: 20px;
+  font-size: 12px; color: #6D6D73; letter-spacing: .06em;
+}
+.conf-list { display: flex; flex-direction: column; }
+.conf-row {
+  display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 24px;
+  padding: 20px 0; border-top: 1px solid var(--line-soft);
+}
+.conf-row__year { color: var(--accent); font-size: 13.5px; }
+.conf-row__body { display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; }
+.conf-row__title { color: var(--text); text-wrap: pretty; }
+.conf-row__meta { color: var(--text-label); font-size: 12.5px; }
+
+.pat-head, .pat-row { display: grid; grid-template-columns: 110px 120px minmax(0, 1fr); gap: 20px; }
+.pat-head {
+  padding-bottom: 12px; font-size: 11px; color: var(--text-faint);
+  letter-spacing: .14em; border-bottom: 1px solid var(--line);
+}
+.pat-row {
+  padding: 18px 0; border-bottom: 1px solid var(--line-soft);
+  align-items: center; font-size: 13.5px; color: var(--text-body);
+}
+.pat-row__no { color: var(--text); font-size: 12.5px; }
+.pat-row__status { font-size: 11px; color: var(--accent); letter-spacing: .08em; }
+.pat-row__title { text-wrap: pretty; }
+
+/* ─── ACHIEVEMENTS / Invited Talks (L378–398) ───────────────────────────── */
+.talks { display: flex; flex-direction: column; gap: 20px; }
+.talk-row {
+  display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 20px;
+  padding: 14px 0; border-top: 1px solid var(--line-soft);
+  font-size: 13.5px; color: var(--text-body);
+}
+.talk-row__date { color: var(--accent); }
+.talk-row__host { color: var(--text-faint); }
+.talks--past .talk-row { color: var(--text-dim); }
+
+/* 토글 버튼 (지난 News / 이전 Talks) */
+.toggle { display: block; width: 100%; padding: 14px; text-align: center; }
+
+/* ─── TEACHING (L403–420) ───────────────────────────────────────────────── */
+.course-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.course { padding: 28px 26px; display: flex; flex-direction: column; gap: 12px; }
+.course__level { font-size: 11px; color: var(--accent); letter-spacing: .14em; }
+.course__name { font-size: 17px; }
+.course__code { font-size: 12.5px; color: var(--text-label); }
+.course__desc { font-size: 13.5px; color: var(--text-body); text-wrap: pretty; }
+
+/* ─── NEWS + GALLERY (L423–474) ─────────────────────────────────────────── */
+.gallery-wrap { margin-top: 72px; }
+.gallery__head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.gallery__nav { display: flex; align-items: center; gap: 14px; }
+.gallery__page { font-size: 11.5px; color: var(--text-faint); letter-spacing: .08em; }
+.gallery__btn { padding: 7px 14px; font-size: 11px; }
+.gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.gal { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.gal__frame { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+.gal__label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.gal__arrow {
+  position: absolute; top: 0; bottom: 0; width: 34px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--text-label); cursor: pointer;
+  background: none; border: 0; font-family: inherit; padding: 0;
+}
+.gal__arrow:hover { color: var(--accent); }
+.gal__arrow--prev { left: 0; background: linear-gradient(90deg, rgba(11,11,12,.75), transparent); }
+.gal__arrow--next { right: 0; background: linear-gradient(270deg, rgba(11,11,12,.75), transparent); }
+.gal__lines { display: flex; flex-direction: column; gap: 4px; }
+.gal__date { font-size: 11.5px; color: var(--accent); }
+.gal__title { font-size: 13.5px; color: var(--text-body); text-wrap: pretty; }
+.gal__who { font-size: 11.5px; color: var(--text-faint); }
+
+/* ─── CONTACT (L477–507) ────────────────────────────────────────────────── */
+.contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px; align-items: start; }
+.contact__col { display: flex; flex-direction: column; gap: 34px; }
+.contact__field { display: flex; flex-direction: column; gap: 10px; }
+.contact__value { font-size: 14.5px; color: var(--text); }
+.contact__sub { font-size: 13px; color: var(--text-label); }
+.contact__recruit {
+  border: 1px solid var(--line); padding: 24px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.contact__recruit-title { font-size: 14px; color: var(--text); }
+.contact__recruit-body { font-size: 13.5px; color: var(--text-body); text-wrap: pretty; }
+.contact__map { display: flex; flex-direction: column; gap: 12px; }
+.contact__map .imgslot { aspect-ratio: 4/3; }
+.contact__subway { font-size: 11.5px; color: var(--text-faint); }
+
+/* ─── 반응형 ────────────────────────────────────────────────────────────── */
+@media (max-width: 1040px) {
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .about { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .leader { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  /* 프로젝트 표는 좁은 화면에서 카드로 접는다 (원본은 5열 고정) */
+  .proj-head { display: none; }
+  .proj-row { grid-template-columns: auto 1fr; gap: 8px 14px; padding: 20px 0; }
+  .proj-row__logo { display: none; }
+  .proj-row__partner { grid-column: 2; }
+  .proj-row__title { grid-column: 1 / -1; }
+  .alumni__row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .pat-head { display: none; }
+  .pat-row { grid-template-columns: auto 1fr; gap: 6px 16px; }
+  .pat-row__title { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  :root { --pad-x: 20px; --sec-y: 56px; --page-top: 40px; --page-bot: 64px; }
+  .site-header__inner { gap: 16px; }
+  .nav { gap: 16px; font-size: 11.5px; margin-left: 0; width: 100%; }
+  .nav__item { padding-bottom: 8px; margin-bottom: -8px; }
+  .nav__panel { left: -8px; min-width: 180px; }
+  .datalist__row, .pub-year, .conf-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .talk-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .cv__row { grid-template-columns: minmax(0, 1fr) !important; gap: 4px; }
+  .gallery { grid-template-columns: minmax(0, 1fr); }
+  .topic { padding: 28px 22px; gap: 24px; }
+}

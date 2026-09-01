@@ -1,0 +1,79 @@
+[
+  {
+    "publish": "TRUE",
+    "order": "10",
+    "level": "Undergraduate",
+    "title_en": "Adventure Design",
+    "title_ko": "어드벤처디자인",
+    "course_code": "MEC2036",
+    "term": "",
+    "description": "",
+    "notes": ""
+  },
+  {
+    "publish": "TRUE",
+    "order": "20",
+    "level": "Undergraduate",
+    "title_en": "Kinematics",
+    "title_ko": "기구학",
+    "course_code": "MEC2011",
+    "term": "",
+    "description": "",
+    "notes": ""
+  },
+  {
+    "publish": "TRUE",
+    "order": "30",
+    "level": "Undergraduate",
+    "title_en": "CAD/CAM",
+    "title_ko": "",
+    "course_code": "MEC4038",
+    "term": "",
+    "description": "",
+    "notes": ""
+  },
+  {
+    "publish": "TRUE",
+    "order": "40",
+    "level": "Undergraduate",
+    "title_en": "Applied Mechanical & Electronic Engineering Laboratory",
+    "title_ko": "응용기계전자공학실험",
+    "course_code": "MEC4098",
+    "term": "",
+    "description": "",
+    "notes": "영문명 draft"
+  },
+  {
+    "publish": "TRUE",
+    "order": "50",
+    "level": "Graduate",
+    "title_en": "Electromagnetic Field Analysis of Electric Machinery",
+    "title_ko": "전기기계전자장해석",
+    "course_code": "MEC7098",
+    "term": "",
+    "description": "",
+    "notes": "영문명 draft"
+  },
+  {
+    "publish": "TRUE",
+    "order": "60",
+    "level": "Graduate",
+    "title_en": "Advanced Electric Machine Control",
+    "title_ko": "전기기계제어특론",
+    "course_code": "MEC6016",
+    "term": "",
+    "description": "",
+    "notes": "영문명 draft"
+  },
+  {
+    "publish": "TRUE",
+    "order": "70",
+    "level": "Graduate",
+    "title_en": "Electric Machine Design",
+    "title_ko": "전기기기설계",
+    "course_code": "MEC6015",
+    "term": "",
+    "description": "",
+    "notes": "영문명 draft"
+  }
+]

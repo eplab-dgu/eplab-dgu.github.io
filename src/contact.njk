@@ -1,0 +1,37 @@
+---
+layout: base.njk
+title: Contact
+permalink: /contact/
+---
+{# Contact — dc.html L477–507 이식. 주소·연락처·채용문구는 Site_Config 에서 읽는다. #}
+<div class="page">
+  <span class="eyebrow">Contact</span>
+  <h1 class="h-page">Contact</h1>
+
+  <div class="contact">
+    <div class="contact__col">
+      <div class="contact__field">
+        <span class="eyebrow">Address</span>
+        <span class="contact__value">{{ cms.config.contact_lab }}</span>
+        <span class="contact__sub">{{ cms.config.address }}</span>
+      </div>
+      <div class="contact__field">
+        <span class="eyebrow">E-mail</span>
+        <span class="contact__value"><a href="mailto:{{ cms.config.email }}">{{ cms.config.email }}</a></span>
+      </div>
+      <div class="contact__field">
+        <span class="eyebrow">Tel</span>
+        <span class="contact__value">{{ cms.config.tel }}</span>
+      </div>
+      <div class="contact__recruit">
+        <span class="contact__recruit-title">{{ cms.config.recruit_title }}</span>
+        <span class="contact__recruit-body">{{ cms.config.recruit_body }}</span>
+      </div>
+    </div>
+
+    <div class="contact__map">
+      <div class="imgslot">[ MAP / 캠퍼스 위치 이미지 ]</div>
+      <span class="contact__subway">{{ cms.config.subway }}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+---
+layout: base.njk
+title: false
+permalink: /
+description: Design, analysis and testing of electrified propulsion systems.
+---
+{# Home — dc.html L50–126 이식. 히어로 / About+통계 / Research Topics / Latest News #}
+
+<section class="hero">
+  <div class="hero__media">
+    <img src="/assets/hero.svg" alt="" width="1600" height="760">
+  </div>
+  <div class="hero__scrim"></div>
+  <div class="hero__body">
+    <div class="hero__inner">
+      <div class="hero__text">
+        <span class="hero__eyebrow">{{ cms.config.university | upper }} · {{ cms.config.since }}</span>
+        <h1 class="hero__title"><em>{{ cms.config.hero_line1 }}</em><br>{{ cms.config.hero_line2 }}</h1>
+        <p class="hero__sub">{{ cms.config.hero_sub }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div>
+    <span class="eyebrow">01 / About Us</span>
+    <h2 class="h-sec">전동화 추진시스템의<br>설계, 해석 및 시험</h2>
+  </div>
+  <div class="about__body">
+    <p>{{ cms.config.about_p1 }}</p>
+    <p>{{ cms.config.about_p2 }}</p>
+    {# 통계는 시트 값이 있으면 그것을, 없으면 자동 집계를 쓴다 (DESIGN_SPEC §5-8) #}
+    <div class="stats">
+      <div>
+        <div class="stats__num">{{ cms.config.stat_researchers or cms.stats.researchers }}</div>
+        <div class="stats__label">RESEARCHERS</div>
+      </div>
+      <div>
+        <div class="stats__num">{{ cms.config.stat_publications or cms.stats.publications }}</div>
+        <div class="stats__label">PUBLICATIONS</div>
+      </div>
+      <div>
+        <div class="stats__num">{{ cms.config.stat_projects or cms.stats.projects }}</div>
+        <div class="stats__label">INDUSTRY PROJECTS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-alt">
+  <div class="band__inner">
+    <div class="band__head">
+      <div>
+        <span class="eyebrow">02 / Research</span>
+        <h2 class="h-sec">Research Topics</h2>
+      </div>
+      <a class="band__more" href="/research/topics/">전체 보기 →</a>
+    </div>
+    <div class="cardgrid topic-cards">
+      {% for t in cms.Research_Topics %}
+      <a class="topic-card" href="/research/topics/">
+        <span class="topic-card__no">{{ t.no }}</span>
+        <span class="imgslot imgslot-sm topic-card__slot{% if t.image_url %} has-img{% endif %}">
+          {% if t.image_url %}<img src="{{ t.image_url }}" alt="{{ t.title_en }}" loading="lazy">
+          {% else %}[ IMAGE ]{% endif %}
+        </span>
+        <span class="topic-card__en">{{ t.title_en }}</span>
+        <span class="topic-card__ko">{{ t.title_ko }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="band__inner">
+    <div class="band__head">
+      <div>
+        <span class="eyebrow">03 / News</span>
+        <h2 class="h-sec">Latest News</h2>
+      </div>
+      <a class="band__more" href="/news/">전체 보기 →</a>
+    </div>
+    <div class="datalist">
+      {% for n in cms.News.slice(0, 5) %}
+      <div class="datalist__row">
+        <span class="datalist__date">{{ n.date }}</span>
+        <span class="datalist__text">{{ n.text }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

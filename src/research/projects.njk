@@ -1,0 +1,33 @@
+---
+layout: base.njk
+title: Research Projects
+permalink: /research/projects/
+---
+{#
+  Research > Projects — dc.html L290–305 이식.
+  원본 PARTNER 칸은 점선 LOGO placeholder 였다. DESIGN_SPEC §4-1 대로
+  partner_logo_url 이 있으면 로고를, 없으면 파트너명 텍스트로 폴백한다.
+#}
+<div class="page">
+  <span class="eyebrow">Research</span>
+  <h1 class="h-page">Research Projects</h1>
+
+  <div class="projects">
+    <div class="proj-head">
+      <span>STATUS</span><span>PERIOD</span><span>PARTNER</span><span>PROJECT</span>
+    </div>
+    {% for p in cms.Research_Projects %}
+    <div class="proj-row">
+      <span class="badge {{ "badge-on" if p.isOngoing else "" }}">{{ p.status | upper }}</span>
+      <span class="proj-row__period">{{ p.period }}</span>
+      <span class="proj-row__logo{% if p.partner_logo_url %} has-img{% endif %}">
+        {% if p.partner_logo_url %}
+          <img src="{{ p.partner_logo_url }}" alt="{{ p.partner }}" width="40" height="40" loading="lazy">
+        {% else %}LOGO{% endif %}
+      </span>
+      <span class="proj-row__partner">{{ p.partner }}</span>
+      <span class="proj-row__title">{{ p.title_ko or p.title_en }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>

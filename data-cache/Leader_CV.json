@@ -1,0 +1,194 @@
+[
+  {
+    "publish": "TRUE",
+    "section": "ResearchInterest",
+    "order": "10",
+    "date": "",
+    "title": "Analysis and design of electric machines",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "ResearchInterest",
+    "order": "20",
+    "date": "",
+    "title": "Multi-physics analysis of electric machines",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "ResearchInterest",
+    "order": "30",
+    "date": "",
+    "title": "Model-based electric machine design",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "ResearchInterest",
+    "order": "40",
+    "date": "",
+    "title": "AI-assisted acceleration of designing of electric machines",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "ResearchInterest",
+    "order": "50",
+    "date": "",
+    "title": "Design of 1-D electrified propulsion system",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "ResearchInterest",
+    "order": "60",
+    "date": "",
+    "title": "Integrated inverter-motor system analysis",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "ResearchInterest",
+    "order": "70",
+    "date": "",
+    "title": "Thermal management of e-powertrain system",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "ResearchInterest",
+    "order": "80",
+    "date": "",
+    "title": "Design automation with commercial software",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Education",
+    "order": "90",
+    "date": "2022",
+    "title": "(Ph.D.) Department of Automotive Engineering, Hanyang University",
+    "detail": "Advisor: Prof. Myung-Seop Lim, Prof. Jung-Pyo Hong. Dissertation: Design Process of IPMSM Considering PWM-induced Electromagnetic Losses Using Active Transfer Learning"
+  },
+  {
+    "publish": "TRUE",
+    "section": "Education",
+    "order": "100",
+    "date": "2014",
+    "title": "(B.S.) Department of Mechanical Engineering, Hanyang University",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Experience",
+    "order": "110",
+    "date": "2023 – present",
+    "title": "Assistant Professor, Dongguk University",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Experience",
+    "order": "120",
+    "date": "2025",
+    "title": "Lecturer, Global Partnership Center, Hyundai Motor Group",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Experience",
+    "order": "130",
+    "date": "2022 – 2023",
+    "title": "Senior Research Engineer, R&D Division, Hyundai Motor Company",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Experience",
+    "order": "140",
+    "date": "2019 – 2020",
+    "title": "Researcher, Korea Institute of Industrial Technology (KITECH)",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Award",
+    "order": "150",
+    "date": "2025",
+    "title": "신진연구 우수논문상, 대한기계학회 CAE및응용역학부문",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Award",
+    "order": "160",
+    "date": "2025",
+    "title": "우수신진연구자상, 한국PHM학회",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Award",
+    "order": "170",
+    "date": "2025",
+    "title": "신진연구 우수발표상, 전산구조공학회",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Award",
+    "order": "180",
+    "date": "2023",
+    "title": "EMC Prize Paper Award, IEEE Electric Machinery Committee",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Award",
+    "order": "190",
+    "date": "2022",
+    "title": "Distinguished Dissertation Award, Hanyang University",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Activity",
+    "order": "200",
+    "date": "2026 – present",
+    "title": "학술이사, 대한전기학회 (전기기기 및 에너지변환시스템 부문)",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Activity",
+    "order": "210",
+    "date": "2025 – present",
+    "title": "교육이사, 한국PHM학회",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Activity",
+    "order": "220",
+    "date": "2025 – present",
+    "title": "산학협력이사, 대한기계학회 (CAE 및 응용역학 부문)",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Activity",
+    "order": "230",
+    "date": "2023 – present",
+    "title": "Member, IEEE",
+    "detail": ""
+  },
+  {
+    "publish": "TRUE",
+    "section": "Activity",
+    "order": "240",
+    "date": "",
+    "title": "Reviewer: TIE, TMECH, TTE, TMAG, TEC, IEEE ACCESS, JEET, JOM",
+    "detail": ""
+  }
+]

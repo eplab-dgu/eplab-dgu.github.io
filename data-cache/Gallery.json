@@ -1,0 +1,92 @@
+[
+  {
+    "publish": "TRUE",
+    "order": "10",
+    "date": "25.09",
+    "title": "새식구 및 개강맞이 회식",
+    "participants": "연구실 전원",
+    "photo_count": "3",
+    "image_urls": "",
+    "notes": "image_urls: 사진 URL을 콤마로 구분해 입력"
+  },
+  {
+    "publish": "TRUE",
+    "order": "20",
+    "date": "25.07",
+    "title": "대한전기학회 하계학술대회 (부산, BEXCO)",
+    "participants": "장민우, 정성원, 유재경",
+    "photo_count": "4",
+    "image_urls": "",
+    "notes": "image_urls: 사진 URL을 콤마로 구분해 입력"
+  },
+  {
+    "publish": "TRUE",
+    "order": "30",
+    "date": "25.06",
+    "title": "COMPUMAG 2025 (Italy, Naples)",
+    "participants": "김찬우, 김재윤",
+    "photo_count": "5",
+    "image_urls": "",
+    "notes": "image_urls: 사진 URL을 콤마로 구분해 입력"
+  },
+  {
+    "publish": "TRUE",
+    "order": "40",
+    "date": "25.05",
+    "title": "한국자동차공학회 춘계학술대회 (제주, 신화월드)",
+    "participants": "김찬우, 김재윤, 서영주",
+    "photo_count": "3",
+    "image_urls": "",
+    "notes": "image_urls: 사진 URL을 콤마로 구분해 입력"
+  },
+  {
+    "publish": "TRUE",
+    "order": "50",
+    "date": "25.02",
+    "title": "2025년도 봄 학위수여식",
+    "participants": "허태혁, 한진성, 엄기웅 졸업",
+    "photo_count": "3",
+    "image_urls": "",
+    "notes": "image_urls: 사진 URL을 콤마로 구분해 입력"
+  },
+  {
+    "publish": "TRUE",
+    "order": "60",
+    "date": "24.09",
+    "title": "ICEM 2024 (Italy, Torino)",
+    "participants": "한국자동차연구원 하이브리드기술부문과 함께",
+    "photo_count": "4",
+    "image_urls": "",
+    "notes": "image_urls: 사진 URL을 콤마로 구분해 입력"
+  },
+  {
+    "publish": "TRUE",
+    "order": "70",
+    "date": "24.08",
+    "title": "2024년도 가을 학위수여식",
+    "participants": "김찬우, 박태호 졸업",
+    "photo_count": "2",
+    "image_urls": "",
+    "notes": "image_urls: 사진 URL을 콤마로 구분해 입력"
+  },
+  {
+    "publish": "TRUE",
+    "order": "80",
+    "date": "24.08",
+    "title": "한국자동차연구원 교육 참석",
+    "participants": "김찬우, 이준범",
+    "photo_count": "3",
+    "image_urls": "",
+    "notes": "image_urls: 사진 URL을 콤마로 구분해 입력"
+  },
+  {
+    "publish": "TRUE",
+    "order": "90",
+    "date": "24.06",
+    "title": "스승의날 기념 회식",
+    "participants": "연구실 전원",
+    "photo_count": "3",
+    "image_urls": "",
+    "notes": "image_urls: 사진 URL을 콤마로 구분해 입력"
+  }
+]

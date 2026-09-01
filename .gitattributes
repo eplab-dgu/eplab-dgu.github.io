@@ -1,0 +1,10 @@
+# 저장소에는 LF 로 저장한다. 빌드가 Windows(로컬)와 Linux(GitHub Actions) 양쪽에서
+# 돌기 때문에, 줄바꿈을 명시하지 않으면 CI 에서만 나는 차이를 쫓게 된다.
+* text=auto eol=lf
+
+# 바이너리 — 절대 변환하지 않는다
+*.xlsx  binary
+*.webp  binary
+*.png   binary
+*.jpg   binary
+*.pdf   binary

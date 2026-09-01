@@ -1,0 +1,35 @@
+---
+layout: base.njk
+title: Patents
+permalink: /achievements/patents/
+---
+{#
+  Achievements > Patents — dc.html L360–376 이식.
+  원본은 NO./STATUS/TITLE 표 레이아웃만 있고 내용은 placeholder 였다.
+  실제 특허(US 2건)는 Patents 탭에서 채운다.
+#}
+<div class="page">
+  <span class="eyebrow">Achievements</span>
+  <h1 class="h-page">Patents</h1>
+
+  <div class="talks">
+    <div class="pat-head">
+      <span>NO.</span><span>STATUS</span><span>TITLE</span>
+    </div>
+    <div class="datalist">
+      {% for p in cms.Patents %}
+      <div class="pat-row">
+        <span class="pat-row__no">{{ p.patent_no or p.country }}</span>
+        <span class="pat-row__status">{{ p.status | upper }}</span>
+        <span class="pat-row__title">
+          {{ p.title }}
+          {% if p.inventors %}<span class="cv__detail">{{ p.inventors }}</span>{% endif %}
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+    {% if not cms.Patents.length %}
+    <div class="note">[ PATENT LIST — 출원/등록 특허 데이터 필요 ]</div>
+    {% endif %}
+  </div>
+</div>

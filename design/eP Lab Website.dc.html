@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--accent:#FF6A1F;--accent2:#FF8A4C}
+*{box-sizing:border-box}
+body{margin:0;background:#0B0B0C;color:#EDEDED;font-family:Consolas,Menlo,"DejaVu Sans Mono","Malgun Gothic","Apple SD Gothic Neo",monospace;-webkit-font-smoothing:antialiased;line-height:1.6}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent2)}
+::selection{background:var(--accent);color:#0B0B0C}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<header style="position:sticky;top:0;z-index:50;background:rgba(11,11,12,.96);backdrop-filter:blur(8px);border-bottom:1px solid #212124">
+  <div style="max-width:1240px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+    <a href="#/home" style="display:flex;align-items:center;gap:12px;color:#EDEDED">
+      <span style="width:36px;height:36px;border:1px dashed #3A3A3F;display:flex;align-items:center;justify-content:center;font-size:9px;color:#6D6D73;letter-spacing:.05em;flex:none">LOGO</span>
+      <span style="display:flex;flex-direction:column;line-height:1.25">
+        <span style="font-size:13px;letter-spacing:.02em"><span style="color:var(--accent)">electrified</span> Propulsion Lab.</span>
+        <span style="font-size:10px;color:#78787E;letter-spacing:.08em">DONGGUK UNIVERSITY</span>
+      </span>
+    </a>
+    <nav style="display:flex;gap:22px;flex-wrap:wrap;margin-left:auto;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
+        <div style="position:relative;padding-bottom:14px;margin-bottom:-14px" onMouseEnter="{{ item.onEnter }}" onMouseLeave="{{ item.onLeave }}">
+          <a href="{{ item.href }}" style="color:{{ item.color }};padding:4px 0;border-bottom:1px solid {{ item.line }};display:inline-block" style-hover="color:var(--accent2)">{{ item.label }}</a>
+          <div style="position:absolute;top:100%;left:-14px;display:{{ item.panel }};flex-direction:column;min-width:210px;background:#101012;border:1px solid #26262A;padding:8px 0;text-transform:none;letter-spacing:.02em;box-shadow:0 12px 28px rgba(0,0,0,.5)">
+            <sc-for list="{{ item.children }}" as="c" hint-placeholder-count="0">
+              <a href="{{ c.href }}" style="padding:9px 18px;font-size:12.5px;color:#C4C4C9;white-space:nowrap" style-hover="color:var(--accent);background:#17171A">{{ c.label }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </nav>
+  </div>
+</header>
+
+<main style="flex:1">
+
+<!-- ============ HOME ============ -->
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div>
+  <section style="position:relative;border-bottom:1px solid #212124">
+    <div style="height:clamp(340px,52vh,520px);background:repeating-linear-gradient(135deg,#131315 0 10px,#0F0F11 10px 20px);display:flex;align-items:flex-end;justify-content:flex-end;padding:20px 24px">
+      <span style="font-size:11px;color:#5F5F65;letter-spacing:.14em">[ HERO IMAGE — 연구실/모터 대표 이미지 ]</span>
+    </div>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,12,.94) 0%,rgba(11,11,12,.72) 55%,rgba(11,11,12,.35) 100%)"></div>
+    <div style="position:absolute;inset:0;display:flex;align-items:center">
+      <div style="max-width:1240px;margin:0 auto;padding:0 28px;width:100%">
+        <div style="max-width:700px;display:flex;flex-direction:column;gap:18px">
+          <span style="font-size:11px;color:var(--accent);letter-spacing:.22em">DONGGUK UNIVERSITY · SINCE 2023</span>
+          <h1 style="margin:0;font-size:clamp(30px,4.4vw,54px);font-weight:700;line-height:1.15;letter-spacing:-.01em"><span style="color:var(--accent)">electrified</span><br>Propulsion Lab.</h1>
+          <p style="margin:0;font-size:15px;color:#B7B7BC">동국대학교 전동화 추진시스템 연구실</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:84px 28px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:56px">
+    <div>
+      <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">01 / ABOUT US</span>
+      <h2 style="margin:14px 0 0;font-size:26px;font-weight:700;line-height:1.3">전동화 추진시스템의<br>설계, 해석 및 시험</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;font-size:14.5px;color:#C4C4C9;text-wrap:pretty">
+      <p style="margin:0">전동화 추진시스템 연구실(electrified Propulsion Lab.)은 전기기기(electric machinery)의 설계와 다물리(multi-physics) 해석을 기반으로, 자동차·선박·항공·생활가전·로봇용 전동화 추진시스템의 성능을 예측하고 최적화하는 연구를 수행합니다. 또한, 시험-해석 정합성 확보를 위한 해석기법의 연구를 바탕으로 1-D 시스템 모델 관련 연구를 수행합니다.</p>
+      <p style="margin:0">전자기 설계에서 시작해 손실·열·진동/소음을 함께 다루는 통합 해석 체계를 구축하고, 다중충실도 기반 설계 및 시험 효율화와 AI 기반 설계/시험 가속화 방법론을 개발합니다. 산업계와의 협력을 통해 연구 결과를 실제 양산 개발 프로세스에 적용하는 것을 목표로 합니다.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:#212124;border:1px solid #212124;margin-top:8px">
+        <div style="background:#0B0B0C;padding:18px 20px"><div style="font-size:24px;color:var(--accent)">11</div><div style="font-size:11px;color:#8A8A90;letter-spacing:.1em">RESEARCHERS</div></div>
+        <div style="background:#0B0B0C;padding:18px 20px"><div style="font-size:24px;color:var(--accent)">30+</div><div style="font-size:11px;color:#8A8A90;letter-spacing:.1em">PUBLICATIONS</div></div>
+        <div style="background:#0B0B0C;padding:18px 20px"><div style="font-size:24px;color:var(--accent)">13</div><div style="font-size:11px;color:#8A8A90;letter-spacing:.1em">INDUSTRY PROJECTS</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid #212124;background:#0E0E10">
+    <div style="max-width:1240px;margin:0 auto;padding:84px 28px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:36px">
+        <div>
+          <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">02 / RESEARCH</span>
+          <h2 style="margin:14px 0 0;font-size:26px;font-weight:700">Research Topics</h2>
+        </div>
+        <a href="#/research/topics" style="font-size:12px;letter-spacing:.1em">전체 보기 →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:#212124;border:1px solid #212124">
+        <sc-for list="{{ topics }}" as="t" hint-placeholder-count="6">
+          <a href="#/research/topics" style="background:#0B0B0C;padding:26px 24px;display:flex;flex-direction:column;gap:14px;color:#EDEDED" style-hover="background:#141416">
+            <span style="font-size:11px;color:var(--accent);letter-spacing:.16em">{{ t.no }}</span>
+            <span style="height:120px;border:1px dashed #303035;background:repeating-linear-gradient(135deg,#111113 0 8px,#0E0E10 8px 16px);display:flex;align-items:center;justify-content:center;font-size:10px;color:#5F5F65;letter-spacing:.1em">[ IMAGE ]</span>
+            <span style="font-size:15px;line-height:1.4">{{ t.en }}</span>
+            <span style="font-size:12px;color:#8A8A90">{{ t.kr }}</span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid #212124">
+    <div style="max-width:1240px;margin:0 auto;padding:84px 28px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:36px">
+        <div>
+          <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">03 / NEWS</span>
+          <h2 style="margin:14px 0 0;font-size:26px;font-weight:700">Latest News</h2>
+        </div>
+        <a href="#/news" style="font-size:12px;letter-spacing:.1em">전체 보기 →</a>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ newsRecent }}" as="n" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:96px minmax(0,1fr);gap:20px;padding:20px 0;border-top:1px solid #1C1C1F">
+            <span style="font-size:12px;color:var(--accent);letter-spacing:.06em;padding-top:2px">{{ n.d }}</span>
+            <span style="font-size:14px;color:#C4C4C9;text-wrap:pretty">{{ n.t }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<!-- ============ TEAM ============ -->
+<sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1240px;margin:0 auto;padding:56px 28px 96px">
+  <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">TEAM</span>
+  <h1 style="margin:12px 0 24px;font-size:34px;font-weight:700">{{ pageTitle }}</h1>
+  
+
+  <sc-if value="{{ isLeader }}" hint-placeholder-val="{{ false }}">
+  <div style="display:grid;grid-template-columns:minmax(280px,360px) minmax(0,1fr);gap:56px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="width:100%;aspect-ratio:4/3;border:1px dashed #303035;background:repeating-linear-gradient(135deg,#131315 0 10px,#0F0F11 10px 20px);display:flex;align-items:center;justify-content:center;font-size:10px;color:#5F5F65;letter-spacing:.12em">[ PORTRAIT ]</div>
+      <div style="border:1px solid #212124;padding:22px;display:flex;flex-direction:column;gap:10px;font-size:13px;color:#C4C4C9">
+        <div style="font-size:19px;color:#EDEDED">Soo-Hwan Park, 박수환</div>
+        <div style="color:var(--accent);font-size:12px;letter-spacing:.08em">ASSISTANT PROFESSOR</div>
+        <div style="height:1px;background:#212124;margin:4px 0"></div>
+        <div>Department of Mechanical, Robotics,<br>and Energy Engineering</div>
+        <div>Dongguk University</div>
+        <div style="height:1px;background:#212124;margin:4px 0"></div>
+        <div><span style="color:#78787E">e-mail&nbsp;&nbsp;</span>parksh@dgu.ac.kr</div>
+        <div><span style="color:#78787E">tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>02-2260-3703</div>
+        <a href="https://scholar.google.com/citations?user=hocoJJAAAAAJ&amp;hl=ko" style="font-size:12px;letter-spacing:.08em;margin-top:6px">GOOGLE SCHOLAR →</a>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:48px;min-width:0">
+      <div>
+        <div style="font-size:11px;color:var(--accent);letter-spacing:.2em;margin-bottom:16px">RESEARCH INTERESTS</div>
+        <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C4C4C9">
+          <li>Analysis and design of electric machines</li>
+          <li>Multi-physics analysis of electric machines</li>
+          <li>Model-based electric machine design</li>
+          <li>AI-assisted acceleration of designing of electric machines</li>
+          <li>Design of 1-D electrified propulsion system</li>
+          <li>Integrated inverter-motor system analysis</li>
+          <li>Thermal management of e-powertrain system</li>
+          <li>Design automation with commercial software</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--accent);letter-spacing:.2em;margin-bottom:16px">EDUCATION</div>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:grid;grid-template-columns:70px minmax(0,1fr);gap:18px;padding:14px 0;border-top:1px solid #1C1C1F;font-size:14px;color:#C4C4C9">
+            <span style="color:var(--accent)">2022</span>
+            <span>(Ph.D.) Department of Automotive Engineering, Hanyang University<br><span style="color:#78787E;font-size:12.5px">Advisor: Prof. Myung-Seop Lim, Prof. Jung-Pyo Hong<br>Dissertation: Design Process of IPMSM Considering PWM-induced Electromagnetic Losses Using Active Transfer Learning</span></span>
+          </div>
+          <div style="display:grid;grid-template-columns:70px minmax(0,1fr);gap:18px;padding:14px 0;border-top:1px solid #1C1C1F;font-size:14px;color:#C4C4C9">
+            <span style="color:var(--accent)">2014</span>
+            <span>(B.S.) Department of Mechanical Engineering, Hanyang University</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--accent);letter-spacing:.2em;margin-bottom:16px">PROFESSIONAL EXPERIENCE</div>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;padding:13px 0;border-top:1px solid #1C1C1F;font-size:14px;color:#C4C4C9"><span style="color:var(--accent)">2023 – present</span><span>Assistant Professor, Dongguk University</span></div>
+          <div style="display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;padding:13px 0;border-top:1px solid #1C1C1F;font-size:14px;color:#C4C4C9"><span style="color:var(--accent)">2025</span><span>Lecturer, Global Partnership Center, Hyundai Motor Group</span></div>
+          <div style="display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;padding:13px 0;border-top:1px solid #1C1C1F;font-size:14px;color:#C4C4C9"><span style="color:var(--accent)">2022 – 2023</span><span>Senior Research Engineer, R&amp;D Division, Hyundai Motor Company</span></div>
+          <div style="display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;padding:13px 0;border-top:1px solid #1C1C1F;font-size:14px;color:#C4C4C9"><span style="color:var(--accent)">2019 – 2020</span><span>Researcher, Korea Institute of Industrial Technology (KITECH)</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--accent);letter-spacing:.2em;margin-bottom:16px">AWARDS</div>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:18px;padding:12px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9"><span style="color:var(--accent)">2025</span><span>신진연구 우수논문상, 대한기계학회 CAE및응용역학부문</span></div>
+          <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:18px;padding:12px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9"><span style="color:var(--accent)">2025</span><span>우수신진연구자상, 한국PHM학회</span></div>
+          <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:18px;padding:12px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9"><span style="color:var(--accent)">2025</span><span>신진연구 우수발표상, 전산구조공학회</span></div>
+          <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:18px;padding:12px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9"><span style="color:var(--accent)">2023</span><span>EMC Prize Paper Award, IEEE Electric Machinery Committee</span></div>
+          <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:18px;padding:12px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9"><span style="color:var(--accent)">2022</span><span>Distinguished Dissertation Award, Hanyang University</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--accent);letter-spacing:.2em;margin-bottom:16px">ACADEMIC ACTIVITIES</div>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;padding:12px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9"><span style="color:var(--accent)">2026 – present</span><span>학술이사, 대한전기학회 (전기기기 및 에너지변환시스템 부문)</span></div>
+          <div style="display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;padding:12px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9"><span style="color:var(--accent)">2025 – present</span><span>교육이사, 한국PHM학회</span></div>
+          <div style="display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;padding:12px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9"><span style="color:var(--accent)">2025 – present</span><span>산학협력이사, 대한기계학회 (CAE 및 응용역학 부문)</span></div>
+          <div style="display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;padding:12px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9"><span style="color:#78787E"><span style="color: rgb(255, 106, 31);">2023 – present</span></span><span>Member, IEEE</span></div>
+          <div style="display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;padding:12px 0;border-top:1px solid #1C1C1F;font-size:12.5px;color:#C4C4C9"><span style="color:#78787E"><font color="#ff6a1f"><span style="font-size: 13.5px;">Reviewer</span></font></span><span>TIE, TMECH, TTE, TMAG, TEC, IEEE ACCESS, JEET, JOM</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isResearchers }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:64px">
+    <div>
+      <div style="font-size:11px;color:var(--accent);letter-spacing:.2em;margin-bottom:24px">GRADUATE STUDENTS</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1px;background:#212124;border:1px solid #212124">
+        <sc-for list="{{ grads }}" as="p" hint-placeholder-count="7">
+          <div style="background:#0B0B0C;padding:20px;display:flex;flex-direction:column;gap:14px">
+            <div style="aspect-ratio:1/1;border:1px dashed #303035;background:repeating-linear-gradient(135deg,#111113 0 8px,#0E0E10 8px 16px);display:flex;align-items:center;justify-content:center;font-size:10px;color:#5F5F65;letter-spacing:.1em">[ PHOTO ]</div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <span style="font-size:15px">{{ p.kr }}</span>
+              <span style="font-size:12px;color:#8A8A90">{{ p.en }}</span>
+              <span style="font-size:11px;color:var(--accent);letter-spacing:.06em">{{ p.role }}</span>
+              <span style="font-size:11.5px;color:#78787E;word-break:break-all">{{ p.email }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--accent);letter-spacing:.2em;margin-bottom:24px">UNDERGRADUATE STUDENTS</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1px;background:#212124;border:1px solid #212124">
+        <sc-for list="{{ undergrads }}" as="p" hint-placeholder-count="4">
+          <div style="background:#0B0B0C;padding:18px;display:flex;flex-direction:column;gap:12px">
+            <div style="aspect-ratio:1/1;border:1px dashed #303035;background:repeating-linear-gradient(135deg,#111113 0 8px,#0E0E10 8px 16px);display:flex;align-items:center;justify-content:center;font-size:10px;color:#5F5F65;letter-spacing:.1em">[ PHOTO ]</div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:14px">{{ p.kr }}</span>
+              <span style="font-size:11.5px;color:#8A8A90">{{ p.en }}</span>
+              <span style="font-size:11px;color:var(--accent)">{{ p.role }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--accent);letter-spacing:.2em;margin-bottom:24px">ALUMNI</div>
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ alumni }}" as="p" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr);gap:20px;padding:16px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9">
+            <span>{{ p.kr }} <span style="color:#78787E">{{ p.en }}</span></span>
+            <span style="color:#8A8A90">{{ p.role }}</span>
+            <span style="color:var(--accent)">{{ p.next }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ============ RESEARCH ============ -->
+<sc-if value="{{ isResearch }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1240px;margin:0 auto;padding:56px 28px 96px">
+  <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">RESEARCH</span>
+  <h1 style="margin:12px 0 24px;font-size:34px;font-weight:700">{{ pageTitle }}</h1>
+  
+
+  <sc-if value="{{ isTopics }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:1px;background:#212124;border:1px solid #212124">
+    <sc-for list="{{ topics }}" as="t" hint-placeholder-count="6">
+      <div style="background:#0B0B0C;padding:40px 34px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:center">
+        <div style="aspect-ratio:16/10;border:1px dashed #303035;background:repeating-linear-gradient(135deg,#131315 0 10px,#0F0F11 10px 20px);display:flex;align-items:center;justify-content:center;font-size:10px;color:#5F5F65;letter-spacing:.12em">[ {{ t.slot }} ]</div>
+        <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+          <span style="font-size:11px;color:var(--accent);letter-spacing:.16em">{{ t.no }}</span>
+          <h2 style="margin:0;font-size:22px;font-weight:700;line-height:1.3">{{ t.en }}</h2>
+          <span style="font-size:13px;color:#8A8A90">{{ t.kr }}</span>
+          <p style="margin:0;font-size:14px;color:#C4C4C9;text-wrap:pretty">{{ t.desc }}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+            <sc-for list="{{ t.tags }}" as="g" hint-placeholder-count="3">
+              <span style="font-size:11px;color:#8A8A90;border:1px solid #26262A;padding:5px 10px;letter-spacing:.06em">{{ g }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isProjects }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column">
+    <div style="display:grid;grid-template-columns:110px 160px 52px 180px minmax(0,1fr);gap:18px;padding-bottom:12px;font-size:11px;color:#78787E;letter-spacing:.14em;border-bottom:1px solid #212124">
+      <span>STATUS</span><span>PERIOD</span><span style="grid-column:span 2">PARTNER</span><span>PROJECT</span>
+    </div>
+    <sc-for list="{{ projects }}" as="p" hint-placeholder-count="10">
+      <div style="display:grid;grid-template-columns:110px 160px 52px 180px minmax(0,1fr);gap:18px;padding:18px 0;border-bottom:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9;align-items:center">
+        <span style="font-size:10.5px;letter-spacing:.1em;border:1px solid {{ p.sBorder }};color:{{ p.sColor }};padding:4px 8px;justify-self:start">{{ p.s }}</span>
+        <span style="color:var(--accent);font-size:12.5px">{{ p.d }}</span>
+        <span style="width:40px;height:40px;border:1px dashed #303035;display:flex;align-items:center;justify-content:center;font-size:8px;color:#5F5F65;letter-spacing:.04em">LOGO</span>
+        <span style="color:#EDEDED;font-size:13px">{{ p.o }}</span>
+        <span style="text-wrap:pretty">{{ p.t }}</span>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ============ ACHIEVEMENTS ============ -->
+<sc-if value="{{ isAchievements }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1240px;margin:0 auto;padding:56px 28px 96px">
+  <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">ACHIEVEMENTS</span>
+  <h1 style="margin:12px 0 24px;font-size:34px;font-weight:700">{{ pageTitle }}</h1>
+  
+
+  <sc-if value="{{ isPublications }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <a href="https://scholar.google.com/citations?user=hocoJJAAAAAJ&amp;hl=ko" style="font-size:12px;letter-spacing:.08em;margin-bottom:24px">GOOGLE SCHOLAR →</a>
+    <sc-for list="{{ pubYears }}" as="y" hint-placeholder-count="4">
+      <div style="display:grid;grid-template-columns:90px minmax(0,1fr);gap:24px;padding:28px 0;border-top:1px solid #212124">
+        <div style="font-size:22px;color:var(--accent)">{{ y.year }}</div>
+        <div style="display:flex;flex-direction:column;gap:26px;min-width:0">
+          <sc-for list="{{ y.items }}" as="p" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:13.5px">
+              <span style="color:#EDEDED;line-height:1.5;text-wrap:pretty">{{ p.t }}</span>
+              <span style="color:#9A9AA0;line-height:1.6"><sc-for list="{{ p.parts }}" as="w" hint-placeholder-count="1"><span style="color:{{ w.color }};font-weight:{{ w.weight }};white-space:pre-wrap">{{ w.txt }}</span></sc-for></span>
+              <span style="color:#C4C4C9">{{ p.v }}</span>
+              <span style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:2px">
+                <sc-for list="{{ p.metrics }}" as="m" hint-placeholder-count="2">
+                  <span style="font-size:11px;letter-spacing:.04em;padding:3px 8px;border:1px solid {{ m.border }};color:{{ m.color }};font-weight:{{ m.weight }};white-space:nowrap;flex:none;display:inline-flex;align-items:center">{{ m.txt }}</span>
+                </sc-for>
+                <a href="{{ p.doi }}" style="font-size:11px;letter-spacing:.08em;padding:3px 8px;border:1px solid #2E2E33;color:#B7B7BC;white-space:nowrap;flex:none;display:inline-flex;align-items:center" style-hover="border-color:var(--accent);color:var(--accent)">DOI ↗</a>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isConferences }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:24px">
+    <p style="margin:0;font-size:14px;color:#8A8A90">국내/국제 학술대회 발표 목록이 들어갈 영역입니다. 아래 형식으로 연도별 목록이 표시됩니다.</p>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ confPlaceholders }}" as="c" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:90px minmax(0,1fr);gap:24px;padding:20px 0;border-top:1px solid #1C1C1F">
+          <span style="color:var(--accent);font-size:13.5px">{{ c.d }}</span>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="height:14px;background:#17171A;max-width:70%"></span>
+            <span style="height:12px;background:#141416;max-width:45%"></span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="border:1px dashed #303035;padding:20px;font-size:12px;color:#6D6D73;letter-spacing:.06em">[ CONFERENCE LIST — 발표 목록 데이터 필요 ]</div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isPatents }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:grid;grid-template-columns:110px 120px minmax(0,1fr);gap:20px;padding-bottom:12px;font-size:11px;color:#78787E;letter-spacing:.14em;border-bottom:1px solid #212124">
+      <span>NO.</span><span>STATUS</span><span>TITLE</span>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ patentPlaceholders }}" as="p" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:110px 120px minmax(0,1fr);gap:20px;padding:18px 0;border-bottom:1px solid #1C1C1F;align-items:center">
+          <span style="height:12px;background:#17171A"></span>
+          <span style="font-size:11px;color:var(--accent);letter-spacing:.08em">{{ p.s }}</span>
+          <span style="height:12px;background:#17171A;max-width:65%"></span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="border:1px dashed #303035;padding:20px;font-size:12px;color:#6D6D73;letter-spacing:.06em">[ PATENT LIST — 출원/등록 특허 데이터 필요 ]</div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isTalks }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ talksRecent }}" as="k" hint-placeholder-count="8">
+        <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:20px;padding:14px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#C4C4C9">
+          <span style="color:var(--accent)">{{ k.d }}</span><span>{{ k.t }}<span style="color:#78787E"> ({{ k.o }})</span></span>
+        </div>
+      </sc-for>
+    </div>
+    <div onClick="{{ toggleOldTalks }}" style="border:1px solid #26262A;padding:14px;text-align:center;font-size:12px;color:#C4C4C9;letter-spacing:.1em;cursor:pointer;user-select:none" style-hover="border-color:var(--accent);color:var(--accent)">{{ oldTalksLabel }}</div>
+    <sc-if value="{{ showOldTalks }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ talksOld }}" as="k" hint-placeholder-count="8">
+        <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:20px;padding:14px 0;border-top:1px solid #1C1C1F;font-size:13.5px;color:#9A9AA0">
+          <span style="color:var(--accent)">{{ k.d }}</span><span>{{ k.t }}<span style="color:#78787E"> ({{ k.o }})</span></span>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- ============ TEACHING ============ -->
+<sc-if value="{{ isTeaching }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1240px;margin:0 auto;padding:56px 28px 96px">
+  <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">TEACHING</span>
+  <h1 style="margin:12px 0 40px;font-size:34px;font-weight:700">Teaching</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:#212124;border:1px solid #212124">
+    <sc-for list="{{ courses }}" as="c" hint-placeholder-count="4">
+      <div style="background:#0B0B0C;padding:28px 26px;display:flex;flex-direction:column;gap:12px">
+        <span style="font-size:11px;color:var(--accent);letter-spacing:.14em">{{ c.level }}</span>
+        <span style="font-size:17px">{{ c.name }}</span>
+        <span style="font-size:12.5px;color:#8A8A90">{{ c.term }}</span>
+        <span style="height:1px;background:#212124;margin:4px 0"></span>
+        <span style="font-size:13.5px;color:#C4C4C9;text-wrap:pretty">{{ c.desc }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="border:1px dashed #303035;padding:20px;font-size:12px;color:#6D6D73;letter-spacing:.06em;margin-top:24px">[ COURSE LIST — 실제 강의 목록/학기 정보 확인 필요 ]</div>
+</div>
+</sc-if>
+
+<!-- ============ NEWS ============ -->
+<sc-if value="{{ isNews }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1240px;margin:0 auto;padding:56px 28px 96px">
+  <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">NEWS</span>
+  <h1 style="margin:12px 0 40px;font-size:34px;font-weight:700">News</h1>
+  <div style="display:flex;flex-direction:column">
+    <sc-for list="{{ newsCurrent }}" as="n" hint-placeholder-count="6">
+      <div style="display:grid;grid-template-columns:96px minmax(0,1fr);gap:24px;padding:20px 0;border-top:1px solid #1C1C1F">
+        <span style="font-size:12.5px;color:var(--accent);padding-top:2px">{{ n.d }}</span>
+        <span style="font-size:14px;color:#C4C4C9;text-wrap:pretty">{{ n.t }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div onClick="{{ toggleOldNews }}" style="border:1px solid #26262A;padding:14px;text-align:center;font-size:12px;color:#C4C4C9;letter-spacing:.1em;cursor:pointer;user-select:none;margin-top:24px" style-hover="border-color:var(--accent);color:var(--accent)">{{ oldNewsLabel }}</div>
+  <sc-if value="{{ showOldNews }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;margin-top:24px">
+    <sc-for list="{{ newsOld }}" as="n" hint-placeholder-count="10">
+      <div style="display:grid;grid-template-columns:96px minmax(0,1fr);gap:24px;padding:20px 0;border-top:1px solid #1C1C1F">
+        <span style="font-size:12.5px;color:var(--accent);padding-top:2px">{{ n.d }}</span>
+        <span style="font-size:14px;color:#9A9AA0;text-wrap:pretty">{{ n.t }}</span>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <div style="margin-top:72px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:24px">
+      <div style="font-size:11px;color:var(--accent);letter-spacing:.2em">GALLERY</div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <span style="font-size:11.5px;color:#78787E;letter-spacing:.08em">{{ galPageLabel }}</span>
+        <div onClick="{{ galPrev }}" style="border:1px solid #26262A;padding:7px 14px;font-size:11px;color:#C4C4C9;letter-spacing:.1em;cursor:pointer;user-select:none" style-hover="border-color:var(--accent);color:var(--accent)">← PREV</div>
+        <div onClick="{{ galNext }}" style="border:1px solid #26262A;padding:7px 14px;font-size:11px;color:#C4C4C9;letter-spacing:.1em;cursor:pointer;user-select:none" style-hover="border-color:var(--accent);color:var(--accent)">NEXT →</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#212124;border:1px solid #212124">
+      <sc-for list="{{ galleryPage }}" as="g" hint-placeholder-count="8">
+        <div style="background:#0B0B0C;padding:16px;display:flex;flex-direction:column;gap:12px">
+          <div style="position:relative;aspect-ratio:4/3;border:1px dashed #303035;background:repeating-linear-gradient(135deg,#111113 0 8px,#0E0E10 8px 16px);display:flex;align-items:center;justify-content:center;font-size:10px;color:#5F5F65;letter-spacing:.1em">
+            [ PHOTO {{ g.imgLabel }} ]
+            <div onClick="{{ g.onPrev }}" style="position:absolute;left:0;top:0;bottom:0;width:34px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#8A8A90;cursor:pointer;background:linear-gradient(90deg,rgba(11,11,12,.75),transparent)" style-hover="color:var(--accent)">‹</div>
+            <div onClick="{{ g.onNext }}" style="position:absolute;right:0;top:0;bottom:0;width:34px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#8A8A90;cursor:pointer;background:linear-gradient(270deg,rgba(11,11,12,.75),transparent)" style-hover="color:var(--accent)">›</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:11.5px;color:var(--accent)">{{ g.d }}</span>
+            <span style="font-size:13.5px;color:#C4C4C9;text-wrap:pretty">{{ g.t }}</span>
+            <span style="font-size:11.5px;color:#78787E">{{ g.who }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ============ CONTACT ============ -->
+<sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1240px;margin:0 auto;padding:56px 28px 96px">
+  <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">CONTACT</span>
+  <h1 style="margin:12px 0 40px;font-size:34px;font-weight:700">Contact</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:34px">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">ADDRESS</span>
+        <span style="font-size:14.5px;color:#EDEDED">동국대학교 서울캠퍼스<br>전동화 추진시스템 연구실 (원흥관 E142)</span>
+        <span style="font-size:13px;color:#8A8A90">서울특별시 중구 필동로1길 30 (04620)</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">E-MAIL</span>
+        <span style="font-size:14.5px">parksh@dgu.ac.kr</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:11px;color:var(--accent);letter-spacing:.2em">TEL</span>
+        <span style="font-size:14.5px">02-2260-3703</span>
+      </div>
+      <div style="border:1px solid #212124;padding:24px;display:flex;flex-direction:column;gap:12px">
+        <span style="font-size:14px;color:#EDEDED">우리는 Self-motivated Pioneer를 기다립니다.</span>
+        <span style="font-size:13.5px;color:#C4C4C9;text-wrap:pretty">전기기기 설계·해석, 전동화 파워트레인, AI 기반 설계 자동화에 관심 있는 대학원생 및 학부연구생은 이메일로 문의해 주세요.</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="aspect-ratio:4/3;border:1px dashed #303035;background:repeating-linear-gradient(135deg,#131315 0 10px,#0F0F11 10px 20px);display:flex;align-items:center;justify-content:center;font-size:10px;color:#5F5F65;letter-spacing:.12em">[ MAP / 캠퍼스 위치 이미지 ]</div>
+      <span style="font-size:11.5px;color:#78787E">지하철 3호선 충무로역 1번 출구 · 4호선 동대입구역 2번 출구</span>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+</main>
+
+<footer style="border-top:1px solid #212124;background:#0E0E10">
+  <div style="max-width:1240px;margin:0 auto;padding:48px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:36px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="width:32px;height:32px;border:1px dashed #3A3A3F;display:flex;align-items:center;justify-content:center;font-size:8px;color:#6D6D73">LOGO</span>
+        <span style="font-size:12.5px"><span style="color:var(--accent)">electrified</span> Propulsion Lab.</span>
+      </div>
+      <span style="font-size:11.5px;color:#78787E;line-height:1.7">동국대학교 기계로봇에너지공학과<br>서울특별시 중구 필동로1길 30</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:12px">
+      <span style="color:#78787E;letter-spacing:.14em;font-size:10.5px">CONTACT</span>
+      <span style="color:#B7B7BC">parksh@dgu.ac.kr</span>
+      <span style="color:#B7B7BC">02-2260-3703</span>
+      <a href="https://scholar.google.com/citations?user=hocoJJAAAAAJ&amp;hl=ko" style="color:#B7B7BC">Google Scholar</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:11.5px;color:#5F5F65;justify-content:flex-end">
+      <span>Copyright ⓒ 2026 electrified Propulsion Lab.</span><span>Dongguk University. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#FF6A1F&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#FF6A1F&quot;,&quot;#FF8A00&quot;,&quot;#F25C05&quot;,&quot;#FFB300&quot;],&quot;section&quot;:&quot;Brand&quot;},&quot;homeNewsCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;min&quot;:3,&quot;max&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Home&quot;}}">
+class Component extends DCLogic {
+  state = { route: (location.hash || '#/home').slice(1), menu: null, showOldTalks: false, showOldNews: false, galPage: 0, galIdx: {} };
+
+  componentDidMount() {
+    this._h = () => {
+      this.setState({ route: (location.hash || '#/home').slice(1), menu: null });
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener('hashchange', this._h);
+    if (!location.hash) location.replace('#/home');
+    this.applyAccent();
+  }
+  componentDidUpdate() { this.applyAccent(); }
+  componentWillUnmount() { window.removeEventListener('hashchange', this._h); }
+
+  applyAccent() {
+    const a = this.props.accent;
+    if (a) document.documentElement.style.setProperty('--accent', a);
+  }
+
+  sub(items, route) {
+    return items.map(s => ({ ...s, color: s.href === '#' + route ? 'var(--accent)' : '#8A8A90' }));
+  }
+
+  shift(id, n, max) {
+    this.setState(s => {
+      const cur = s.galIdx[id] || 0;
+      return { galIdx: { ...s.galIdx, [id]: (cur + n + max) % max } };
+    });
+  }
+
+  decoratePub(p) {
+    // authors: highlight every "S. H. Park" occurrence (with trailing * / ** markers)
+    const parts = [];
+    const re = /S\.\s*H\.\s*Park\**/g;
+    let last = 0, m;
+    while ((m = re.exec(p.a)) !== null) {
+      if (m.index > last) parts.push({ txt: p.a.slice(last, m.index), color: '#9A9AA0', weight: '400' });
+      parts.push({ txt: m[0], color: 'var(--accent)', weight: '700' });
+      last = m.index + m[0].length;
+    }
+    if (last < p.a.length) parts.push({ txt: p.a.slice(last), color: '#9A9AA0', weight: '400' });
+
+    const metrics = (p.m || '').split('·').map(s => s.trim()).filter(Boolean).map(txt => {
+      const jcr = txt.match(/JCR\s*([\d.]+)\s*%/);
+      const hot = txt === 'Q1' || (jcr && parseFloat(jcr[1]) <= 10);
+      return hot
+        ? { txt, color: 'var(--accent)', border: 'var(--accent)', weight: '700' }
+        : { txt, color: '#8A8A90', border: '#26262A', weight: '400' };
+    });
+    return { ...p, parts, metrics };
+  }
+
+  renderVals() {
+    const r = this.state.route || '/home';
+    const section = (r.split('/')[1] || 'home');
+    const nav = [
+      { label: 'Home', href: '#/home', key: 'home', children: [] },
+      { label: 'Team', href: '#/team/leader', key: 'team', children: [
+        { label: 'Leader', href: '#/team/leader' }, { label: 'Researchers', href: '#/team/researchers' }] },
+      { label: 'Research', href: '#/research/topics', key: 'research', children: [
+        { label: 'Research Topics', href: '#/research/topics' }, { label: 'Research Projects', href: '#/research/projects' }] },
+      { label: 'Achievements', href: '#/achievements/publications', key: 'achievements', children: [
+        { label: 'Publications', href: '#/achievements/publications' }, { label: 'Conferences', href: '#/achievements/conferences' },
+        { label: 'Patents', href: '#/achievements/patents' }, { label: 'Invited Talks', href: '#/achievements/talks' }] },
+      { label: 'Teaching', href: '#/teaching', key: 'teaching', children: [] },
+      { label: 'News', href: '#/news', key: 'news', children: [] },
+      { label: 'Contact', href: '#/contact', key: 'contact', children: [] }
+    ];
+
+    const titles = {
+      '/team/leader': 'Leader', '/team/researchers': 'Researchers',
+      '/research/topics': 'Research Topics', '/research/projects': 'Research Projects',
+      '/achievements/publications': 'Publications', '/achievements/conferences': 'Conferences',
+      '/achievements/patents': 'Patents', '/achievements/talks': 'Invited Talks'
+    };
+
+    const topics = [
+      { no: 'T-01', slot: 'MOTOR DESIGN IMAGE', en: 'Design of electric machinery', kr: '전기기기 설계',
+        desc: '전자기 등가회로와 유한요소해석을 기반으로 IPMSM, SPMSM, WFSM, 축방향자속 전동기의 초기 사이징부터 형상 최적설계까지 수행합니다.',
+        tags: ['IPMSM', 'Sizing', 'Optimization'] },
+      { no: 'T-02', slot: 'MULTI-PHYSICS IMAGE', en: 'Multi-physics analysis for electric machinery', kr: '전기기기 다물리 해석',
+        desc: '전자기-열-구조-제어 영역을 연계한 해석 체계를 구축하여, 실제 운전 조건에서의 손실과 성능을 예측하고 시험 결과와의 정합성을 향상시킵니다.',
+        tags: ['Coupled analysis', 'AC copper loss', 'Iron loss'] },
+      { no: 'T-03', slot: 'NVH IMAGE', en: 'NVH analysis of electric machinery', kr: '전기기기 진동·소음 해석',
+        desc: '극/슬롯 조합에 따른 전자기 가진력과 모드 특성을 분석하여 구동모터 및 압축기의 진동·소음을 저감하는 설계 방법을 연구합니다.',
+        tags: ['Radial force', 'Modal analysis', 'Vibration'] },
+      { no: 'T-04', slot: 'THERMAL IMAGE', en: 'Thermal analysis of electric machinery', kr: '전기기기 열해석',
+        desc: '권선·자석·회전자의 발열 특성과 냉각 구조를 열등가회로 및 CFD로 해석하여 연속/최대 출력 성능의 한계를 규명합니다.',
+        tags: ['LPTN', 'Cooling', 'Demagnetization'] },
+      { no: 'T-05', slot: 'POWERTRAIN IMAGE', en: 'Thermal management of electrified powertrain', kr: '전동화 파워트레인 열관리',
+        desc: '인버터-모터-감속기를 포함한 전동화 파워트레인의 1-D 시스템 모델을 구축하고, 차량 열관리 전략과 비효율 제어 기반 발열 모드를 검토합니다.',
+        tags: ['1-D system', 'e-Powertrain', 'VTM'] },
+      { no: 'T-06', slot: 'AI DESIGN IMAGE', en: 'AI-assisted acceleration of designing electric machinery', kr: 'AI 기반 전기기기 설계 가속',
+        desc: '심층전이학습과 능동학습, 다중충실도 대체모델을 활용하여 해석 비용이 큰 설계 문제의 탐색 시간을 획기적으로 단축합니다.',
+        tags: ['Transfer learning', 'Active learning', 'Surrogate'] }
+    ];
+
+    const grads = [
+      { kr: '김찬우', en: 'Chan-Woo Kim', role: '석사과정', email: 'kimcw_339@dgu.ac.kr' },
+      { kr: '장민우', en: 'Min-Woo Jang', role: '석사과정', email: '2025120179@dgu.ac.kr' },
+      { kr: '정성원', en: 'Seong-Won Jeong', role: '석사과정', email: '2025120182@dgu.ac.kr' },
+      { kr: '서영주', en: 'Young-Ju Seo', role: '석사과정', email: 'ca1ifornia1@dgu.ac.kr' },
+      { kr: '김재윤', en: 'Jae-Yoon Kim', role: '석사과정', email: 'kimjy_333@dgu.ac.kr' },
+      { kr: '유재경', en: 'Jae-Kyung Ryu', role: '석사과정', email: 'yujk_361@dgu.ac.kr' },
+      { kr: '노진태', en: 'Jin-Tae Roh', role: '석사과정', email: 'njt0731@dgu.ac.kr' }
+    ];
+    const undergrads = [
+      { kr: '정채영', en: 'Chae-Young Jeong', role: '학부연구생' },
+      { kr: '조혜찬', en: 'Hye-Chan Cho', role: '학부연구생' },
+      { kr: '홍서현', en: 'Seo-Hyun Hong', role: '학부연구생' },
+      { kr: '유나경', en: 'Na-Kyung Yoo', role: '학부연구생' }
+    ];
+    const alumni = [
+      { kr: '박태호', en: 'Tae-Ho Park', role: '학부연구생 (23.10 ~ 24.08)', next: '현대자동차 연구개발본부' },
+      { kr: '엄기웅', en: 'Ki-Woong Eom', role: '학부연구생 (24.08 ~ 24.12)', next: '현대제철' },
+      { kr: '허태혁', en: 'Tae-Hyeok Heo', role: '학부연구생 (24.01 ~ 24.12)', next: '현대자동차 연구개발본부' },
+      { kr: '한진성', en: 'Jinseong Han', role: '학부연구생 (23.10 ~ 24.08)', next: 'KAIST 석사과정' },
+      { kr: '김하린', en: 'Harin Kim', role: '학부연구생 (24.01 ~ 24.12)', next: '볼보그룹코리아' },
+      { kr: '이준범', en: 'Joon-Beom Lee', role: '학부연구생 (24.08 ~ 24.12)', next: '—' }
+    ];
+
+    const talks = [
+      { d: '2026.03', t: '전기자동차 구동모터 개발동향 및 열관리 전략', o: '한양대학교' },
+      { d: '2025.09', t: '협동로봇 구동모듈의 PHM', o: '두산로보틱스' },
+      { d: '2025.08', t: 'Scaling 기반 모터 설계 효율화 및 심층전이학습 기반 설계/시험 효율화', o: '대구대학교' },
+      { d: '2025.08', t: '전자기 액추에이터 기초 이론 및 실습', o: '한국최적설계학회 하계강습회' },
+      { d: '2025.07', t: '구동모터 기초이론 및 비효율 전류벡터제어 기반 강제발열모드', o: '현대자동차 열에너지통합개발실' },
+      { d: '2025.07', t: '핵심 구동 부품 전자기-기계 성능 최신 연구동향', o: '한국자동차연구원' },
+      { d: '2025.06', t: '2-Stage 인버터 토폴로지 적용 PE 시스템의 설계, 제어 및 응용', o: '현대모비스 전동화BU' },
+      { d: '2025.05', t: 'Scaling 기반 모터 설계 효율화 및 심층전이학습 기반 설계/시험 효율화', o: 'LG전자' },
+      { d: '2025.05', t: '전동화 가속을 위한 AI 및 CAE 빅데이터 기반 구동모터 시험/설계 효율화 기술', o: '한국자동차연구원' },
+      { d: '2025.05', t: '고효율 구동시스템을 위한 권선 토폴로지 & PE 시스템의 Multi-physics 성능해석', o: '보그워너' },
+      { d: '2025.02', t: '친환경자동차 PE 시스템 권선절환 토폴로지 & 전이학습 기반 시험/설계 효율화', o: '현대자동차 전동화시험센터' },
+      { d: '2024.12', t: 'xEV 구동모터 개발기간 단축을 위한 설계 및 시험기술', o: '한국자동차연구원' },
+      { d: '2024.10', t: '친환경자동차 구동시스템 토폴로지', o: '한국자동차연구원' },
+      { d: '2024.10', t: '전기자동차 구동모터의 글로벌 최신 연구 동향', o: '한국생산기술연구원' },
+      { d: '2024.09', t: '고출력밀도 전기모터를 위한 적층제조 코일 연구동향', o: '한국생산기술연구원' },
+      { d: '2024.08', t: '고효율/고출력 구동시스템 신구조 및 시험-해석 가속화 연구', o: 'LG전자 가산R&D캠퍼스' },
+      { d: '2024.08', t: '전기자동차 구동모터 연구개발 동향 및 고효율/고출력 구동시스템 신구조', o: '충남대학교 전기공학과' },
+      { d: '2024.07', t: '개방형 권선 구조 및 IPMSM의 전자기 성능해석 및 응용', o: '한국생산기술연구원' },
+      { d: '2024.06', t: '전기자동차 구동모터의 시험-해석 정합성 향상에 관한 연구', o: '영남대학교 기계공학부' },
+      { d: '2024.03', t: '전자기 유한요소해석 기반 철손해석', o: '한국생산기술연구원' },
+      { d: '2024.02', t: '전기자동차 구동모터의 시험-해석 정합성 향상에 관한 연구', o: '서울대학교 기계공학부' },
+      { d: '2023.12', t: '전동화 파워트레인 연구동향', o: '한국자동차연구원' },
+      { d: '2023.10', t: '전기자동차 파워트레인의 기술 동향', o: '한국자동차연구원' },
+      { d: '2023.09', t: '전기자동차 파워트레인의 기술 동향', o: '동국대학교 BK21 초청세미나' }
+    ];
+    const talksRecent = talks.filter(k => k.d >= '2025');
+    const talksOld = talks.filter(k => k.d < '2025');
+
+    const rawProjects = [
+      { s: 'ONGOING', d: '2026.03 – 2026.12', o: '현대자동차', t: '모터시스템 효율 향상을 위한 실측데이터 기반 전류지령맵 추출 기술 개발' },
+      { s: 'ONGOING', d: '2026.03 – 2026.12', o: '현대자동차', t: 'PE 비효율 제어 시, 차량 열관리 시스템 성능 검토를 위한 해석 모델 개발' },
+      { s: 'ONGOING', d: '2026.03 – 2026.12', o: '현대자동차', t: '저가형 모터를 위한 PE 시스템 최적화 기술 개발' },
+      { s: 'ONGOING', d: '2026.03 – 2026.12', o: 'HD현대중공업', t: '친환경연료 힘센엔진 솔레노이드 밸브 LECM Fault 분석 및 설계 기술 개발' },
+      { s: 'ONGOING', d: '2025.09 – 2026.08', o: 'HD현대중공업', t: '친환경연료 힘센엔진 연료분사펌프(e-FIP)용 솔레노이드 밸브 해석 및 시험평가 기술 개발' },
+      { s: 'ONGOING', d: '2025.04 – 2027.12', o: '효성전기 · 한국자동차연구원 · 대구대학교', t: '평각동선 분포권 기술 적용 축방향자속 전동기 개발' },
+      { s: 'COMPLETED', d: '2025.03 – 2025.12', o: '현대트랜시스', t: 'e2DT 구동모터 가진력 최적 설계 개발' },
+      { s: 'COMPLETED', d: '2025.03 – 2025.12', o: '현대자동차', t: '고전압 파워넷 네트워크의 공진 해석을 위한 시스템 해석 기법 및 모델링, 검증, 시뮬레이션 툴 개발' },
+      { s: 'COMPLETED', d: '2025.02 – 2025.11', o: '현대자동차', t: 'VTM 기반기술 확보 및 데이터 구축을 위한 전력 모델 구축 및 PE시스템 Scaling 기법 개발' },
+      { s: 'COMPLETED', d: '2024.09 – 2024.12', o: '한국생산기술연구원', t: '회전자 관성을 이용한 토크 산정 알고리즘 개선' },
+      { s: 'COMPLETED', d: '2024.08 – 2025.07', o: 'WESPION', t: '스마트 헬스케어 머신의 감성품질 향상을 위한 부하정밀제어 캘리브레이션 기술개발 및 출고 검사 장비 개발' },
+      { s: 'COMPLETED', d: '2024.08 – 2024.12', o: '현대트랜시스', t: '구동모터 특성해석 시간 단축을 위한 프로그램 개발' },
+      { s: 'COMPLETED', d: '2024.03 – 2024.12', o: '현대자동차', t: 'VTM 모델의 전비 예측 정확도 향상을 위한 2-Stage PE 시스템 손실맵 확장 프로세스 개발' }
+    ];
+    const projects = rawProjects.map(p => ({
+      ...p,
+      sColor: p.s === 'ONGOING' ? 'var(--accent)' : '#8A8A90',
+      sBorder: p.s === 'ONGOING' ? 'var(--accent)' : '#2E2E33'
+    }));
+
+    const pubYears = [
+      { year: '2026', items: [
+        { t: 'Deep Transfer Learning-Based Demagnetization Analysis for Linear Oscillating Actuator Considering Circumferential Segmented Structure', a: 'J. H. Lee, S. H. Park, D. H. Park, J. H. Jeong, and M. S. Lim*', v: 'IEEE Transactions on Industry Applications, vol. 62, no. 1, pp. 821–829, Jan. 2026', m: 'IF 4.2 · Q1 · JCR 13.0%', doi: 'https://doi.org/10.1109/TIA.2025.3585098' }
+      ]},
+      { year: '2025', items: [
+        { t: 'Design of WFSM using Sizing Method Combining 2D Equivalent Magnetic Circuit considering Nonlinear Characteristics', a: 'K. S. Cha**, S. H. Park**, and Y. H. Jung*', v: 'IEEE Transactions on Magnetics, Early Access, 2025', m: 'IF 2.1 · Q3 · JCR 54.5%', doi: 'https://doi.org/10.1109/TMAG.2025.3624623' },
+        { t: 'Characteristics Estimation and Design of SPMSM using Analytic Method-based Transfer Learning', a: 'Y. M. Lee, D. H. Ko, S. Yoon, J. Cho, S. H. Park*, and M. R. Park*', v: 'IEEE Transactions on Magnetics, Early Access, 2025', m: 'IF 2.1 · Q3 · JCR 54.5%', doi: 'https://doi.org/10.1109/TMAG.2025.3640767' },
+        { t: 'Robust Design Optimization of SPMSM based on Manufacturing Uncertainty Analysis of Prototype', a: 'S. H. Park, D. H. Ko, S. G. Lee, J. C. Park, and M. R. Park*', v: 'IEEE Transactions on Magnetics, Early Access, 2025', m: 'IF 2.1 · Q3 · JCR 54.5%', doi: 'https://doi.org/10.1109/TMAG.2025.3616812' },
+        { t: 'Advances in prognostics and health management of light emitting diodes: A comprehensive review', a: 'S. Khalid, J. W. Song, M. H. Yazdani, M. U. Elahi, S. H. Park, H. S. Kim*, Y. G. Yoon, and J. S. Lee', v: 'Journal of Computational Design and Engineering, vol. 12, no. 9, pp. 184–203, Sept. 2025', m: 'IF 4.8 · Q1 · JCR 11.3%', doi: 'https://doi.org/10.1093/jcde/qwaf090' },
+        { t: 'Vibration Reduction of Permanent Magnet Synchronous Motors by Four-Layer Winding: Mathematical Modeling and Experimental Validation', a: 'Y. H. Jung**, D. M. Kim**, K. S. Cha, S. H. Park*, and M. R. Park*', v: 'Mathematics, vol. 13, no. 9, pp. 1603–1621, May 2025', m: 'IF 2.3 · Q1 · JCR 4.2%', doi: 'https://doi.org/10.3390/math13101603' },
+        { t: 'Optimal Design Considering AC Copper Loss of Traction Motor Applied HSFF Coil for Improving Electric Bus Fuel Economy', a: 'K. S. Cha**, Y. H. Jung**, S. H. Park*, and M. R. Park*', v: 'Mathematics, vol. 13, no. 9, pp. 1509–1528, May 2025', m: 'IF 2.3 · Q1 · JCR 4.2%', doi: 'https://doi.org/10.3390/math13091509' },
+        { t: 'Deep Transfer Learning-Based Performance Prediction Considering 3-D Flux in Outer Rotor Interior Permanent Magnet Synchronous Motors', a: 'M. H. Sung**, S. H. Park**, K. S. Cha, J. H. Sim, and M. S. Lim*', v: 'Machines, vol. 13, no. 4, pp. 302–313, Apr. 2025', m: 'IF 2.1 · Q2 · JCR 45.1%', doi: 'https://doi.org/10.3390/machines13040302' },
+        { t: 'Computationally Efficient Design of 16-Poles and 24-Slots IPMSM for EV Traction Considering PWM-Induced Iron Loss Using Active Transfer Learning', a: 'S. H. Park and M. S. Lim*', v: 'Mathematics, vol. 13, no. 6, pp. 915–930, Mar. 2025', m: 'IF 2.3 · Q1 · JCR 4.2%', doi: 'https://doi.org/10.3390/math13060915' }
+      ]},
+      { year: '2024', items: [
+        { t: 'High-Efficiency e-Powertrain Topology by Integrating Open-End Winding and Winding Changeover for Improving Fuel Economy of Electric Vehicles', a: 'K. S. Cha**, J. H. Kim**, S. W. Hwang, M. S. Lim*, and S. H. Park*', v: 'Mathematics, vol. 12, no. 21, pp. 3415–3433, Dec. 2024', m: 'IF 2.4 · Q1 · JCR 6.8%', doi: 'https://doi.org/10.3390/math12213415' },
+        { t: 'Investigation on Radial Vibration of FSCW PMSM According to Pole/Slot Combination Considering Phase of Radial, Tangential Force and Moment', a: 'J. H. Kim, J. Y. Ryu, S. H. Park, K. S. Cha, Y. J. Won, C. S. Park, and M. S. Lim*', v: 'IEEE Transactions on Industry Applications, vol. 60, no. 1, pp. 439–449, Jan. 2024', m: 'IF 4.079 · Q1 · JCR 24.5%', doi: 'https://doi.org/10.1109/TIA.2023.3326425' }
+      ]},
+      { year: '2023', items: [
+        { t: 'Investigation of AC Copper Loss Considering Effect of Field and Armature Excitation on IPMSM With Hairpin Winding', a: 'S. H. Park, J. W. Chin, K. S. Cha, J. Y. Ryu, and M. S. Lim*', v: 'IEEE Transactions on Industrial Electronics, vol. 70, no. 12, pp. 12102–12112, Dec. 2023', m: 'IF 8.236 · Q1 · JCR 2.3%', doi: 'https://doi.org/10.1109/TIE.2023.3234154' },
+        { t: 'Computationally Efficient Estimation of PWM-Induced Iron Loss of PMSM Using Deep Transfer Learning', a: 'S. H. Park, K. O. Kim, and M. S. Lim*', v: 'IEEE Transactions on Magnetics, vol. 59, no. 11, Nov. 2023', m: 'IF 1.848 · Q3', doi: 'https://doi.org/10.1109/TMAG.2023.3304981' },
+        { t: 'Transfer Learning-Based Design Method for Cogging Torque Reduction in PMSM With Step-Skew Considering 3-D Leakage Flux', a: 'Y. J. Won, J. H. Kim, S. H. Park, J. H. Lee, S. M. An, D. Y. Kim, and M. S. Lim*', v: 'IEEE Transactions on Magnetics, vol. 59, no. 11, Nov. 2023', m: 'IF 1.848 · Q3', doi: 'https://doi.org/10.1109/TMAG.2023.3294601' },
+        { t: 'Design Optimization Using Asymmetric Rotor in IPMSM for Torque Ripple Reduction Considering Forward and Reverse Directions', a: 'J. C. Park, J. H. Kim, S. H. Park, K. O. Kim, M. H. Sung, and M. S. Lim', v: 'IEEE Transactions on Magnetics, vol. 59, no. 11, Nov. 2023', m: 'IF 1.848 · Q3', doi: 'https://doi.org/10.1109/TMAG.2023.3292295' },
+        { t: 'Two-Dimensional FEA-Based Iron Loss Calculation Method for Linear Oscillating Actuator Considering the Circumferential Segmented Structure', a: 'J. H. Lee, S. H. Park, P. J. Kim, D. H. Park, and M. S. Lim*', v: 'IEEE Transactions on Magnetics, vol. 59, no. 11, Nov. 2023', m: 'IF 1.848 · Q3', doi: 'https://doi.org/10.1109/TMAG.2023.3275152' },
+        { t: 'Effect of Electromagnetic Force Caused by PMSM on the Vibration/Noise of Reciprocating Compressors', a: 'C. S. Park, J. H. Kim, S. H. Park, and M. S. Lim*', v: 'IEEE Access, vol. 11, 2023', m: 'IF 3.476 · Q2', doi: 'https://doi.org/10.1109/ACCESS.2023.3283144' },
+        { t: 'Comparative Study of Vibration on 10-Pole 12-Slot and 14-Pole 12-Slot PMSM Considering Tooth Modulation Effect', a: 'J. H. Kim, S. H. Park, J. Y. Ryu, and M. S. Lim*', v: 'IEEE Transactions on Industrial Electronics, vol. 70, no. 4, pp. 4007–4017, Apr. 2023', m: 'IF 8.236 · Q1 · JCR 2.3%', doi: 'https://doi.org/10.1109/TIE.2022.3181418' }
+      ]},
+      { year: '2022', items: [
+        { t: 'Multi-physics characteristics of PMSM for compressor according to driving mode considering PWM frequency', a: 'C. S. Park, J. H. Kim, S. H. Park, Y. D. Yoon, and M. S. Lim*', v: 'IEEE Access, vol. 10, 2022', m: 'IF 3.367 · Q2', doi: 'https://doi.org/10.1109/ACCESS.2022.3217779' },
+        { t: 'Design and Analysis of Dual Stator PMSM With Separately Controlled Dual Three-Phase Winding for eVTOL Propulsion', a: 'S. W. Hwang, D. K. Son, S. H. Park, G. H. Lee, Y. D. Yoon, and M. S. Lim*', v: 'IEEE Transactions on Transportation Electrification, vol. 8, no. 4, pp. 4255–4264, Dec. 2022', m: 'IF 5.444 · Q1 · JCR 12.5%', doi: 'https://doi.org/10.1109/TTE.2022.3192353' },
+        { t: 'Electronic Throttle Valve Modeling Considering Nonlinearity of Electrical and Mechanical Parameters Based on Experiments', a: 'J. C. Park, J. Y. Ryu, S. H. Park, and M. S. Lim*', v: 'IEEE/ASME Transactions on Mechatronics, vol. 27, no. 5, pp. 3309–3314, Oct. 2022', m: 'IF 5.673 · Q1 · JCR 5.0%', doi: 'https://doi.org/10.1109/TMECH.2021.3123137' },
+        { t: 'Deep Transfer Learning-Based Sizing Method of Permanent Magnet Synchronous Motors Considering Axial Leakage Flux', a: 'S. H. Park, J. W. Chin, K. S. Cha, and M. S. Lim*', v: 'IEEE Transactions on Magnetics, vol. 58, no. 9, Sep. 2022', m: 'IF 1.700 · Q3', doi: 'https://doi.org/10.1109/TMAG.2022.3181804' }
+      ]},
+      { year: '2021', items: [
+        { t: 'A Study on a Slotless Brushless DC Motor with Toroidal Winding', a: 'H. Y. Lee, S. Y. Yoon, S. O. Kwon, J. Y. Shin, S. H. Park, and M. S. Lim*', v: 'Processes, vol. 9, no. 11, pp. 1881–1900, Oct. 2021', m: 'IF 2.753 · Q2', doi: 'https://doi.org/10.3390/pr9111881' },
+        { t: 'Design Method for Reducing AC Resistance of Traction Motor Using High Fill Factor Coil to Improve the Fuel Economy of eBus', a: 'K. S. Cha, J. W. Chin, S. H. Park, Y. H. Jung, E. C. Lee, and M. S. Lim*', v: 'IEEE/ASME Transactions on Mechatronics, vol. 26, no. 3, pp. 1260–1270, June 2021', m: 'IF 4.943 · Q1 · JCR 13.3%', doi: 'https://doi.org/10.1109/TMECH.2021.3054798' },
+        { t: 'Model Predictive Control for Torque Ripple Suppression Caused by Misalignment of the Gearbox', a: 'S. H. Park, J. C. Park, S. W. Hwang, J. H. Kim, and M. S. Lim*', v: 'IEEE Transactions on Energy Conversion, vol. 36, no. 2, pp. 1517–1527, June 2021', m: 'IF 4.614 · Q1 · JCR 14.9%', doi: 'https://doi.org/10.1109/TEC.2021.3060536' },
+        { t: 'High Efficiency PMSM With High Slot Fill Factor Coil for Heavy-Duty EV Traction Considering AC Resistance', a: 'J. W. Chin, K. S. Cha, M. R. Park, S. H. Park, E. C. Lee, and M. S. Lim*', v: 'IEEE Transactions on Energy Conversion, vol. 36, no. 2, pp. 883–894, June 2021', m: 'IF 4.614 · Q1 · JCR 14.9%', doi: 'https://doi.org/10.1109/TEC.2020.3035165' },
+        { t: 'Coupled Electromagnetic-Thermal Analysis for Predicting Traction Motor Characteristics According to Electric Vehicle Driving Cycle', a: 'S. W. Hwang, J. Y. Ryu, J. W. Chin, S. H. Park, D. K. Kim, and M. S. Lim*', v: 'IEEE Transactions on Vehicular Technology, vol. 70, no. 5, pp. 4262–4272, May 2021', m: 'IF 5.379 · Q1 · JCR 12.6%', doi: 'https://doi.org/10.1109/TVT.2021.3071943' },
+        { t: 'Effect of Pole and Slot Combination on the AC Joule Loss of Outer-Rotor Permanent Magnet Synchronous Motors Using a High Fill Factor Machined Coil', a: 'S. H. Park, E. C. Lee, G. J. Lee, S. O. Kwon, and M. S. Lim*', v: 'Energies, vol. 14, no. 11, pp. 3073–3083, May 2021', m: 'IF 2.702 · Q3', doi: 'https://doi.org/10.3390/en14113073' },
+        { t: 'Diagnosis and Robust Design Optimization of SPMSM Considering Back EMF and Cogging Torque due to Static Eccentricity', a: 'J. C. Park, S. H. Park, J. H. Kim, S. G. Lee, G. H. Lee, and M. S. Lim*', v: 'Energies, vol. 14, no. 10, pp. 2900–2918, May 2021', m: 'IF 2.702 · Q3', doi: 'https://doi.org/10.3390/en14102900' },
+        { t: 'Prediction of Mechanical Loss for High-Power Density PMSM Considering Eddy Current Loss of PMs and Conductors', a: 'S. H. Park, E. C. Lee, J. C. Park, S. W. Hwang, and M. S. Lim*', v: 'IEEE Transactions on Magnetics, vol. 57, no. 2, Feb. 2021', m: 'IF 1.651 · Q3', doi: 'https://doi.org/10.1109/TMAG.2020.3007439' }
+      ]},
+      { year: '2020', items: [
+        { t: 'Design of High-Bandwidth Motor System Considering Electrical and Mechanical Time Constant', a: 'S. H. Park, J. C. Park, H. Y. Lee, S. O. Kwon, and M. S. Lim*', v: 'IEEE Transactions on Industry Applications, vol. 56, no. 5, pp. 4738–4747, Sep. 2020', m: 'IF 2.743 · Q1 · JCR 15.7%', doi: 'https://doi.org/10.1109/TIA.2020.2998674' },
+        { t: 'Suppression of Torque Ripple Caused by Misalignment of the Gearbox by Using Harmonic Current Injection Method', a: 'S. H. Park, J. C. Park, S. W. Hwang, J. H. Kim, H. J. Park, and M. S. Lim*', v: 'IEEE/ASME Transactions on Mechatronics, vol. 25, no. 4, pp. 1990–1999, Aug. 2020', m: 'IF 4.943 · Q1 · JCR 5.0%', doi: 'https://doi.org/10.1109/TMECH.2020.2999379' },
+        { t: 'Analysis of AC Resistance according to Coil Shape of an Interior-Permanent Magnet Motor', a: 'G. J. Lee, H. Y. Lee, E. C. Lee, S. H. Park, S. O. Kwon, H. S. Choi*, and J. H. Seo', v: 'The Transactions of the Korean Institute of Electrical Engineers, vol. 69, no. 5, pp. 671–676, May 2020', m: '', doi: 'https://doi.org/10.5370/KIEE.2020.69.5.671' }
+      ]},
+      { year: '2019', items: [
+        { t: 'Design of Surface-mounted Permanent Magnet Synchronous Motor using Electromagnetic and Thermal Analysis', a: 'S. H. Park, J. C. Park, J. W. Chin, H. J. Park, S. O. Kwon, S. I. Kim, and M. S. Lim*', v: 'Journal of Magnetics, vol. 24, no. 4, pp. 606–615, Dec. 2019', m: 'IF 0.628 · Q4', doi: 'https://doi.org/10.4283/JMAG.2019.24.4.606' }
+      ]}
+    ];
+
+    const news = [
+      { d: '26.03', t: '유재경 석사과정이 제1저자로 작성한 "Efficient multi-objective design optimization of axial-flux permanent magnet machines for drone propulsion system using multi-fidelity gaussian process" 논문이 Structural and Multidisciplinary Optimization 저널에 Accept 되었습니다. 축하합니다!' },
+      { d: '26.03', t: '현대자동차와 함께 "모터시스템 효율 향상을 위한 실측데이터 기반 전류지령맵 추출 기술 개발" 연구과제를 수행합니다.' },
+      { d: '26.03', t: '현대자동차와 함께 "PE 비효율 제어 시, 차량 열관리 시스템 성능 검토를 위한 해석 모델 개발" 연구과제를 수행합니다.' },
+      { d: '26.03', t: '현대자동차와 함께 "저가형 모터를 위한 PE 시스템 최적화 기술 개발" 연구과제를 수행합니다.' },
+      { d: '26.03', t: 'HD현대중공업과 함께 "친환경연료 힘센엔진 솔레노이드 밸브 LECM Fault 분석 및 설계 기술 개발" 연구과제를 수행합니다.' },
+      { d: '26.01', t: '우리 연구실에 유나경 학생이 학부연구생으로 합류하였습니다. 환영합니다!' },
+      { d: '25.12', t: '학부연구생 김하린 학생이 볼보그룹코리아에 입사했습니다. 건설기계 고전압시스템 엔지니어로 근무할 예정입니다. 축하합니다!' },
+      { d: '25.09', t: 'HD현대중공업과 함께 "친환경연료 힘센엔진 연료분사펌프(e-FIP)용 솔레노이드 밸브 해석 및 시험평가 기술 개발" 연구과제를 수행합니다.' },
+      { d: '25.09', t: '장민우, 정성원 석사과정이 한국연구재단 석사과정생연구장려금지원사업에 선정되었습니다. 축하합니다!' },
+      { d: '25.09', t: '우리 연구실에 노진태, 조혜찬, 홍서현 학생이 학부연구생으로 합류하였습니다. 환영합니다!' },
+      { d: '25.06', t: '우리 연구실에 정채영 학생이 학부연구생으로 합류하였습니다. 환영합니다!' },
+      { d: '25.06', t: '우리 연구실에 서영주, 김재윤, 유재경 학생이 석사과정으로 합류하였습니다. 환영합니다!' },
+      { d: '25.04', t: '효성전기, 한국자동차연구원, 대구대학교와 함께 "평각동선 분포권 기술 적용 축방향자속 전동기 개발" 연구과제를 수행합니다.' },
+      { d: '25.03', t: '현대트랜시스와 함께 "e2DT 구동모터 가진력 최적 설계 개발" 연구과제를 수행합니다.' },
+      { d: '25.03', t: '현대자동차와 함께 "고전압 파워넷 네트워크의 공진 해석을 위한 시스템 해석 기법 및 모델링, 검증, 시뮬레이션 툴 개발" 연구과제를 수행합니다.' },
+      { d: '25.03', t: '우리 연구실에 장민우, 정성원 학생이 석사과정으로 합류하였습니다. 환영합니다!' },
+      { d: '25.02', t: '현대자동차와 함께 "VTM 기반기술 확보 및 데이터 구축을 위한 전력 모델 구축 및 PE시스템 Scaling 기법 개발" 연구과제를 수행합니다.' },
+      { d: '25.01', t: '학부연구생 엄기웅 학생이 현대제철에 입사했습니다. 설비 엔지니어로 근무할 예정입니다. 축하합니다!' },
+      { d: '25.01', t: '학부연구생 한진성 학생이 KAIST 석사과정에 진학했습니다. 훌륭한 연구자로 성장하시기 바랍니다. 축하합니다!' },
+      { d: '25.01', t: '학부연구생 허태혁 학생이 현대자동차에 입사했습니다. 하이브리드 전기자동차 성능 개발 업무를 담당할 예정입니다. 축하합니다!' },
+      { d: '24.09', t: '한국생산기술연구원과 함께 "회전자 관성을 이용한 토크 산정 알고리즘 개선" 연구과제를 수행합니다.' },
+      { d: '24.09', t: '김찬우 석사과정이 한국연구재단 석사과정생연구장려금지원사업에 선정되었습니다. 축하합니다!' },
+      { d: '24.09', t: '김찬우 학생이 우리 연구실 1호 석사과정으로 진학하였습니다. 환영합니다!' },
+      { d: '24.09', t: '우리 연구실에 서영주, 김재윤 학생이 학부연구생으로 합류하였습니다. 환영합니다!' },
+      { d: '24.08', t: 'WESPION과 함께 "스마트 헬스케어 머신의 감성품질 향상을 위한 부하정밀제어 캘리브레이션 기술개발 및 출고 검사 장비 개발" 연구과제를 수행합니다.' },
+      { d: '24.08', t: '현대트랜시스와 함께 "구동모터 특성해석 시간 단축을 위한 프로그램 개발" 연구과제를 수행합니다.' },
+      { d: '24.08', t: '동국대학교 전동화 추진시스템 연구실 홈페이지 오픈!' },
+      { d: '24.07', t: '1호 학부연구생 박태호 학생이 현대자동차에 입사했습니다. 상용차 연비/전비 계측 및 개발 업무를 담당할 예정입니다. 축하합니다!' },
+      { d: '24.07', t: '학부연구생 허태혁 학생이 삼성SDI 인턴에 합격하였습니다. 축하합니다!' },
+      { d: '24.06', t: '우리 연구실에 이준범, 엄기웅 학생이 학부연구생으로 합류하였습니다. 환영합니다!' },
+      { d: '24.03', t: '현대자동차와 함께 "VTM 모델의 전비 예측 정확도 향상을 위한 2-Stage PE 시스템 손실맵 확장 프로세스 개발" 연구과제를 수행합니다.' },
+      { d: '24.01', t: '우리 연구실에 허태혁, 김찬우, 김하린 학생이 학부연구생으로 합류하였습니다. 환영합니다!' },
+      { d: '23.10', t: '우리 연구실에 박태호, 한진성 학생이 학부연구생으로 합류하였습니다. 환영합니다!' },
+      { d: '23.09', t: '박수환 교수 동국대학교 기계로봇에너지공학과 부임 및 전동화 추진시스템 연구실이 설립되었습니다.' }
+    ];
+    const curYear = '26';
+    const newsCurrent = news.filter(n => n.d.indexOf(curYear + '.') === 0);
+    const newsOld = news.filter(n => n.d.indexOf(curYear + '.') !== 0);
+
+    const galleryAll = [
+      { id: 'g1', d: '25.09', t: '새식구 및 개강맞이 회식', who: '연구실 전원', photos: 3 },
+      { id: 'g2', d: '25.07', t: '대한전기학회 하계학술대회 (부산, BEXCO)', who: '장민우, 정성원, 유재경', photos: 4 },
+      { id: 'g3', d: '25.06', t: 'COMPUMAG 2025 (Italy, Naples)', who: '김찬우, 김재윤', photos: 5 },
+      { id: 'g4', d: '25.05', t: '한국자동차공학회 춘계학술대회 (제주, 신화월드)', who: '김찬우, 김재윤, 서영주', photos: 3 },
+      { id: 'g5', d: '25.02', t: '2025년도 봄 학위수여식', who: '허태혁, 한진성, 엄기웅 졸업', photos: 3 },
+      { id: 'g6', d: '24.09', t: 'ICEM 2024 (Italy, Torino)', who: '한국자동차연구원 하이브리드기술부문과 함께', photos: 4 },
+      { id: 'g7', d: '24.08', t: '2024년도 가을 학위수여식', who: '김찬우, 박태호 졸업', photos: 2 },
+      { id: 'g8', d: '24.08', t: '한국자동차연구원 교육 참석', who: '김찬우, 이준범', photos: 3 },
+      { id: 'g9', d: '24.06', t: '스승의날 기념 회식', who: '연구실 전원', photos: 3 }
+    ];
+    const perPage = 8;
+    const pageCount = Math.max(1, Math.ceil(galleryAll.length / perPage));
+    const page = Math.min(this.state.galPage, pageCount - 1);
+    const galleryPage = galleryAll.slice(page * perPage, page * perPage + perPage).map(g => {
+      const cur = this.state.galIdx[g.id] || 0;
+      return { ...g, imgLabel: (cur + 1) + ' / ' + g.photos,
+        onPrev: () => this.shift(g.id, -1, g.photos),
+        onNext: () => this.shift(g.id, 1, g.photos) };
+    });
+
+    const courses = [
+      { level: 'UNDERGRADUATE', name: '[ 과목명 ]', term: '학기 미정', desc: '학부 강의 개요가 들어갈 영역입니다.' },
+      { level: 'UNDERGRADUATE', name: '[ 과목명 ]', term: '학기 미정', desc: '학부 강의 개요가 들어갈 영역입니다.' },
+      { level: 'GRADUATE', name: '[ 과목명 ]', term: '학기 미정', desc: '대학원 강의 개요가 들어갈 영역입니다.' },
+      { level: 'GRADUATE', name: '[ 과목명 ]', term: '학기 미정', desc: '대학원 강의 개요가 들어갈 영역입니다.' }
+    ];
+
+    return {
+      route: r,
+      navItems: nav.map(n => ({
+        ...n,
+        color: n.key === section ? 'var(--accent)' : '#EDEDED',
+        line: n.key === section ? 'var(--accent)' : 'transparent',
+        panel: (n.children.length && this.state.menu === n.key) ? 'flex' : 'none',
+        onEnter: () => this.setState({ menu: n.key }),
+        onLeave: () => this.setState({ menu: null })
+      })),
+      pageTitle: titles[r] || '',
+      isHome: r === '/home' || r === '/' || r === '',
+      isTeam: r.indexOf('/team') === 0,
+      isLeader: r === '/team/leader',
+      isResearchers: r === '/team/researchers',
+      isResearch: r.indexOf('/research') === 0,
+      isTopics: r === '/research/topics',
+      isProjects: r === '/research/projects',
+      isAchievements: r.indexOf('/achievements') === 0,
+      isPublications: r === '/achievements/publications',
+      isConferences: r === '/achievements/conferences',
+      isPatents: r === '/achievements/patents',
+      isTalks: r === '/achievements/talks',
+      isTeaching: r === '/teaching',
+      isNews: r === '/news',
+      isContact: r === '/contact',
+      teamSubnav: this.sub([{ label: 'Leader', href: '#/team/leader' }, { label: 'Researchers', href: '#/team/researchers' }], r),
+      researchSubnav: this.sub([{ label: 'Topics', href: '#/research/topics' }, { label: 'Projects', href: '#/research/projects' }], r),
+      achSubnav: this.sub([{ label: 'Publications', href: '#/achievements/publications' }, { label: 'Conferences', href: '#/achievements/conferences' }, { label: 'Patents', href: '#/achievements/patents' }, { label: 'Invited Talks', href: '#/achievements/talks' }], r),
+      topics, grads, undergrads, alumni, projects, courses,
+      pubYears: pubYears.map(y => ({ year: y.year, items: y.items.map(p => this.decoratePub(p)) })),
+      talksRecent, talksOld,
+      showOldTalks: this.state.showOldTalks,
+      oldTalksLabel: this.state.showOldTalks ? '− 2024년 이전 Talks 접기' : '+ 2024년 이전 Talks 보기 (' + talksOld.length + ')',
+      toggleOldTalks: () => this.setState(s => ({ showOldTalks: !s.showOldTalks })),
+      newsCurrent, newsOld,
+      showOldNews: this.state.showOldNews,
+      oldNewsLabel: this.state.showOldNews ? '− 지난 News 접기' : '+ 지난 News 보기 (' + newsOld.length + ')',
+      toggleOldNews: () => this.setState(s => ({ showOldNews: !s.showOldNews })),
+      newsRecent: news.slice(0, (this.props.homeNewsCount ?? 5)),
+      galleryPage,
+      galPageLabel: (page + 1) + ' / ' + pageCount,
+      galPrev: () => this.setState({ galPage: (page - 1 + pageCount) % pageCount }),
+      galNext: () => this.setState({ galPage: (page + 1) % pageCount }),
+      confPlaceholders: [{ d: '2026' }, { d: '2025' }, { d: '2025' }, { d: '2024' }, { d: '2024' }],
+      patentPlaceholders: [{ s: '등록' }, { s: '출원' }, { s: '출원' }, { s: '출원' }]
+    };
+  }
+}
+</script>
+</body>
+</html>
