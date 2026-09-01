@@ -75,11 +75,19 @@ permalink: /team/researchers/
             {% if p.photo_url %}<img src="{{ p.photo_url }}" alt="{{ p.name_en }}" loading="lazy">
             {% else %}[ PHOTO ]{% endif %}
           </div>
+          {#
+            졸업생 카드는 세 줄이다 (2026-09-02 확정):
+              김찬우 (석사, 2026.08)
+              Chan-Woo Kim
+              현대자동차 연구개발본부      ← 주황색 볼드
+            학위·취득년월을 이름 줄에 괄호로 붙이므로 재학생 카드와 줄 구성이 다르다.
+          #}
           <div class="person__lines">
-            <span class="person__ko">{{ p.name_ko or p.name_en }}</span>
+            <span class="person__ko">
+              {{- p.name_ko or p.name_en -}}
+              {%- if p.position or p.degreeDate %} ({{ p.position }}{% if p.position and p.degreeDate %}, {% endif %}{{ p.degreeDate }}){% endif -%}
+            </span>
             <span class="person__en">{{ p.name_en }}</span>
-            {# 학위(취득년월) — degreeDate 는 cohort_period 의 끝에서 뽑는다 #}
-            <span class="person__role">{{ p.position }}{% if p.degreeDate %} ({{ p.degreeDate }}){% endif %}</span>
             <span class="person__affil">{{ p.current_affiliation }}</span>
           </div>
         </div>
