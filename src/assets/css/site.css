@@ -5,29 +5,45 @@
    ========================================================================== */
 
 /* ─── Design tokens (design/tokens.css) ─────────────────────────────────── */
+/*
+   라이트 테마. 원본 디자인은 다크 단일 테마였고, 여기서 밝게 뒤집었다.
+   뒤집은 것은 "값"이지 "역할"이 아니다 — 토큰 이름이 뜻하는 위계(text 가 가장
+   진하고 ghost 가 가장 옅다, line-soft 가 line 보다 흐리다)는 그대로다.
+   그래서 컴포넌트 규칙은 한 줄도 건드리지 않는다.
+   액센트 오렌지(#FF6A1F)는 원본 그대로 유지한다.
+
+   예외: 히어로 배너는 계속 어둡다 (아래 .hero 참고).
+*/
 :root {
   --accent:        #FF6A1F;
-  --accent-2:      #FF8A4C;
+  --accent-2:      #E85A12;   /* 밝은 배경에서는 hover 가 더 짙어야 눈에 띈다 */
 
-  --bg:            #0B0B0C;
-  --bg-alt:        #0E0E10;
-  --bg-elev:       #101012;
-  --bg-hover:      #141416;
-  --bg-hover-2:    #17171A;
+  --bg:            #FFFFFF;
+  --bg-alt:        #F6F6F8;
+  --bg-elev:       #FFFFFF;
+  --bg-hover:      #F4F4F6;
+  --bg-hover-2:    #F0F0F3;
 
-  --line:          #212124;
-  --line-soft:     #1C1C1F;
-  --line-box:      #26262A;
-  --line-btn:      #2E2E33;
-  --line-dashed:   #303035;
+  --line:          #D8D8DE;
+  --line-soft:     #E7E7EC;
+  --line-box:      #CFCFD6;
+  --line-btn:      #C6C6CE;
+  --line-dashed:   #C2C2CB;
 
-  --text:          #EDEDED;
-  --text-body:     #C4C4C9;
-  --text-muted:    #B7B7BC;
-  --text-dim:      #9A9AA0;
-  --text-label:    #8A8A90;
-  --text-faint:    #78787E;
-  --text-ghost:    #5F5F65;
+  --text:          #16161A;
+  --text-body:     #3B3B43;
+  --text-muted:    #4C4C55;
+  --text-dim:      #5E5E67;
+  --text-label:    #70707A;
+  --text-faint:    #85858F;
+  --text-ghost:    #A2A2AB;
+
+  /* 예전에 값이 규칙 안에 박혀 있던 것들 — 테마를 바꾸려면 여기 하나만 고치면 된다 */
+  --stripe-1:      #F0F0F3;   /* 이미지 placeholder 사선 줄무늬 */
+  --stripe-2:      #F8F8FA;
+  --header-bg:     rgba(255, 255, 255, .94);
+  --shadow-panel:  0 12px 28px rgba(0, 0, 0, .10);
+  --fade:          rgba(255, 255, 255, .85);   /* 갤러리 화살표 뒤 그라디언트 */
 
   --font: Consolas, Menlo, "DejaVu Sans Mono", "Malgun Gothic", "Apple SD Gothic Neo", monospace;
   --lh:   1.6;
@@ -72,19 +88,24 @@ a:hover { color: var(--accent-2); }
 .h-page  { font-size: 34px; font-weight: 700; margin: 12px 0 24px; }
 .h-sec   { font-size: 26px; font-weight: 700; line-height: 1.3; margin: 14px 0 0; }
 
-/* hairline 카드 그리드 — 카드 사이가 1px 선으로만 갈린다 */
-.cardgrid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
-.cardgrid > * { background: var(--bg); }
+/* hairline 카드 그리드 — 카드 사이가 1px 선으로만 갈린다.
+   원본은 컨테이너를 선 색으로 칠하고 카드로 덮어 gap 만 선으로 남겼다. 그러면
+   마지막 줄의 **빈 칸까지 선 색으로 칠해져** 회색 덩어리가 생긴다. 어두운 테마에선
+   거의 안 보였지만 밝은 테마에선 눈에 띈다.
+   그래서 선을 카드 자신의 outline 으로 그린다 — outline 은 레이아웃을 밀지 않고
+   1px gap 을 사이에 둔 이웃끼리 정확히 겹쳐, 채워진 칸에만 hairline 이 생긴다. */
+.cardgrid { display: grid; gap: 1px; background: var(--bg); border: 1px solid var(--line); }
+.cardgrid > * { background: var(--bg); outline: 1px solid var(--line); }
 
 /* 점선 + 대각 줄무늬 이미지 placeholder */
 .imgslot {
   border: 1px dashed var(--line-dashed);
-  background: repeating-linear-gradient(135deg, #131315 0 10px, #0F0F11 10px 20px);
+  background: repeating-linear-gradient(135deg, var(--stripe-1) 0 10px, var(--stripe-2) 10px 20px);
   display: flex; align-items: center; justify-content: center;
   font-size: 10px; color: var(--text-ghost); letter-spacing: .12em; text-align: center;
 }
 /* 작은 슬롯은 줄무늬 간격도 좁다 (원본 8px/16px) */
-.imgslot-sm { background: repeating-linear-gradient(135deg, #111113 0 8px, #0E0E10 8px 16px); }
+.imgslot-sm { background: repeating-linear-gradient(135deg, var(--stripe-1) 0 8px, var(--stripe-2) 8px 16px); }
 
 .imgslot img, .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .has-img { border: 0; background: none; }
@@ -110,7 +131,7 @@ a:hover { color: var(--accent-2); }
 /* ─── 헤더 / 네비 (dc.html L24–46) ──────────────────────────────────────── */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(11, 11, 12, .96);
+  background: var(--header-bg);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
 }
@@ -149,7 +170,7 @@ a:hover { color: var(--accent-2); }
   display: none; flex-direction: column; min-width: 210px;
   background: var(--bg-elev); border: 1px solid var(--line-box);
   padding: 8px 0; text-transform: none; letter-spacing: .02em;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, .5);
+  box-shadow: var(--shadow-panel);
 }
 /* 드롭다운은 CSS :hover 만으로 (support.js 의 onMouseEnter/Leave 대체) */
 .nav__item:hover > .nav__panel,
@@ -180,7 +201,22 @@ a:hover { color: var(--accent-2); }
 }
 
 /* ─── HOME (dc.html L50–126) ────────────────────────────────────────────── */
-.hero { position: relative; border-bottom: 1px solid var(--line); }
+/*
+   히어로만 어둡게 남긴다. hero.svg 가 밤바다·우주를 그린 어두운 일러스트라
+   밝게 뒤집으면 그림이 망가진다. 밝은 페이지 위의 어두운 배너는 의도된 대비다.
+   여기서 글자 토큰만 다시 어두운 테마 값으로 덮어써서, 아래 .hero__* 규칙들이
+   (var(--text-muted) 같은) 원래 이름 그대로 밝은 글자를 얻게 한다.
+   --line 은 덮지 않는다 — 히어로 아래 경계선은 밝은 페이지 쪽 선이다.
+*/
+.hero {
+  position: relative; border-bottom: 1px solid var(--line);
+  --text:       #EDEDED;
+  --text-body:  #C4C4C9;
+  --text-muted: #B7B7BC;
+  /* 토큰만 바꾸면 안 된다 — body 에서 이미 계산돼 내려온 color 는 그대로다.
+     여기서 다시 지정해야 새 --text 로 다시 풀린다. */
+  color: var(--text);
+}
 .hero__media {
   height: clamp(340px, 52vh, 520px);
   background: repeating-linear-gradient(135deg, #131315 0 10px, #0F0F11 10px 20px);
@@ -320,19 +356,19 @@ a:hover { color: var(--accent-2); }
 .topic__en { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.3; }
 .topic__ko { font-size: 13px; color: var(--text-label); }
 .topic__desc { margin: 0; font-size: 14px; color: var(--text-body); text-wrap: pretty; }
-.topic__tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-.topic__tags .chip { padding: 5px 10px; letter-spacing: .06em; }
 
 /* ─── RESEARCH / Projects (L290–305) ────────────────────────────────────── */
 .projects { display: flex; flex-direction: column; }
+/* 열: STATUS · ROLE · PERIOD · [로고 + PARTNER] · PROJECT */
 .proj-head, .proj-row {
-  display: grid; grid-template-columns: 110px 160px 52px 180px minmax(0, 1fr); gap: 18px;
+  display: grid; grid-template-columns: 110px 62px 160px 52px 180px minmax(0, 1fr); gap: 18px;
 }
 .proj-head {
   padding-bottom: 12px; font-size: 11px; color: var(--text-faint);
   letter-spacing: .14em; border-bottom: 1px solid var(--line);
 }
-.proj-head span:nth-child(3) { grid-column: span 2; }
+/* PARTNER 머리글 하나가 로고 칸과 이름 칸 두 열을 덮는다 */
+.proj-head span:nth-child(4) { grid-column: span 2; }
 .proj-row {
   padding: 18px 0; border-bottom: 1px solid var(--line-soft);
   font-size: 13.5px; color: var(--text-body); align-items: center;
@@ -342,6 +378,7 @@ a:hover { color: var(--accent-2); }
   border: 1px solid var(--line-box); color: var(--text-label);
 }
 .badge-on { border-color: var(--accent); color: var(--accent); }
+.proj-row__role { font-size: 11.5px; color: var(--text-label); letter-spacing: .08em; }
 .proj-row__period { color: var(--accent); font-size: 12.5px; }
 .proj-row__logo {
   width: 40px; height: 40px; border: 1px dashed var(--line-dashed);
@@ -379,7 +416,7 @@ a:hover { color: var(--accent-2); }
 /* ─── ACHIEVEMENTS / Conferences · Patents ──────────────────────────────── */
 .note {
   border: 1px dashed var(--line-dashed); padding: 20px;
-  font-size: 12px; color: #6D6D73; letter-spacing: .06em;
+  font-size: 12px; color: var(--text-faint); letter-spacing: .06em;
 }
 .conf-list { display: flex; flex-direction: column; }
 .conf-row {
@@ -446,8 +483,8 @@ a:hover { color: var(--accent-2); }
   background: none; border: 0; font-family: inherit; padding: 0;
 }
 .gal__arrow:hover { color: var(--accent); }
-.gal__arrow--prev { left: 0; background: linear-gradient(90deg, rgba(11,11,12,.75), transparent); }
-.gal__arrow--next { right: 0; background: linear-gradient(270deg, rgba(11,11,12,.75), transparent); }
+.gal__arrow--prev { left: 0; background: linear-gradient(90deg, var(--fade), transparent); }
+.gal__arrow--next { right: 0; background: linear-gradient(270deg, var(--fade), transparent); }
 .gal__lines { display: flex; flex-direction: column; gap: 4px; }
 .gal__date { font-size: 11.5px; color: var(--accent); }
 .gal__title { font-size: 13.5px; color: var(--text-body); text-wrap: pretty; }

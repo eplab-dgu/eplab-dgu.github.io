@@ -62,8 +62,8 @@
 | **Site_Config** | key, value_en, value_ko, notes | 전역 설정(랩명, 배너, 연구영역4, 연락처, 채용문구, 푸터) |
 | **Members** | publish, order, category*, name_en, name_ko, position, email, cohort_period, current_affiliation, photo_url, scholar_url, notes | Team (Leader/Researchers) |
 | **Leader_CV** | publish, section**, order, date, title, detail | Team > Leader (교수 이력) |
-| **Research_Topics** | publish, order, title, description, image_url | Research > Topics |
-| **Research_Projects** | publish, order, status(Ongoing/Completed), title_en, title_ko, funder_en, funder_ko, period_start, period_end, role_en, role_ko, notes | Research > Projects |
+| **Research_Topics** | publish, order, no, title_en, title_ko, description, image_url | Research > Topics |
+| **Research_Projects** | publish, order, status(Ongoing/Completed), title_ko, role(PI/Co-I/Advisor), partner, partner_logo_url, period_start, period_end, notes | Research > Projects |
 | **Publications** | publish, order, year, authors, title, venue, details, metrics, doi, featured, raw_citation | Achievements > Publications |
 | **Patents** | publish, order, country, title, year, patent_no, inventors, notes | Achievements > Patents |
 | **Teaching** | publish, order, level(Undergraduate/Graduate), title_en, title_ko, course_code, notes | Teaching |
@@ -137,7 +137,8 @@ Contact
 - `design/tokens.css` — 원본 인라인 스타일에서 추출한 디자인 토큰/유틸리티. 전역 CSS의 기반.
 - `design/support.js` — Claude Design 런타임(참고용, **최종 사이트엔 미사용**). `design/thumbnail.webp` — 미리보기.
 
-**디자인 성격**: 다크 단일 테마 + 오렌지 액센트(`#FF6A1F`) + 모노스페이스. 해시 라우팅 SPA이며 콘텐츠가 파일 내 JS 배열에 하드코딩됨.
+**디자인 성격**: 원본은 다크 단일 테마 + 오렌지 액센트(`#FF6A1F`) + 모노스페이스. 해시 라우팅 SPA이며 콘텐츠가 파일 내 JS 배열에 하드코딩됨.
+**⚠️ 구현은 2026-09-02부터 라이트 테마다** — `site.css`의 `:root` 토큰 값만 밝게 뒤집었고 컴포넌트 규칙·레이아웃·오렌지 액센트는 원본 그대로다. 히어로 배너만 어둡게 남겼다(§11 참고). 따라서 `design/*.dc.html`과 색을 대조하지 말 것 — **레이아웃만** 소스 오브 트루스다.
 **목표**: 픽셀·레이아웃 **그대로 이식(port)** 하되 — ① 해시 SPA → Eleventy 실제 페이지, ② 하드코딩 데이터 → Google Sheet 로드, ③ support.js 인터랙션 → 바닐라 JS. **새로 디자인하지 말 것.**
 
 **히어로 배경 이미지**: 기존 아티팩트 **재사용(채용)** — "eP Lab 히어로 배경" (`https://claude.ai/code/artifact/ef739503-f5ed-47e3-b8c9-936537e02c31`). Hero 슬롯에 배치, `/assets/`에 저장.
@@ -164,6 +165,18 @@ Contact
 - **예외 두 종류**:
   1. 디자인이 두 언어를 **동시에** 보여주는 자리(연구주제 카드의 영문 제목+국문 부제, 구성원 카드의 한글 이름+영문 이름)는 템플릿이 `title_en`/`title_ko`를 각각 직접 쓴다.
   2. 디자인이 **영문만** 쓰는 자리(헤더 브랜드 `DONGGUK UNIVERSITY`, 히어로 eyebrow, Leader 카드 소속 — 원본 L28·L61·L144-146)는 `cms.configEn`을 쓴다.
+
+### 테마 (2026-09-02: 다크 → 라이트)
+- 사이트는 **라이트 테마**다. 바꾼 것은 `site.css` 맨 위 `:root` 의 **토큰 값뿐**이고, 컴포넌트 규칙은 한 줄도 안 건드렸다.
+  토큰 **이름이 뜻하는 위계**(`--text` 가 가장 진하고 `--text-ghost` 가 가장 옅다, `--line-soft` 가 `--line` 보다 흐리다)를
+  그대로 유지했기 때문이다. 나중에 테마를 또 바꾸려면 **`:root` 한 블록만** 고친다.
+- 규칙 안에 박혀 있던 색은 전부 토큰으로 뺐다: `--stripe-1/2`(placeholder 줄무늬), `--header-bg`, `--shadow-panel`, `--fade`(갤러리 화살표).
+  **새 색을 규칙에 직접 쓰지 말 것** — 그 순간 테마 전환이 다시 깨진다.
+- **예외 하나: 히어로 배너는 계속 어둡다.** `hero.svg` 가 밤바다·우주를 그린 어두운 일러스트라 밝게 뒤집으면 그림이 망가진다.
+  `.hero` 블록이 글자 토큰만 어두운 테마 값으로 되돌린다. **`color: var(--text)` 를 같이 지정해야 한다** —
+  토큰만 바꾸면 `body` 에서 이미 계산돼 상속된 `color` 는 그대로여서 제목이 안 보인다(실제로 한 번 겪었다).
+- `.cardgrid` 의 hairline 을 컨테이너 배경 → **카드 자신의 `outline`** 으로 바꿨다. 예전 방식은 마지막 줄의
+  **빈 칸까지 선 색으로 칠해** 회색 덩어리가 생겼다 — 어두울 땐 안 보였지만 밝으니 눈에 띄었다.
 
 ### 남아 있는 것
 - **폴백 캐시는 수동 갱신**: `data-cache/` 는 `npm run cache:refresh` 로만 갱신된다. 갱신을 빠뜨리면 API 장애일 때 옛 내용이 조용히 배포된다. 8단계에서 CI 에 넣을 것.

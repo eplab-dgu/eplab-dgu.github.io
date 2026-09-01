@@ -25,14 +25,14 @@
 
 `tokens.css` 참조 (색/폰트/간격/유틸리티가 모두 변수화되어 있음). 요점:
 
-- **테마**: 다크 단일 테마. 배경 `#0B0B0C`, 텍스트 `#EDEDED`, **오렌지 액센트 `#FF6A1F`**.
+- **테마**: 원본은 다크 단일 테마(배경 `#0B0B0C`, 텍스트 `#EDEDED`). **구현은 2026-09-02부터 라이트 테마**(배경 `#FFFFFF`, 텍스트 `#16161A`)이며, 히어로 배너만 어둡게 남았다. **오렌지 액센트 `#FF6A1F` 는 그대로.** 이 문서의 색 값은 원본 기록용이고, 현재 값은 `src/assets/css/site.css` 의 `:root` 가 기준이다.
 - **폰트**: 모노스페이스 스택(`Consolas, Menlo, "DejaVu Sans Mono", "Malgun Gothic", "Apple SD Gothic Neo", monospace`). 이 모노스페이스 감성이 브랜드의 핵심이므로 유지.
 - **레이아웃**: 콘텐츠 최대폭 `1240px`, 좌우 패딩 `28px`, 섹션 상하 `84px`, 내부 페이지 상단 `56px`.
 - **시그니처 패턴**:
   - **Eyebrow 라벨**: 섹션마다 오렌지 대문자 소제목(`11px`, `letter-spacing:.2em`), 종종 번호 프리픽스(`01 / ABOUT US`, `T-01`).
   - **Hairline 카드 그리드**: 카드들을 `gap:1px; background:#212124`로 묶어 카드 사이가 1px 선으로만 갈리는 격자(`tokens.css`의 `.cardgrid`).
   - **이미지 placeholder**: 점선 테두리 + 대각선 줄무늬 배경(`.imgslot`). 실제 사진/도식으로 교체될 자리.
-  - **칩(chip)**: 논문 지표(IF/Q/JCR), 연구 태그를 테두리 칩으로. **Q1 또는 JCR ≤ 10%면 오렌지 강조**(`.chip-hot`).
+  - **칩(chip)**: 논문 지표(IF/Q/JCR)를 테두리 칩으로 (연구 태그 칩은 2026-09-02 폐기). **Q1 또는 JCR ≤ 10%면 오렌지 강조**(`.chip-hot`).
 
 ---
 
@@ -79,7 +79,7 @@ Contact
 - **Team / Leader** (L136–210): 좌측 인물 카드(포트레이트 슬롯 + 이름/직함/연락/Scholar), 우측 Research Interests / Education / Professional Experience / Awards / Academic Activities. 데이터는 시트 `Leader_CV` (section별).
 - **Team / Researchers** (L212–258): Graduate(카드 그리드, 사진+이름+역할+이메일), Undergraduate(카드 그리드), Alumni(행 리스트: 이름 · 재학기간/역할 · 진로).
 - **Research / Topics** (L269–288): 6개 주제, 각 행 = 이미지 슬롯 + 번호 + 영문/국문 제목 + 설명 + 태그 칩. **원본에 설명·태그가 이미 작성됨**(§5 참조).
-- **Research / Projects** (L290–305): 표(STATUS / PERIOD / PARTNER / PROJECT). ONGOING은 오렌지 배지, COMPLETED는 회색. **PARTNER 칸 = 로고 + 이름**: 시트 `partner_logo_url`이 있으면 40×40 로고 이미지, 없으면 원본의 점선 LOGO placeholder(dc.html L299) 대신 파트너명 텍스트로 폴백(§4-1 스니펫).
+- **Research / Projects** (L290–305): 표(STATUS / ROLE / PERIOD / PARTNER / PROJECT). `ROLE` 은 2026-09-02 추가된 열(PI / Co-I / Advisor). ONGOING은 오렌지 배지, COMPLETED는 회색. **PARTNER 칸 = 로고 + 이름**: 시트 `partner_logo_url`이 있으면 40×40 로고 이미지, 없으면 원본의 점선 LOGO placeholder(dc.html L299) 대신 파트너명 텍스트로 폴백(§4-1 스니펫).
 - **Achievements / Publications** (L316–340): 연도 헤더(오렌지) + 논문 리스트. 각 논문: 제목 → 저자(**"S. H. Park" 자동 오렌지 볼드 강조**) → 게재지 → 지표 칩(Q1/JCR≤10% 오렌지) + DOI 버튼.
 - **Achievements / Conferences** (L342–358): **placeholder — 데이터 없음**. 연도별 리스트 레이아웃만 존재.
 - **Achievements / Patents** (L360–376): **placeholder — 표 레이아웃만**(NO./STATUS/TITLE). 실제 특허 데이터는 시트 `Patents`(US 2건)로 채운다.
@@ -98,7 +98,7 @@ Contact
 | 원본 배열 | 필드 | 시트 탭 |
 |---|---|---|
 | `nav` | 고정 구조 | 코드에 유지(시트化 불필요) |
-| `topics` | no, en, kr, desc, tags[] | **Research_Topics** (desc·tags 컬럼 추가 필요) |
+| `topics` | no, en, kr, desc | **Research_Topics** (`tags` 열은 2026-09-02 폐기 — 사이트에 안 나온다) |
 | `grads` / `undergrads` / `alumni` | kr, en, role, email, next | **Members** (category로 구분) |
 | Leader 블록(하드코딩) | interests/education/experience/awards/activities | **Leader_CV** (section별) |
 | `projects` (rawProjects) | s(status), d(period), o(partner), **logo(partner_logo_url)**, t(title) | **Research_Projects** |
@@ -145,7 +145,7 @@ Contact
 
 디자인 원본이 이전에 만든 `eplab_website_content.xlsx`보다 갱신되어 있다. **시트를 디자인 기준으로 업데이트해야 한다**(다음 작업 후보):
 
-1. **연구주제 설명·태그**: 이전엔 미작성 → 디자인에 6개 모두 desc + tags 3개씩 완성됨(L612–631). → `Research_Topics`에 `description`, `tags` 채우기.
+1. **연구주제 설명**: 이전엔 미작성 → 디자인에 6개 모두 desc 완성됨(L612–631). → `Research_Topics`에 `description` 채우기. (원본의 tags 는 2026-09-02 폐기 결정.)
 2. **유나경 영문명 확정**: `Na-Kyung Yoo` (이전 미확정) (L646). → `Members` 반영.
 3. **프로젝트 13건**(진행 6 + 완료 7): 이전 xlsx는 9건(진행만). 완료 과제 7건이 추가됨(L686–700). → `Research_Projects` 확장 + status 반영. 파트너에 효성전기/현대트랜시스/WESPION/현대자동차/한국생산기술연구원 등.
 4. **뉴스 35건**: 이전 16건 → 35건으로 대폭 확장(L760–795), 입사/진학/합류/과제 소식 포함. → `News` 교체.

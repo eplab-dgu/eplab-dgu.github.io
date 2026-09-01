@@ -20,11 +20,6 @@ permalink: /research/topics/
         <h2 class="topic__en">{{ t.title_en }}</h2>
         <span class="topic__ko">{{ t.title_ko }}</span>
         <p class="topic__desc">{{ t.description }}</p>
-        {% if t.tags.length %}
-        <div class="topic__tags">
-          {% for g in t.tags %}<span class="chip">{{ g }}</span>{% endfor %}
-        </div>
-        {% endif %}
       </div>
     </div>
     {% endfor %}

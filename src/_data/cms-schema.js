@@ -37,6 +37,7 @@ const MEMBER_CATEGORIES = ['Faculty', 'Graduate', 'Undergraduate', 'Alumni'];
 const CV_SECTIONS = ['ResearchInterest', 'Education', 'Experience', 'Award', 'Activity'];
 const NEWS_CATEGORIES = ['Paper', 'Research', 'Conference', 'Event', 'People', 'Award'];
 const PROJECT_STATUS = ['Ongoing', 'Completed'];
+const PROJECT_ROLES = ['PI', 'Co-I', 'Advisor'];
 const TEACHING_LEVELS = ['Undergraduate', 'Graduate'];
 const PATENT_STATUS = ['Registered', 'Filed', 'Pending'];
 
@@ -101,7 +102,6 @@ export const SCHEMAS = {
       title_en: { required: true },
       title_ko: {},
       description: {},
-      tags: { type: 'list' },
       image_url: { type: 'url' },
     },
     derive: (r) => ({ title: preferred(r.title_ko, r.title_en) }),
@@ -110,8 +110,10 @@ export const SCHEMAS = {
   Research_Projects: {
     fields: {
       status: { required: true, enum: PROJECT_STATUS },
-      title_en: { required: true },
-      title_ko: {},
+      // 이 탭엔 영문 제목 열이 없다 (2026-09-02 시트에서 삭제). 국문만 쓴다.
+      title_ko: { required: true },
+      // 교수님의 과제 참여 형태. 비어 있어도 행은 게시된다 — 표의 ROLE 칸만 빈다.
+      role: { enum: PROJECT_ROLES },
       partner: {},
       partner_logo_url: { type: 'url' },
       period_start: {},
@@ -119,7 +121,8 @@ export const SCHEMAS = {
       notes: {},
     },
     derive: (r) => ({
-      title: preferred(r.title_ko, r.title_en),
+      // 언어 선택지가 없으므로 preferred() 를 거치지 않는다.
+      title: r.title_ko,
       // 디자인의 PERIOD 칸은 "2026.03 – 2026.12" 한 덩어리다 (DESIGN_SPEC §3).
       period: [r.period_start, r.period_end].filter(Boolean).join(' – '),
       isOngoing: r.status === 'Ongoing',

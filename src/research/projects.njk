@@ -14,11 +14,12 @@ permalink: /research/projects/
 
   <div class="projects">
     <div class="proj-head">
-      <span>STATUS</span><span>PERIOD</span><span>PARTNER</span><span>PROJECT</span>
+      <span>STATUS</span><span>ROLE</span><span>PERIOD</span><span>PARTNER</span><span>PROJECT</span>
     </div>
     {% for p in cms.Research_Projects %}
     <div class="proj-row">
       <span class="badge {{ "badge-on" if p.isOngoing else "" }}">{{ p.status | upper }}</span>
+      <span class="proj-row__role">{{ p.role }}</span>
       <span class="proj-row__period">{{ p.period }}</span>
       <span class="proj-row__logo{% if p.partner_logo_url %} has-img{% endif %}">
         {% if p.partner_logo_url %}
@@ -26,7 +27,7 @@ permalink: /research/projects/
         {% else %}LOGO{% endif %}
       </span>
       <span class="proj-row__partner">{{ p.partner }}</span>
-      <span class="proj-row__title">{{ p.title_ko or p.title_en }}</span>
+      <span class="proj-row__title">{{ p.title }}</span>
     </div>
     {% endfor %}
   </div>
