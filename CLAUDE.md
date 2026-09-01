@@ -17,7 +17,7 @@
 | 항목 | 결정 | 비고 |
 |---|---|---|
 | 렌더링 방식 | **빌드 시 정적 생성** (build-time static generation) | runtime fetch 아님. 시트를 읽어 정적 HTML을 미리 생성 |
-| 언어 | **영어 전용** (English-only) | `*_en` 열이 게시 텍스트, `*_ko`는 원문/참고 |
+| 언어 | **한글 우선** (2026-09-01 변경) | `*_ko`가 게시 텍스트, 비면 `*_en`으로 폴백. 확정 디자인이 한글 기준이라 영문 우선은 디자인과 어긋났다. 구현은 `cms-schema.js`의 `preferred(ko, en)` **한 함수**만 거친다 |
 | 정적 사이트 생성기 | **Eleventy(11ty)** 권장 | 대안: Astro |
 | 호스팅 | **미정** → GitHub Pages + GitHub Actions 권장 | 대안: Vercel. `eplab.dgu.ac.kr` DNS는 학교 IT 협조 필요 (장기 과제) |
 | 시트 접근 | **서비스 계정 + Sheets API (읽기 전용)** 권장 | "웹에 게시(CSV)" 방식은 미게시 행까지 노출되므로 지양 |
@@ -87,7 +87,8 @@ Contact
 
 ## 6. 검수 필요 항목 (미확정 데이터)
 - 학부연구생 **'유나경' 영문명** — 원본에 'Seo-Hyun Hong'로 중복 표기된 오류. 정확한 로마자 확인 필요.
-- 모든 **`*_en` 초안 번역**(프로젝트/뉴스/일부 강의명) — 기계 초안이므로 검수 후 게시.
+- **`*_ko`가 비어 `*_en`으로 폴백되는 행** — 한글 원문이 빠진 것이므로 채울 것. 빌드 로그가 개수를 보고한다.
+- 영문 병기가 필요한 자리는 시트의 `*_en`에 채운다(디자인이 영문을 쓰는 세 곳: 헤더 브랜드·히어로 eyebrow·Leader 카드 소속. 템플릿에서 `cms.configEn`을 쓴다).
 - **연구주제(Research_Topics) description** — 미작성.
 - **Collaborators** 기관명·로고 URL — 원본 로고에 alt 텍스트 없어 식별 불가.
 - 구성원 **사진(photo_url), Google Scholar 링크** — 미입력.
@@ -101,7 +102,8 @@ Contact
 - [x] **Phase 2**: 빌드 파이프라인 MVP. `src/_data/cms.js`(소스 어댑터) + `cms-schema.js`(13개 탭 검증). xlsx → 정규화 JSON, publish/order 처리, 나쁜 행 스킵. **(완료)**
 - [x] **Phase 3**: 디자인 이식 — `src/assets/css/site.css`(tokens+컴포넌트), `base.njk`(헤더/네비/푸터), 12개 페이지 전부, 인터랙션 바닐라 JS(`src/assets/js/site.js`). **(완료)**
   - 남은 것: 실제 이미지 에셋(인물 사진·파트너 로고·갤러리·지도)은 여전히 placeholder — 시트에 URL이 들어오면 자동 표시된다. 빌드 시 로컬 다운로드 파이프라인은 미구현.
-- [ ] **Phase 4**: GitHub Actions 빌드·배포, 게시 트리거(예약+수동→Apps Script dispatch), 스테이징 URL.
+- [x] **Phase 4 (일부)**: Google Sheets API 연결 완료 — 빌드가 시트를 직접 읽는다. 소스 우선순위 ①API ②data-cache 폴백 ③로컬 xlsx, `CMS_SOURCE=xlsx` 로 강제 전환. **(완료)**
+- [ ] **Phase 4 (잔여)**: GitHub Actions 빌드·배포, 게시 트리거(예약+수동→Apps Script dispatch), 스테이징 URL.
 - [ ] **Phase 5**: 검증 강화, 학생용 관리 런북 작성, 스테이징 검수, DNS 전환(cutover), 기존 Google Site는 백업 유지.
 - [ ] **Phase 6**: 모니터링, 토큰·키 갱신 절차, 백업.
 
@@ -156,11 +158,19 @@ Contact
 - 검증: 통합 후 덤프 결과가 구 파서의 커밋본과 **13개 탭 전부 바이트 단위로 동일**(`_manifest` 타임스탬프만 차이).
 - **유지 규칙: xlsx 파서를 다시 늘리지 말 것.** 새로 xlsx를 읽어야 하면 `xlsx-source.js`를 임포트한다.
 
+### 언어 규칙 (2026-09-01 확정)
+- **한글 우선.** `preferred(ko, en)` = `ko || en`. `cms.config`(Site_Config 맵)와 `Members.name`·`Research_Topics.title`·`Research_Projects.title`·`Teaching.title`·`News.text` 파생 필드가 모두 이 함수를 거친다.
+- **언어를 고르는 곳은 이 함수 하나뿐이다.** 템플릿이나 다른 모듈에서 `a || b`로 언어를 고르지 말 것 — 규칙이 조용히 갈라진다.
+- **예외 두 종류**:
+  1. 디자인이 두 언어를 **동시에** 보여주는 자리(연구주제 카드의 영문 제목+국문 부제, 구성원 카드의 한글 이름+영문 이름)는 템플릿이 `title_en`/`title_ko`를 각각 직접 쓴다.
+  2. 디자인이 **영문만** 쓰는 자리(헤더 브랜드 `DONGGUK UNIVERSITY`, 히어로 eyebrow, Leader 카드 소속 — 원본 L28·L61·L144-146)는 `cms.configEn`을 쓴다.
+
 ### 남아 있는 것
+- **폴백 캐시는 수동 갱신**: `data-cache/` 는 `npm run cache:refresh` 로만 갱신된다. 갱신을 빠뜨리면 API 장애일 때 옛 내용이 조용히 배포된다. 8단계에서 CI 에 넣을 것.
 - **에셋 자체 호스팅 미구현**: 시트의 이미지 URL을 빌드 시 내려받아 `/assets/`에 두는 파이프라인이 없다. 지금은 시트 URL을 그대로 `<img src>`에 쓴다 — Drive 직링크가 들어오면 throttling에 걸린다. (HOW_TO_BUILD 7단계)
 - **`Collaborators` 탭이 어떤 페이지에도 안 쓰인다**: 확정 디자인에 협력기관 섹션이 없다. 섹션 부활 vs 탭 폐기 결정 필요.
 - **Home About 제목만 템플릿 하드코딩**: `Site_Config`에 대응 키가 없어서다. 키를 추가하면 시트로 뺄 수 있다.
 
 ---
 
-*최종 업데이트: 2026-09-01. Phase 2·3 완료(데이터 레이어 + 12개 페이지 디자인 이식). 첫 커밋 생성, xlsx 파서 통합. 다음: Sheets API 연결(6단계) — 서비스 계정 키 대기.*
+*최종 업데이트: 2026-09-01. Phase 2·3 완료 + Google Sheets API 연결 완료. 언어 한글 우선으로 전환. 다음: 에셋 파이프라인(7단계), GitHub Actions 배포(8단계).*

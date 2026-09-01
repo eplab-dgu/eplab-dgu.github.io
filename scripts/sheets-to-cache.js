@@ -44,7 +44,9 @@ for (const tab of TABS) {
 writeFileSync(
   join(CACHE_DIR, '_manifest.json'),
   JSON.stringify(
-    { source: 'google-sheets', sheetId, generatedAt: new Date().toISOString(), presentTabs, sheets: manifest },
+    // SHEET_ID 는 넣지 않는다. .env 로 커밋에서 빼는 값인데 캐시 매니페스트로 새면
+    // 앞뒤가 안 맞는다 (캐시는 저장소에 커밋된다).
+    { source: 'google-sheets', generatedAt: new Date().toISOString(), presentTabs, sheets: manifest },
     null,
     2
   ) + '\n',

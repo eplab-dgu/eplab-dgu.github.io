@@ -21,7 +21,8 @@
       <span class="brand__mark"><img src="/assets/logo.svg" alt="" width="36" height="36"></span>
       <span class="brand__text">
         <span class="brand__name"><em>electrified</em> Propulsion Lab.</span>
-        <span class="brand__org">{{ cms.config.university | upper }}</span>
+        {# 디자인 L28: 헤더 브랜드는 영문 대문자 #}
+        <span class="brand__org">{{ cms.configEn.university | upper }}</span>
       </span>
     </a>
 

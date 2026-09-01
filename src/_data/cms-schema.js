@@ -15,6 +15,23 @@
  *     → URL/숫자 같은 부가 필드는 값만 비우고, required 필드만 행을 버린다.
  */
 
+/**
+ * 표시 언어 우선순위 — **한글 우선** (2026-09-01 결정, CLAUDE.md §2).
+ *
+ * 확정 디자인(eP Lab Website.dc.html)이 한글 기준으로 작성돼 있어, 영문을 우선하면
+ * 사이트가 디자인과 어긋난다. `*_ko` 가 있으면 그것을, 없으면 `*_en` 으로 넘어간다.
+ *
+ * 언어를 고르는 지점은 **반드시 이 함수 하나만 거친다.** 곳곳에서 `a || b` 를 쓰면
+ * 규칙이 조용히 갈라진다.
+ *
+ * 예외: 디자인이 두 언어를 **동시에** 보여주는 자리(연구주제 카드의 영문 제목 +
+ * 국문 부제, 구성원 카드의 한글 이름 + 영문 이름)는 이 함수를 쓰지 않고
+ * 템플릿에서 `title_en`/`title_ko` 를 각각 직접 쓴다.
+ */
+export function preferred(ko, en) {
+  return ko || en || '';
+}
+
 // ── enum 목록 (시트의 데이터 유효성 검사와 같은 값을 유지할 것) ──────────────
 const MEMBER_CATEGORIES = ['Faculty', 'Graduate', 'Undergraduate', 'Alumni'];
 const CV_SECTIONS = ['ResearchInterest', 'Education', 'Experience', 'Award', 'Activity'];
@@ -61,7 +78,7 @@ export const SCHEMAS = {
       scholar_url: { type: 'url' },
       notes: {},
     },
-    derive: (r) => ({ name: r.name_en || r.name_ko || '' }),
+    derive: (r) => ({ name: preferred(r.name_ko, r.name_en) }),
   },
 
   Leader_CV: {
@@ -87,7 +104,7 @@ export const SCHEMAS = {
       tags: { type: 'list' },
       image_url: { type: 'url' },
     },
-    derive: (r) => ({ title: r.title_en || r.title_ko || '' }),
+    derive: (r) => ({ title: preferred(r.title_ko, r.title_en) }),
   },
 
   Research_Projects: {
@@ -102,7 +119,7 @@ export const SCHEMAS = {
       notes: {},
     },
     derive: (r) => ({
-      title: r.title_en || r.title_ko || '',
+      title: preferred(r.title_ko, r.title_en),
       // 디자인의 PERIOD 칸은 "2026.03 – 2026.12" 한 덩어리다 (DESIGN_SPEC §3).
       period: [r.period_start, r.period_end].filter(Boolean).join(' – '),
       isOngoing: r.status === 'Ongoing',
@@ -170,7 +187,7 @@ export const SCHEMAS = {
       description: {},
       notes: {},
     },
-    derive: (r) => ({ title: r.title_en || r.title_ko || '' }),
+    derive: (r) => ({ title: preferred(r.title_ko, r.title_en) }),
   },
 
   // ── News / Gallery ────────────────────────────────────────────────────────
@@ -182,12 +199,11 @@ export const SCHEMAS = {
       text_en: {},
       image_url: { type: 'url' },
     },
-    // 영어 전용 사이트지만(CLAUDE.md §2) 뉴스 영문 번역이 아직 비어 있다.
-    // 번역이 채워지기 전까지는 한국어 원문이라도 내보낸다 — 빈 카드보다 낫다.
-    // isFallbackKo 로 "아직 번역 안 된 행"을 세어 빌드 로그에 보고한다.
+    // 한글 우선. 디자인 원본의 News 는 한국어 문장이다.
+    // isFallbackEn = 한국어가 비어 영문으로 대체된 행. 원문이 빠진 것이므로 보고 대상.
     derive: (r) => ({
-      text: r.text_en || r.text_ko || '',
-      isFallbackKo: !r.text_en && !!r.text_ko,
+      text: preferred(r.text_ko, r.text_en),
+      isFallbackEn: !r.text_ko && !!r.text_en,
       year: yearOf(r.date),
     }),
   },

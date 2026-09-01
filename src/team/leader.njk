@@ -23,8 +23,9 @@ permalink: /team/leader/
         <div class="leader__name">{{ leader.name_en }}{% if leader.name_ko %}, {{ leader.name_ko }}{% endif %}</div>
         <div class="leader__role">{{ leader.position | upper }}</div>
         <div class="rule"></div>
-        <div>{{ cms.config.dept }}</div>
-        <div>{{ cms.config.university }}</div>
+        {# 디자인 L144-146: Leader 카드의 소속은 영문 #}
+        <div>{{ cms.configEn.dept }}</div>
+        <div>{{ cms.configEn.university }}</div>
         <div class="rule"></div>
         <div><span class="dim">e-mail&nbsp;&nbsp;</span>{{ leader.email or cms.config.email }}</div>
         <div><span class="dim">tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ cms.config.tel }}</div>

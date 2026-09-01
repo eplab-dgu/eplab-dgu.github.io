@@ -1,7 +1,22 @@
 {
-  "source": "xlsx",
-  "file": "eplab_website_content.xlsx",
-  "generatedAt": "2026-09-01T14:37:59.258Z",
+  "source": "google-sheets",
+  "generatedAt": "2026-09-01T14:47:22.491Z",
+  "presentTabs": [
+    "README",
+    "Site_Config",
+    "Members",
+    "Leader_CV",
+    "Research_Topics",
+    "Research_Projects",
+    "Publications",
+    "Conferences",
+    "Patents",
+    "Invited_Talks",
+    "Teaching",
+    "News",
+    "Gallery",
+    "Collaborators"
+  ],
   "sheets": {
     "Site_Config": {
       "rows": 24,
