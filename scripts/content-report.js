@@ -37,7 +37,7 @@ const WATCH = {
   Teaching: ['term', 'description'],
   News: ['text_en'],
   Gallery: ['image_urls', 'participants'],
-  Collaborators: ['name', 'logo_url', 'url'],
+  // Collaborators: ['name', 'logo_url', 'url'],  // 탭 폐기 (cms-schema.js 참고)
 };
 
 const isEmpty = (v) => v === null || v === undefined || v === '' || (Array.isArray(v) && v.length === 0);

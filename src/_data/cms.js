@@ -56,7 +56,7 @@
  *                     +text, +isFallbackKo, +year
  *   Gallery           date, title, participants, photo_count(number),
  *                     image_urls[], notes, +year
- *   Collaborators     name, logo_url, url, notes
+ *   (Collaborators    2026-09-01 폐기 — 디자인에 협력기관 섹션이 없다)
  *
  * 필드별 상세(필수 여부·enum)는 cms-schema.js 의 SCHEMAS 를 볼 것.
  */

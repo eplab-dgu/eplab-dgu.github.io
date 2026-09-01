@@ -4,7 +4,14 @@ _site/
 .env.*
 !.env.example
 
-# 서비스 계정 키는 절대 커밋 금지
+# 서비스 계정 키는 절대 커밋 금지.
+# 이름 패턴에 의존하면 반드시 샌다 — Google 이 주는 기본 파일명은
+# "heroic-charter-504301-b5-7b54a3163075.json" 처럼 프로젝트명+해시라 어떤 패턴에도 안 맞는다.
+# 그래서 루트의 .json 을 통째로 막고, 필요한 것만 아래에서 되살린다.
+/*.json
+!/package.json
+!/package-lock.json
+
 *service-account*.json
 *credentials*.json
 gcp-key*.json

@@ -1,10 +1,10 @@
 {
   "source": "xlsx",
   "file": "eplab_website_content.xlsx",
-  "generatedAt": "2026-09-01T12:52:00.154Z",
+  "generatedAt": "2026-09-01T14:37:59.258Z",
   "sheets": {
     "Site_Config": {
-      "rows": 23,
+      "rows": 24,
       "headers": [
         "key",
         "value_en",
@@ -83,7 +83,7 @@
       ]
     },
     "Conferences": {
-      "rows": 1,
+      "rows": 3,
       "headers": [
         "publish",
         "order",
@@ -156,17 +156,6 @@
         "participants",
         "photo_count",
         "image_urls",
-        "notes"
-      ]
-    },
-    "Collaborators": {
-      "rows": 6,
-      "headers": [
-        "publish",
-        "order",
-        "name",
-        "logo_url",
-        "url",
         "notes"
       ]
     }

@@ -72,6 +72,15 @@ export default function (eleventyConfig) {
     return !!jcr && parseFloat(jcr[1]) <= 10;
   });
 
+  /**
+   * 셀 하나를 여러 줄로 나눈다. 시트에 HTML 을 넣게 하면 학생 입력이 그대로 마크업이
+   * 되므로, 줄바꿈은 구분자('|')로 표현하고 렌더링은 템플릿이 한다.
+   * Site_Config.about_title, Leader_CV.detail 이 같은 규칙을 쓴다.
+   */
+  eleventyConfig.addFilter('lines', (text, sep = '|') =>
+    String(text ?? '').split(sep).map((s) => s.trim()).filter(Boolean)
+  );
+
   /** 리스트를 n개씩 끊어 페이지 배열로. Gallery 페이지네이션(8개/페이지)에 쓴다. */
   eleventyConfig.addFilter('chunk', (list, size) => {
     const out = [];

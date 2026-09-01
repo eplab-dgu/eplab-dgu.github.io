@@ -205,14 +205,19 @@ export const SCHEMAS = {
   },
 
   // ── About ─────────────────────────────────────────────────────────────────
-  Collaborators: {
-    fields: {
-      name: { required: true },
-      logo_url: { type: 'url' },
-      url: { type: 'url' },
-      notes: {},
-    },
-  },
+  // Collaborators — 2026-09-01 폐기.
+  // 확정 디자인(eP Lab Website.dc.html)에 협력기관 섹션이 없어 어떤 페이지도 이 탭을
+  // 쓰지 않았고, 시트에서도 탭을 삭제했다. 스키마에 남겨두면 매 빌드마다
+  // "기대하는 탭이 시트에 없다" 드리프트 경고가 뜨므로 함께 내린다.
+  // 되살리려면 이 블록의 주석을 풀고 시트에 같은 헤더로 탭을 만들면 된다.
+  // Collaborators: {
+  //   fields: {
+  //     name: { required: true },
+  //     logo_url: { type: 'url' },
+  //     url: { type: 'url' },
+  //     notes: {},
+  //   },
+  // },
 };
 
 /** 데이터 탭이 아니므로 "코드가 모르는 탭" 경고에서 제외한다. */

@@ -9,5 +9,27 @@
     "location": "(예: 제주)",
     "date": "2025.05",
     "notes": "발표 목록 데이터 입력 필요 — 원본 디자인은 placeholder"
+  },
+  {
+    "publish": "FALSE",
+    "order": "20",
+    "year": "2025",
+    "authors": "김찬우, 박수환",
+    "title": "[샘플] IPMSM의 PWM 고조파를 고려한 철손 예측 기법",
+    "venue": "한국자동차공학회 춘계학술대회",
+    "location": "제주",
+    "date": "2025.05",
+    "notes": "샘플 행 — 실제 발표로 교체할 것"
+  },
+  {
+    "publish": "FALSE",
+    "order": "30",
+    "year": "2024",
+    "authors": "유재경, 박수환",
+    "title": "[샘플] 드론용 축방향 자속 전동기의 다중충실도 최적설계",
+    "venue": "대한전기학회 하계학술대회",
+    "location": "부산",
+    "date": "2024.07",
+    "notes": "샘플 행 — 실제 발표로 교체할 것"
   }
 ]

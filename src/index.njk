@@ -25,7 +25,12 @@ description: Design, analysis and testing of electrified propulsion systems.
 <section class="about">
   <div>
     <span class="eyebrow">01 / About Us</span>
-    <h2 class="h-sec">전동화 추진시스템의<br>설계, 해석 및 시험</h2>
+    {# 시트 Site_Config.about_title — '|' 가 줄바꿈 자리다 #}
+    <h2 class="h-sec">
+      {%- for line in cms.config.about_title | lines -%}
+        {{ line }}{% if not loop.last %}<br>{% endif %}
+      {%- endfor -%}
+    </h2>
   </div>
   <div class="about__body">
     <p>{{ cms.config.about_p1 }}</p>
