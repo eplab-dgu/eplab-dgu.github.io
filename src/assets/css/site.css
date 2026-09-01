@@ -6,44 +6,46 @@
 
 /* ─── Design tokens (design/tokens.css) ─────────────────────────────────── */
 /*
-   라이트 테마. 원본 디자인은 다크 단일 테마였고, 여기서 밝게 뒤집었다.
-   뒤집은 것은 "값"이지 "역할"이 아니다 — 토큰 이름이 뜻하는 위계(text 가 가장
-   진하고 ghost 가 가장 옅다, line-soft 가 line 보다 흐리다)는 그대로다.
-   그래서 컴포넌트 규칙은 한 줄도 건드리지 않는다.
-   액센트 오렌지(#FF6A1F)는 원본 그대로 유지한다.
+   다크 테마 — 원본 디자인(eP Lab Website.dc.html)의 값 그대로다.
 
-   예외: 히어로 배너는 계속 어둡다 (아래 .hero 참고).
+   테마를 바꾸는 곳은 **이 :root 블록 하나뿐이다.** 토큰 이름이 뜻하는 위계
+   (--text 가 가장 진하고 --text-ghost 가 가장 옅다, --line-soft 가 --line 보다
+   흐리다)만 지키면 컴포넌트 규칙은 한 줄도 안 건드리고 값만 뒤집으면 된다.
+   (2026-09-02 에 라이트로 갔다가 되돌아왔다. 그때 규칙 안에 박혀 있던 색을
+   전부 토큰으로 빼둬서, 되돌리는 데 이 블록만 고치면 됐다.)
+
+   ⚠️ 새 색을 규칙 안에 직접 쓰지 말 것 — 그 순간 테마 전환이 다시 깨진다.
 */
 :root {
   --accent:        #FF6A1F;
-  --accent-2:      #E85A12;   /* 밝은 배경에서는 hover 가 더 짙어야 눈에 띈다 */
+  --accent-2:      #FF8A4C;
 
-  --bg:            #FFFFFF;
-  --bg-alt:        #F6F6F8;
-  --bg-elev:       #FFFFFF;
-  --bg-hover:      #F4F4F6;
-  --bg-hover-2:    #F0F0F3;
+  --bg:            #0B0B0C;
+  --bg-alt:        #0E0E10;
+  --bg-elev:       #101012;
+  --bg-hover:      #141416;
+  --bg-hover-2:    #17171A;
 
-  --line:          #D8D8DE;
-  --line-soft:     #E7E7EC;
-  --line-box:      #CFCFD6;
-  --line-btn:      #C6C6CE;
-  --line-dashed:   #C2C2CB;
+  --line:          #212124;
+  --line-soft:     #1C1C1F;
+  --line-box:      #26262A;
+  --line-btn:      #2E2E33;
+  --line-dashed:   #303035;
 
-  --text:          #16161A;
-  --text-body:     #3B3B43;
-  --text-muted:    #4C4C55;
-  --text-dim:      #5E5E67;
-  --text-label:    #70707A;
-  --text-faint:    #85858F;
-  --text-ghost:    #A2A2AB;
+  --text:          #EDEDED;
+  --text-body:     #C4C4C9;
+  --text-muted:    #B7B7BC;
+  --text-dim:      #9A9AA0;
+  --text-label:    #8A8A90;
+  --text-faint:    #78787E;
+  --text-ghost:    #5F5F65;
 
-  /* 예전에 값이 규칙 안에 박혀 있던 것들 — 테마를 바꾸려면 여기 하나만 고치면 된다 */
-  --stripe-1:      #F0F0F3;   /* 이미지 placeholder 사선 줄무늬 */
-  --stripe-2:      #F8F8FA;
-  --header-bg:     rgba(255, 255, 255, .94);
-  --shadow-panel:  0 12px 28px rgba(0, 0, 0, .10);
-  --fade:          rgba(255, 255, 255, .85);   /* 갤러리 화살표 뒤 그라디언트 */
+  /* 예전에 값이 규칙 안에 박혀 있던 것들 */
+  --stripe-1:      #131315;   /* 이미지 placeholder 사선 줄무늬 */
+  --stripe-2:      #0F0F11;
+  --header-bg:     rgba(11, 11, 12, .96);
+  --shadow-panel:  0 12px 28px rgba(0, 0, 0, .5);
+  --fade:          rgba(11, 11, 12, .75);   /* 갤러리 화살표 뒤 그라디언트 */
 
   --font: Consolas, Menlo, "DejaVu Sans Mono", "Malgun Gothic", "Apple SD Gothic Neo", monospace;
   --lh:   1.6;
@@ -90,8 +92,8 @@ a:hover { color: var(--accent-2); }
 
 /* hairline 카드 그리드 — 카드 사이가 1px 선으로만 갈린다.
    원본은 컨테이너를 선 색으로 칠하고 카드로 덮어 gap 만 선으로 남겼다. 그러면
-   마지막 줄의 **빈 칸까지 선 색으로 칠해져** 회색 덩어리가 생긴다. 어두운 테마에선
-   거의 안 보였지만 밝은 테마에선 눈에 띈다.
+   마지막 줄의 **빈 칸까지 선 색으로 칠해져** 덩어리가 생긴다(다크에선 거의 안 보이지만
+   라이트로 뒤집으면 바로 드러난다 — 2026-09-02 에 실제로 겪었다).
    그래서 선을 카드 자신의 outline 으로 그린다 — outline 은 레이아웃을 밀지 않고
    1px gap 을 사이에 둔 이웃끼리 정확히 겹쳐, 채워진 칸에만 hairline 이 생긴다. */
 .cardgrid { display: grid; gap: 1px; background: var(--bg); border: 1px solid var(--line); }
@@ -202,11 +204,12 @@ a:hover { color: var(--accent-2); }
 
 /* ─── HOME (dc.html L50–126) ────────────────────────────────────────────── */
 /*
-   히어로만 어둡게 남긴다. hero.svg 가 밤바다·우주를 그린 어두운 일러스트라
-   밝게 뒤집으면 그림이 망가진다. 밝은 페이지 위의 어두운 배너는 의도된 대비다.
-   여기서 글자 토큰만 다시 어두운 테마 값으로 덮어써서, 아래 .hero__* 규칙들이
-   (var(--text-muted) 같은) 원래 이름 그대로 밝은 글자를 얻게 한다.
-   --line 은 덮지 않는다 — 히어로 아래 경계선은 밝은 페이지 쪽 선이다.
+   히어로는 **테마와 무관하게 항상 어둡다.** hero.svg 가 밤바다·우주를 그린 어두운
+   일러스트라, 배경을 밝게 하면 그림이 망가진다. 그래서 글자 토큰을 여기서 어두운
+   테마 값으로 고정한다 — 지금은 :root 와 같은 값이라 아무 일도 하지 않지만,
+   :root 를 밝게 뒤집는 순간 이 블록이 히어로 글자를 지켜준다. 지우지 말 것.
+   아래 .hero__media 줄무늬와 .hero__scrim 그라디언트도 같은 이유로 어둡게 박아뒀다.
+   --line 은 덮지 않는다 — 히어로 아래 경계선은 페이지 쪽 선이다.
 */
 .hero {
   position: relative; border-bottom: 1px solid var(--line);
@@ -359,16 +362,15 @@ a:hover { color: var(--accent-2); }
 
 /* ─── RESEARCH / Projects (L290–305) ────────────────────────────────────── */
 .projects { display: flex; flex-direction: column; }
-/* 열: STATUS · ROLE · PERIOD · [로고 + PARTNER] · PROJECT */
+/* 열: STATUS · ROLE · PERIOD · PARTNER · PROJECT
+   (로고 칸은 2026-09-02 폐기 — 머리글과 칸이 1:1 이라 span 보정이 필요 없다) */
 .proj-head, .proj-row {
-  display: grid; grid-template-columns: 110px 62px 160px 52px 180px minmax(0, 1fr); gap: 18px;
+  display: grid; grid-template-columns: 110px 62px 160px 200px minmax(0, 1fr); gap: 18px;
 }
 .proj-head {
   padding-bottom: 12px; font-size: 11px; color: var(--text-faint);
   letter-spacing: .14em; border-bottom: 1px solid var(--line);
 }
-/* PARTNER 머리글 하나가 로고 칸과 이름 칸 두 열을 덮는다 */
-.proj-head span:nth-child(4) { grid-column: span 2; }
 .proj-row {
   padding: 18px 0; border-bottom: 1px solid var(--line-soft);
   font-size: 13.5px; color: var(--text-body); align-items: center;
@@ -380,13 +382,6 @@ a:hover { color: var(--accent-2); }
 .badge-on { border-color: var(--accent); color: var(--accent); }
 .proj-row__role { font-size: 11.5px; color: var(--text-label); letter-spacing: .08em; }
 .proj-row__period { color: var(--accent); font-size: 12.5px; }
-.proj-row__logo {
-  width: 40px; height: 40px; border: 1px dashed var(--line-dashed);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 8px; color: var(--text-ghost); letter-spacing: .04em; overflow: hidden;
-}
-.proj-row__logo img { width: 100%; height: 100%; object-fit: contain; }
-.proj-row__logo.has-img { border: 0; }
 .proj-row__partner { color: var(--text); font-size: 13px; }
 .proj-row__title { text-wrap: pretty; }
 
@@ -516,7 +511,6 @@ a:hover { color: var(--accent-2); }
   /* 프로젝트 표는 좁은 화면에서 카드로 접는다 (원본은 5열 고정) */
   .proj-head { display: none; }
   .proj-row { grid-template-columns: auto 1fr; gap: 8px 14px; padding: 20px 0; }
-  .proj-row__logo { display: none; }
   .proj-row__partner { grid-column: 2; }
   .proj-row__title { grid-column: 1 / -1; }
   .alumni__row { grid-template-columns: minmax(0, 1fr); gap: 4px; }

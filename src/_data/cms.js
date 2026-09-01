@@ -42,9 +42,9 @@
  *                     photo_url, scholar_url, notes, +name
  *   Leader_CV         section(ResearchInterest|Education|Experience|Award|Activity),
  *                     date, title, detail
- *   Research_Topics   no, title_en, title_ko, description, tags[], image_url, +title
- *   Research_Projects status(Ongoing|Completed), title_en, title_ko, partner,
- *                     partner_logo_url, period_start, period_end, notes,
+ *   Research_Topics   no, title_en, title_ko, description, image_url, +title
+ *   Research_Projects status(Ongoing|Completed), role(PI|Co-I|Advisor), title_ko,
+ *                     partner, period_start, period_end, notes,
  *                     +title, +period("시작 – 끝"), +isOngoing
  *   Publications      year(number), authors, title, venue, metrics, doi,
  *                     featured(boolean), +metricsList[]

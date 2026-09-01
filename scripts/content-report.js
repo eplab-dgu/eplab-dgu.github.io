@@ -29,7 +29,7 @@ const WATCH = {
     { field: 'email', only: (m) => m.category === 'Faculty' || m.category === 'Graduate' },
   ],
   Research_Topics: ['description', 'image_url'],
-  Research_Projects: ['role', 'partner', 'partner_logo_url', 'period_start', 'period_end'],
+  Research_Projects: ['role', 'partner', 'period_start', 'period_end'],
   Publications: ['venue', 'metrics', 'doi'],
   Conferences: ['authors', 'venue'],
   Patents: ['patent_no', 'inventors'],

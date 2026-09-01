@@ -1,6 +1,6 @@
 {
   "source": "google-sheets",
-  "generatedAt": "2026-09-01T15:58:42.771Z",
+  "generatedAt": "2026-09-01T16:13:09.586Z",
   "presentTabs": [
     "README",
     "Site_Config",
@@ -75,7 +75,6 @@
         "role",
         "title_ko",
         "partner",
-        "partner_logo_url",
         "period_start",
         "period_end",
         "notes"

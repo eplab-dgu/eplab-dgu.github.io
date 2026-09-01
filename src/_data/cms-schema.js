@@ -115,7 +115,6 @@ export const SCHEMAS = {
       // 교수님의 과제 참여 형태. 비어 있어도 행은 게시된다 — 표의 ROLE 칸만 빈다.
       role: { enum: PROJECT_ROLES },
       partner: {},
-      partner_logo_url: { type: 'url' },
       period_start: {},
       period_end: {},
       notes: {},

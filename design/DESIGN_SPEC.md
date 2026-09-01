@@ -25,7 +25,7 @@
 
 `tokens.css` 참조 (색/폰트/간격/유틸리티가 모두 변수화되어 있음). 요점:
 
-- **테마**: 원본은 다크 단일 테마(배경 `#0B0B0C`, 텍스트 `#EDEDED`). **구현은 2026-09-02부터 라이트 테마**(배경 `#FFFFFF`, 텍스트 `#16161A`)이며, 히어로 배너만 어둡게 남았다. **오렌지 액센트 `#FF6A1F` 는 그대로.** 이 문서의 색 값은 원본 기록용이고, 현재 값은 `src/assets/css/site.css` 의 `:root` 가 기준이다.
+- **테마**: 다크 단일 테마. 배경 `#0B0B0C`, 텍스트 `#EDEDED`, **오렌지 액센트 `#FF6A1F`**. 구현의 현재 값은 언제나 `src/assets/css/site.css` 의 `:root` 가 기준이다.
 - **폰트**: 모노스페이스 스택(`Consolas, Menlo, "DejaVu Sans Mono", "Malgun Gothic", "Apple SD Gothic Neo", monospace`). 이 모노스페이스 감성이 브랜드의 핵심이므로 유지.
 - **레이아웃**: 콘텐츠 최대폭 `1240px`, 좌우 패딩 `28px`, 섹션 상하 `84px`, 내부 페이지 상단 `56px`.
 - **시그니처 패턴**:
@@ -79,7 +79,7 @@ Contact
 - **Team / Leader** (L136–210): 좌측 인물 카드(포트레이트 슬롯 + 이름/직함/연락/Scholar), 우측 Research Interests / Education / Professional Experience / Awards / Academic Activities. 데이터는 시트 `Leader_CV` (section별).
 - **Team / Researchers** (L212–258): Graduate(카드 그리드, 사진+이름+역할+이메일), Undergraduate(카드 그리드), Alumni(행 리스트: 이름 · 재학기간/역할 · 진로).
 - **Research / Topics** (L269–288): 6개 주제, 각 행 = 이미지 슬롯 + 번호 + 영문/국문 제목 + 설명 + 태그 칩. **원본에 설명·태그가 이미 작성됨**(§5 참조).
-- **Research / Projects** (L290–305): 표(STATUS / ROLE / PERIOD / PARTNER / PROJECT). `ROLE` 은 2026-09-02 추가된 열(PI / Co-I / Advisor). ONGOING은 오렌지 배지, COMPLETED는 회색. **PARTNER 칸 = 로고 + 이름**: 시트 `partner_logo_url`이 있으면 40×40 로고 이미지, 없으면 원본의 점선 LOGO placeholder(dc.html L299) 대신 파트너명 텍스트로 폴백(§4-1 스니펫).
+- **Research / Projects** (L290–305): 표(STATUS / ROLE / PERIOD / PARTNER / PROJECT). `ROLE` 은 2026-09-02 추가된 열(PI / Co-I / Advisor). ONGOING은 오렌지 배지, COMPLETED는 회색. **PARTNER 칸은 이름만** — 원본의 로고 placeholder(dc.html L299)와 `partner_logo_url` 열은 2026-09-02 폐기했다.
 - **Achievements / Publications** (L316–340): 연도 헤더(오렌지) + 논문 리스트. 각 논문: 제목 → 저자(**"S. H. Park" 자동 오렌지 볼드 강조**) → 게재지 → 지표 칩(Q1/JCR≤10% 오렌지) + DOI 버튼.
 - **Achievements / Conferences** (L342–358): **placeholder — 데이터 없음**. 연도별 리스트 레이아웃만 존재.
 - **Achievements / Patents** (L360–376): **placeholder — 표 레이아웃만**(NO./STATUS/TITLE). 실제 특허 데이터는 시트 `Patents`(US 2건)로 채운다.
