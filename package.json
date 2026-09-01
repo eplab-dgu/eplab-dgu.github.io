@@ -14,11 +14,11 @@
     "serve": "eleventy --serve",
     "clean": "node -e \"fs.rmSync('_site',{recursive:true,force:true})\"",
     "cache:refresh": "node scripts/sheets-to-cache.js",
-    "hero": "node scripts/hero-illustration.js"
+    "hero": "node scripts/hero-illustration.js",
+    "report": "node scripts/content-report.js"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.6",
-    "fflate": "^0.8.3"
+    "@11ty/eleventy": "^3.1.6"
   },
   "dependencies": {
     "dotenv": "^17.4.2",

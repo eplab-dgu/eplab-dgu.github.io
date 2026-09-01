@@ -12,33 +12,16 @@
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { TABS } from './cms-schema.js';
+// 헤더 매핑은 xlsx 경로와 **똑같은 함수**를 쓴다. 두 소스가 다르게 해석하면
+// 소스를 바꿨을 때 이유 없이 내용이 달라진다.
+import { gridToObjects } from './xlsx-source.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
 export const CACHE_DIR = join(ROOT, 'data-cache');
 export { TABS };
 
-/** 시트 2차원 배열 → 헤더 이름 매핑 객체 배열 (열 순서 무관) */
-export function gridToObjects(grid) {
-  if (!grid || grid.length === 0) return { headers: [], rows: [] };
-
-  const headerRow = (grid[0] ?? []).map((h) => String(h ?? '').trim());
-  const headers = headerRow.filter(Boolean);
-
-  const rows = grid.slice(1).flatMap((row) => {
-    const obj = {};
-    let hasValue = false;
-    headerRow.forEach((header, i) => {
-      if (!header) return;
-      const cell = String(row?.[i] ?? '').trim();
-      obj[header] = cell;
-      if (cell) hasValue = true;
-    });
-    return hasValue ? [obj] : [];
-  });
-
-  return { headers, rows };
-}
+export { gridToObjects };
 
 /**
  * Sheets API 로드. **탭을 통째로 요청하지 않는다.**

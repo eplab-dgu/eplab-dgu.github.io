@@ -60,14 +60,8 @@
  *
  * 필드별 상세(필수 여부·enum)는 cms-schema.js 의 SCHEMAS 를 볼 것.
  */
-import { readFileSync, existsSync } from 'node:fs';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import * as XLSX from 'xlsx';
 import { TABS, IGNORED_TABS, validateTab, expectedHeaders } from './cms-schema.js';
-
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const XLSX_PATH = join(ROOT, 'eplab_website_content.xlsx');
+import { loadFromXlsx } from './xlsx-source.js';
 
 // ═══ SOURCE ADAPTER ═══════════════════════════════════════════════════════
 // 여기만 갈아끼우면 소스가 바뀐다. 위 주석의 계약을 지킬 것.
@@ -77,62 +71,13 @@ const XLSX_PATH = join(ROOT, 'eplab_website_content.xlsx');
  * 실패해도 throw 하지 않는다 — 빈 데이터로 빌드가 계속되고, 로그에 이유가 남는다.
  */
 async function loadRawTabs() {
-  if (!existsSync(XLSX_PATH)) {
-    console.warn(`  [cms] !! ${XLSX_PATH} 없음 — 빈 데이터로 빌드한다`);
-    return { source: 'missing', presentTabs: [], data: {} };
-  }
-
-  try {
-    // cellDates:false + raw:false → 모든 셀을 "보이는 그대로의 문자열"로 받는다.
-    // 시트에서 오는 값과 형태를 맞춰야(예: "2026.03" 이 날짜로 뒤바뀌지 않도록)
-    // 나중에 Sheets API 로 바꿔도 파싱 결과가 동일하다.
-    const wb = XLSX.read(readFileSync(XLSX_PATH), { type: 'buffer', cellDates: false });
-    const data = {};
-
-    for (const name of wb.SheetNames) {
-      const grid = XLSX.utils.sheet_to_json(wb.Sheets[name], {
-        header: 1, // 2차원 배열로 받아 헤더 매핑을 우리가 직접 한다
-        raw: false,
-        defval: '',
-        blankrows: false,
-      });
-      data[name] = gridToObjects(grid);
-    }
-
-    return { source: 'xlsx', presentTabs: wb.SheetNames, data };
-  } catch (err) {
-    console.warn(`  [cms] !! xlsx 읽기 실패: ${err.message} — 빈 데이터로 빌드한다`);
-    return { source: 'xlsx-error', presentTabs: [], data: {} };
-  }
+  // 파싱 자체는 xlsx-source.js 가 한다 — 캐시 덤프 스크립트와 **같은 파서**를 쓰기 위해서다.
+  // 여기서는 어댑터 계약(source 이름 붙이기)만 맞춘다.
+  const { ok, presentTabs, data } = loadFromXlsx((msg) => console.warn(`  [cms] !! ${msg}`));
+  return { source: ok ? 'xlsx' : 'xlsx-unavailable', presentTabs, data };
 }
 
 // ═══ 이하 소스 무관 파이프라인 ═════════════════════════════════════════════
-
-/**
- * 2차원 배열 → 헤더 **이름** 매핑 객체 배열. 열 순서에 의존하지 않는다.
- * headers 를 함께 돌려주는 이유: 조용히 사라진 열을 탐지하려면
- * "실제 시트에 있던 헤더 목록"이 필요하다. rows 만 봐서는 알 수 없다.
- */
-function gridToObjects(grid) {
-  if (!grid || grid.length === 0) return { headers: [], rows: [] };
-
-  const headerRow = (grid[0] ?? []).map((h) => String(h ?? '').trim());
-  const headers = headerRow.filter(Boolean);
-
-  const rows = grid.slice(1).flatMap((row) => {
-    const obj = {};
-    let hasValue = false;
-    headerRow.forEach((header, i) => {
-      if (!header) return; // 헤더 없는 열은 무시
-      const cell = String(row?.[i] ?? '').trim();
-      obj[header] = cell;
-      if (cell) hasValue = true;
-    });
-    return hasValue ? [obj] : []; // 완전히 빈 행은 버린다
-  });
-
-  return { headers, rows };
-}
 
 /**
  * 탭·헤더 구조가 스키마와 어긋나는지 검사한다.
