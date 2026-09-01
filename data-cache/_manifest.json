@@ -1,6 +1,6 @@
 {
   "source": "google-sheets",
-  "generatedAt": "2026-09-01T14:47:22.491Z",
+  "generatedAt": "2026-09-01T15:58:42.771Z",
   "presentTabs": [
     "README",
     "Site_Config",
@@ -14,8 +14,7 @@
     "Invited_Talks",
     "Teaching",
     "News",
-    "Gallery",
-    "Collaborators"
+    "Gallery"
   ],
   "sheets": {
     "Site_Config": {
@@ -64,17 +63,16 @@
         "title_en",
         "title_ko",
         "description",
-        "tags",
         "image_url"
       ]
     },
     "Research_Projects": {
-      "rows": 13,
+      "rows": 26,
       "headers": [
         "publish",
         "order",
         "status",
-        "title_en",
+        "role",
         "title_ko",
         "partner",
         "partner_logo_url",

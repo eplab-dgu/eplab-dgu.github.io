@@ -7,8 +7,8 @@
   },
   {
     "key": "site_short",
-    "value_en": "eP Lab.",
-    "value_ko": "eP Lab.",
+    "value_en": "electrified Propulsion Lab.",
+    "value_ko": "",
     "notes": ""
   },
   {
@@ -42,15 +42,21 @@
     "notes": "배너 서브텍스트"
   },
   {
+    "key": "about_title",
+    "value_en": "전동화 추진시스템의|설계, 해석 및 시험",
+    "value_ko": "",
+    "notes": ""
+  },
+  {
     "key": "about_p1",
     "value_en": "",
-    "value_ko": "전동화 추진시스템 연구실(electrified Propulsion Lab.)은 전기기기(electric machinery)의 설계와 다물리(multi-physics) 해석을 기반으로, 자동차·선박·항공·생활가전·로봇용 전동화 추진시스템의 성능을 예측하고 최적화하는 연구를 수행합니다. 또한, 시험-해석 정합성 확보를 위한 해석기법의 연구를 바탕으로 1-D 시스템 모델 관련 연구를 수행합니다.",
+    "value_ko": "전동화 추진시스템 연구실은 전기기기의 설계와 다물리 해석을 기반으로, 자동차·선박·항공·생활가전·로봇용 전동화 추진시스템의 성능을 향상시키고 최적화하기 위한 연구를 수행합니다.",
     "notes": "About 본문 1"
   },
   {
     "key": "about_p2",
     "value_en": "",
-    "value_ko": "전자기 설계에서 시작해 손실·열·진동/소음을 함께 다루는 통합 해석 체계를 구축하고, 다중충실도 기반 설계 및 시험 효율화와 AI 기반 설계/시험 가속화 방법론을 개발합니다. 산업계와의 협력을 통해 연구 결과를 실제 양산 개발 프로세스에 적용하는 것을 목표로 합니다.",
+    "value_ko": "자성재료 기반 전자기 해석과 열·진동/소음·회전자 강도를 함께 다루는 통합 해석 체계를 구축하고, 다중충실도 기반 설계 및 시험 효율화와 AI 기반 설계/시험 가속화 방법론을 개발합니다. 산업계와의 협력을 통해 연구 결과를 양산 개발 프로세스에 적용하는 것을 목표로 합니다.",
     "notes": "About 본문 2"
   },
   {
@@ -134,12 +140,6 @@
   {
     "key": "footer",
     "value_en": "Copyright © 2026 electrified Propulsion Lab. Dongguk University. All rights reserved.",
-    "value_ko": "",
-    "notes": ""
-  },
-  {
-    "key": "about_title",
-    "value_en": "전동화 추진시스템의|설계, 해석 및 시험",
     "value_ko": "",
     "notes": ""
   }

@@ -44,7 +44,7 @@
     "notes": "영문명 draft"
   },
   {
-    "publish": "TRUE",
+    "publish": "FALSE",
     "order": "50",
     "level": "Graduate",
     "title_en": "Electromagnetic Field Analysis of Electric Machinery",
@@ -55,7 +55,7 @@
     "notes": "영문명 draft"
   },
   {
-    "publish": "TRUE",
+    "publish": "FALSE",
     "order": "60",
     "level": "Graduate",
     "title_en": "Advanced Electric Machine Control",
