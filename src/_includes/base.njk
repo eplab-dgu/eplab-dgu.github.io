@@ -9,7 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% if title %}{{ title }} · {% endif %}{{ cms.config.site_short or "eP Lab." }}</title>
 <meta name="description" content="{{ description or cms.config.site_name }} — {{ cms.config.university }}">
-<link rel="icon" href="/assets/logo.svg">
+{# 파비콘은 정사각 SVG 래퍼 — 원본 로고(84×93)를 그대로 쓰면 탭에서 찌그러진다 #}
+<link rel="icon" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/logo.png">
 <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
@@ -18,7 +20,7 @@
 <header class="site-header">
   <div class="site-header__inner">
     <a class="brand" href="/">
-      <span class="brand__mark"><img src="/assets/logo.svg" alt="" width="36" height="36"></span>
+      <span class="brand__mark"><img src="/assets/logo.png" alt="" width="33" height="36"></span>
       <span class="brand__text">
         <span class="brand__name"><em>electrified</em> Propulsion Lab.</span>
         {# 디자인 L28: 헤더 브랜드는 영문 대문자 #}
@@ -52,7 +54,7 @@
   <div class="site-footer__inner">
     <div class="site-footer__col">
       <div class="site-footer__brand">
-        <span class="brand__mark"><img src="/assets/logo.svg" alt="" width="32" height="32"></span>
+        <span class="brand__mark"><img src="/assets/logo.png" alt="" width="29" height="32"></span>
         <span><em style="color:var(--accent);font-style:normal">electrified</em> Propulsion Lab.</span>
       </div>
       <span class="site-footer__addr">{{ cms.config.dept }}<br>{{ cms.config.address }}</span>

@@ -619,11 +619,9 @@ ${spacecraft()}
 }
 
 mkdirSync(OUT_DIR, { recursive: true });
-{
-  const mark = logo();
-  writeFileSync(join(OUT_DIR, 'logo.svg'), mark, 'utf8');
-  console.log(`  ${'logo.svg'.padEnd(20)} ${(mark.length / 1024).toFixed(1).padStart(6)} KB   64×64`);
-}
+// logo.svg 는 더 이상 만들지 않는다 — 2026-09-02 부터 연구실 실제 로고
+// (src/assets/logo.png)를 쓴다. 여기서 다시 쓰면 안 쓰이는 파일만 생긴다.
+// 아래 logo() 함수는 임시 로고가 다시 필요해질 때를 위해 남겨둔다.
 for (const [name, layout] of Object.entries(LAYOUTS)) {
   L = layout;
   const out = render();

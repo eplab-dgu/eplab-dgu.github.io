@@ -110,7 +110,11 @@ a:hover { color: var(--accent-2); }
 .imgslot-sm { background: repeating-linear-gradient(135deg, var(--stripe-1) 0 8px, var(--stripe-2) 8px 16px); }
 
 .imgslot img, .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.has-img { border: 0; background: none; }
+/* 이미지가 들어온 슬롯은 점선 테두리를 없앤다.
+   배경(줄무늬)은 **일부러 남긴다** — 이미지는 100%×100% object-fit:cover 라 정상일 때
+   줄무늬를 완전히 덮는다. 대신 링크가 깨지면(권한·오타) 빈 칸 대신 줄무늬 placeholder 가
+   드러나서 "안 불러와졌다"는 게 눈에 보인다. background:none 이면 그냥 빈 상자가 된다. */
+.has-img { border: 0; }
 
 .chip {
   font-size: 11px; letter-spacing: .04em; padding: 3px 8px;
@@ -324,19 +328,19 @@ a:hover { color: var(--accent-2); }
 
 /* ─── TEAM / Researchers (L212–258) ─────────────────────────────────────── */
 .team-block { display: flex; flex-direction: column; gap: 64px; }
+/* 원본은 학부생 카드를 대학원생보다 작게 잡았다(.team-grid-ug / .person--ug).
+   2026-09-02 부터 두 그룹의 카드 크기를 같게 맞춰서 그 두 규칙을 걷어냈다.
+   졸업생 중 학위 취득자 카드도 같은 크기를 쓴다. */
 .team-grid-grad { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
-.team-grid-ug   { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
 .person { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-.person--ug { padding: 18px; gap: 12px; }
 .person__photo { aspect-ratio: 1/1; }
 .person__lines { display: flex; flex-direction: column; gap: 5px; }
-.person--ug .person__lines { gap: 4px; }
 .person__ko { font-size: 15px; }
-.person--ug .person__ko { font-size: 14px; }
 .person__en { font-size: 12px; color: var(--text-label); }
-.person--ug .person__en { font-size: 11.5px; }
 .person__role { font-size: 11px; color: var(--accent); letter-spacing: .06em; }
 .person__email { font-size: 11.5px; color: var(--text-faint); word-break: break-all; }
+/* 졸업생 카드의 현 소속 — 재학생 카드의 이메일 자리를 그대로 쓴다 */
+.person__affil { font-size: 11.5px; color: var(--text-body); text-wrap: pretty; }
 
 .alumni__row {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr);

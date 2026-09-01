@@ -41,11 +41,15 @@ const PROJECT_ROLES = ['PI', 'Co-I', 'Advisor'];
 const TEACHING_LEVELS = ['Undergraduate', 'Graduate'];
 const PATENT_STATUS = ['Registered', 'Filed', 'Pending'];
 
+/** 졸업생 중 "학위 취득자"로 볼 position. 학부연구생은 여기 안 걸린다. */
+const DEGREE_POSITION = /석사|박사|master|ph\.?\s*d|doctor/i;
+
 /**
  * 필드 스펙:
  *   required : 비면 **행 전체 스킵** (경고)
  *   enum     : 목록 밖 값이면 **행 전체 스킵** (경고)
- *   type     : 'string'(기본) | 'number' | 'boolean' | 'url' | 'list'
+ *   type     : 'string'(기본) | 'number' | 'boolean' | 'url' | 'image' | 'list'
+ *              'image' = url + 구글 드라이브 공유 링크를 직접 이미지 URL로 변환
  *   sep      : type:'list' 의 구분자 (기본 ',')
  *
  * 탭 옵션:
@@ -75,11 +79,21 @@ export const SCHEMAS = {
       email: {},
       cohort_period: {},
       current_affiliation: {},
-      photo_url: { type: 'url' },
+      photo_url: { type: 'image' },
       scholar_url: { type: 'url' },
       notes: {},
     },
-    derive: (r) => ({ name: preferred(r.name_ko, r.name_en) }),
+    derive: (r) => ({
+      name: preferred(r.name_ko, r.name_en),
+      // 졸업생은 두 갈래로 나뉜다 (2026-09-02):
+      //   학위 취득자(석사·박사) → 사진 카드
+      //   학부연구생            → 이름만 있는 텍스트 줄
+      // position 문자열로 판정한다. 못 알아본 값은 **텍스트 줄로 떨어진다** —
+      // 사진 없는 카드가 덩그러니 남는 것보다 그쪽이 덜 망가진다.
+      isDegreeAlumni: r.category === 'Alumni' && DEGREE_POSITION.test(r.position),
+      // 학위 취득 시점 = 재직 기간의 끝. "24.09 ~ 26.08" → "2026.08"
+      degreeDate: endOfPeriod(r.cohort_period),
+    }),
   },
 
   Leader_CV: {
@@ -102,7 +116,7 @@ export const SCHEMAS = {
       title_en: { required: true },
       title_ko: {},
       description: {},
-      image_url: { type: 'url' },
+      image_url: { type: 'image' },
     },
     derive: (r) => ({ title: preferred(r.title_ko, r.title_en) }),
   },
@@ -199,7 +213,7 @@ export const SCHEMAS = {
       category: { enum: NEWS_CATEGORIES },
       text_ko: {},
       text_en: {},
-      image_url: { type: 'url' },
+      image_url: { type: 'image' },
     },
     // 한글 우선. 디자인 원본의 News 는 한국어 문장이다.
     // isFallbackEn = 한국어가 비어 영문으로 대체된 행. 원문이 빠진 것이므로 보고 대상.
@@ -219,7 +233,8 @@ export const SCHEMAS = {
       image_urls: { type: 'list' },
       notes: {},
     },
-    derive: (r) => ({ year: yearOf(r.date) }),
+    // image_urls 는 리스트라 coerce 의 'image' 분기를 못 탄다. 여기서 항목별로 변환한다.
+    derive: (r) => ({ year: yearOf(r.date), image_urls: r.image_urls.map((u) => driveDirect(u)) }),
   },
 
   // ── About ─────────────────────────────────────────────────────────────────
@@ -272,6 +287,59 @@ export function dateSortKey(value) {
   return `${year.padStart(4, '0')}${m.padStart(2, '0')}${d.padStart(2, '0')}`;
 }
 
+/**
+ * 구글 드라이브 공유 링크를 **`<img src>` 로 쓸 수 있는 직접 이미지 URL**로 바꾼다.
+ *
+ * 학생이 드라이브에서 "링크 복사"를 누르면 이런 게 나온다:
+ *     https://drive.google.com/file/d/<ID>/view?usp=drive_link
+ * 이건 **이미지가 아니라 뷰어 웹페이지**다. `<img src>` 에 넣으면 아무것도 안 보인다.
+ * 학생에게 URL을 손으로 고치라고 시킬 수는 없으니(반드시 틀린다) 여기서 바꾼다.
+ *
+ * 드라이브가 주는 링크 형태를 전부 받아 파일 ID만 뽑고, 이미지 바이트를 돌려주는
+ * `thumbnail` 엔드포인트로 정규화한다. (`uc?export=view` 는 지금은 잘 막힌다.)
+ *
+ * ⚠️ 이건 **주소만** 고친다. 파일이 "링크가 있는 모든 사용자"로 공개돼 있지 않으면
+ *    어떤 주소를 써도 구글 로그인 페이지가 돌아온다 — 사진이 안 나오면 공유 설정을 먼저 볼 것.
+ * ⚠️ 드라이브 핫링크는 트래픽 제한이 있다. 최종적으로는 빌드 시 내려받아
+ *    자체 호스팅하는 편이 맞다 (HOW_TO_BUILD 7단계).
+ *
+ * 드라이브 링크가 아니면 원본을 그대로 돌려준다.
+ */
+export function driveDirect(url, size = 1000) {
+  const s = String(url ?? '');
+  // 호스트를 문자열 매칭으로 보면 안 된다 — "//drive.google.com" 앞은 점도 문자열
+  // 시작도 아니라서 정규식이 조용히 빗나간다. 파싱해서 호스트만 본다.
+  let host;
+  try { host = new URL(s).hostname.toLowerCase(); } catch { return s; }
+  if (host !== 'drive.google.com' && !host.endsWith('.drive.google.com')) return s;
+  const id =
+    s.match(/\/file\/d\/([A-Za-z0-9_-]+)/)?.[1] ??      // /file/d/<ID>/view
+    s.match(/[?&]id=([A-Za-z0-9_-]+)/)?.[1] ??          // /open?id=<ID>, /uc?id=<ID>
+    s.match(/\/d\/([A-Za-z0-9_-]+)/)?.[1];              // 그 밖의 /d/<ID>
+  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w${size}` : s;
+}
+
+/**
+ * 기간 문자열의 **끝**을 "YYYY.MM" 으로. 졸업생의 학위 취득 시점에 쓴다.
+ *
+ *   "24.09 ~ 26.08"     → "2026.08"
+ *   "2024.09 ~ 2026.08" → "2026.08"
+ *   "26.08"             → "2026.08"   (구분자가 없으면 통째로 끝으로 본다)
+ *
+ * 시트에 학위 취득일 열이 따로 없어서 `cohort_period` 의 끝을 쓴다 — 연구실을
+ * 떠난 시점이 곧 학위 취득 시점이라는 전제다. 이 전제가 안 맞는 사람이 생기면
+ * 그때 전용 열을 만드는 게 맞다. 못 읽으면 빈 문자열(표시 안 함).
+ */
+export function endOfPeriod(period) {
+  const s = String(period ?? '').trim();
+  if (!s) return '';
+  const last = s.split(/[~–—-]/).pop().trim();
+  const m = last.match(/^(\d{2}|\d{4})\s*[.\-/]\s*(\d{1,2})$/);
+  if (!m) return '';
+  const [, y, mo] = m;
+  return `${y.length === 2 ? `20${y}` : y}.${mo.padStart(2, '0')}`;
+}
+
 /** 구분자로 나눈 뒤 공백 정리. 빈 조각은 버린다. */
 export function splitList(value, sep = ',') {
   return String(value ?? '')
@@ -318,6 +386,16 @@ function coerce(raw, spec, ctx, warn) {
         return { ok: true, value: null };
       }
       return { ok: true, value };
+    }
+
+    // 'image' = url 과 같되, 구글 드라이브 공유 링크를 **직접 이미지 URL로 바꾼다.**
+    case 'image': {
+      if (empty) return { ok: true, value: null };
+      if (!/^https?:\/\//i.test(value)) {
+        warn(`${ctx}: http(s) URL이 아니라 무시 ("${value}")`);
+        return { ok: true, value: null };
+      }
+      return { ok: true, value: driveDirect(value) };
     }
 
     default: {

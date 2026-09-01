@@ -6,7 +6,15 @@ permalink: /team/researchers/
 {# Team > Researchers — dc.html L212–258 이식. Members 탭을 category 로 나눈다. #}
 {% set grads = cms.Members | where("category", "Graduate") %}
 {% set undergrads = cms.Members | where("category", "Undergraduate") %}
+{#
+  졸업생은 두 갈래다 (2026-09-02):
+    isDegreeAlumni=true  → 석사·박사 학위 취득자. 재학생과 같은 사진 카드.
+    false                → 학부연구생. 사진 없이 텍스트 줄로만.
+  판정은 cms-schema.js 의 derive 가 position 을 보고 한다.
+#}
 {% set alumni = cms.Members | where("category", "Alumni") %}
+{% set degreeAlumni = alumni | where("isDegreeAlumni", true) %}
+{% set ugAlumni = alumni | where("isDegreeAlumni", false) %}
 
 <div class="page">
   <span class="eyebrow">Team</span>
@@ -38,9 +46,10 @@ permalink: /team/researchers/
     {% if undergrads.length %}
     <div>
       <div class="cv__label">UNDERGRADUATE STUDENTS</div>
-      <div class="cardgrid team-grid-ug">
+      {# 대학원생과 같은 그리드·같은 카드 크기를 쓴다 (2026-09-02) #}
+      <div class="cardgrid team-grid-grad">
         {% for p in undergrads %}
-        <div class="person person--ug">
+        <div class="person">
           <div class="imgslot imgslot-sm person__photo{% if p.photo_url %} has-img{% endif %}">
             {% if p.photo_url %}<img src="{{ p.photo_url }}" alt="{{ p.name_en }}" loading="lazy">
             {% else %}[ PHOTO ]{% endif %}
@@ -56,11 +65,34 @@ permalink: /team/researchers/
     </div>
     {% endif %}
 
-    {% if alumni.length %}
+    {% if degreeAlumni.length %}
     <div>
-      <div class="cv__label">ALUMNI</div>
+      <div class="cv__label">ALUMNI &middot; DEGREE HOLDERS</div>
+      <div class="cardgrid team-grid-grad">
+        {% for p in degreeAlumni %}
+        <div class="person">
+          <div class="imgslot imgslot-sm person__photo{% if p.photo_url %} has-img{% endif %}">
+            {% if p.photo_url %}<img src="{{ p.photo_url }}" alt="{{ p.name_en }}" loading="lazy">
+            {% else %}[ PHOTO ]{% endif %}
+          </div>
+          <div class="person__lines">
+            <span class="person__ko">{{ p.name_ko or p.name_en }}</span>
+            <span class="person__en">{{ p.name_en }}</span>
+            {# 학위(취득년월) — degreeDate 는 cohort_period 의 끝에서 뽑는다 #}
+            <span class="person__role">{{ p.position }}{% if p.degreeDate %} ({{ p.degreeDate }}){% endif %}</span>
+            <span class="person__affil">{{ p.current_affiliation }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if ugAlumni.length %}
+    <div>
+      <div class="cv__label">ALUMNI &middot; UNDERGRADUATE RESEARCHERS</div>
       <div class="datalist">
-        {% for p in alumni %}
+        {% for p in ugAlumni %}
         <div class="alumni__row">
           <span>{{ p.name_ko or p.name_en }} <span class="dim">{{ p.name_en }}</span></span>
           <span class="alumni__role">{{ p.position }}{% if p.cohort_period %} ({{ p.cohort_period }}){% endif %}</span>
