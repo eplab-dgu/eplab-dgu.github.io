@@ -2,6 +2,7 @@
 layout: base.njk
 title: Conferences
 permalink: /achievements/conferences/
+hasScript: true
 ---
 {#
   Achievements > Conferences — dc.html L342–358 이식.
@@ -10,8 +11,32 @@ permalink: /achievements/conferences/
   글자 크기·연도 라벨·행 간격을 따로 맞출 필요 없이 한 곳(.pub*)에서 같이 관리된다.
   발표지 줄은 Publications 의 게재지 줄과 같은 형식으로 "venue, location, 년월".
 
+  Publications 와 마찬가지로 최근 2개년만 펼치고 이전은 토글로 접는다.
   시트에 행이 없으면 원본 디자인과 같은 안내 박스만 남는다.
 #}
+{% set years = cms.Conferences | distinctYears %}
+{% set cutoff = years[1] if years.length > 1 else (years[0] or 0) %}
+{% set recent = cms.Conferences | yearFrom(cutoff) %}
+{% set past = cms.Conferences | yearBefore(cutoff) %}
+
+{% macro confYears(items) %}
+  {% for y in items | groupBy("year") | sortGroups("desc") %}
+  <div class="pub-year">
+    <div class="pub-year__label">{{ y.key }}</div>
+    <div class="pub-year__items">
+      {% for c in y.items %}
+      <div class="pub">
+        <span class="pub__title">{{ c.title }}</span>
+        <span class="pub__authors">{{ c.authors | highlightAuthor | safe }}</span>
+        {# venue · location · 년월을 쉼표로 이어 Publications 의 게재지 줄과 같은 모양으로 #}
+        <span class="pub__venue">{{ [c.venue, c.location, c.date] | compact | join(", ") }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+{% endmacro %}
+
 <div class="page">
   <span class="eyebrow">Achievements</span>
   <h1 class="h-page">Conferences</h1>
@@ -19,25 +44,22 @@ permalink: /achievements/conferences/
   {% if cms.Conferences.length %}
   <div class="pub-years">
     {% if cms.config.scholar_url %}
-    <a class="pub-scholar" href="{{ cms.config.scholar_url }}">GOOGLE SCHOLAR →</a>
+    <a class="pub-scholar" href="{{ cms.config.scholar_url }}" target="_blank" rel="noopener">GOOGLE SCHOLAR →</a>
     {% endif %}
 
-    {% for y in cms.Conferences | groupBy("year") | sortGroups("desc") %}
-    <div class="pub-year">
-      <div class="pub-year__label">{{ y.key }}</div>
-      <div class="pub-year__items">
-        {% for c in y.items %}
-        <div class="pub">
-          <span class="pub__title">{{ c.title }}</span>
-          <span class="pub__authors">{{ c.authors | highlightAuthor | safe }}</span>
-          {# venue · location · 년월을 쉼표로 이어 Publications 의 게재지 줄과 같은 모양으로 #}
-          <span class="pub__venue">{{ [c.venue, c.location, c.date] | compact | join(", ") }}</span>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    {% endfor %}
+    {{ confYears(recent) }}
   </div>
+
+  {% if past.length %}
+  <button type="button" class="btn-line toggle" data-toggle="old-confs" style="margin-top:24px"
+          data-label-show="+ {{ cutoff - 1 }}년 이전 Conferences 보기 ({{ past.length }})"
+          data-label-hide="− {{ cutoff - 1 }}년 이전 Conferences 접기">
+    + {{ cutoff - 1 }}년 이전 Conferences 보기 ({{ past.length }})
+  </button>
+  <div class="pub-years" id="old-confs" style="margin-top:24px">
+    {{ confYears(past) }}
+  </div>
+  {% endif %}
   {% else %}
   <div class="talks">
     <p style="margin:0;font-size:14px;color:var(--text-label)">국내/국제 학술대회 발표 목록이 들어갈 영역입니다. 시트의 <code>Conferences</code> 탭에 행을 추가하고 <code>publish</code>를 체크하면 연도별 목록이 표시됩니다.</p>

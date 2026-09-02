@@ -211,9 +211,37 @@ Contact
   "연구실을 떠난 시점 = 학위 취득 시점"이라는 전제이므로, 안 맞는 사람이 생기면 전용 열을 만들 것.
 - 학부생 카드 크기를 대학원생과 같게 맞추면서 `.team-grid-ug` · `.person--ug` 규칙을 걷어냈다.
 
+### 에셋 파이프라인 (2026-09-02, DESIGN_SPEC §8 / HOW_TO_BUILD 7단계)
+- `src/_data/asset-pipeline.js` 가 빌드 때 시트의 이미지 URL을 **내려받아 자체 호스팅**한다.
+  대상은 `TARGETS` 표 하나에 모여 있다: `Members.photo_url` · `Research_Topics.image_url` ·
+  `News.image_url` · `Gallery.image_urls` → `/assets/media/`,
+  `Research_Projects.partner_logo_url` · `Collaborators.logo_url` → `/assets/partners/`.
+  뒤의 둘은 지금 시트에 없지만(열·탭 폐기) 되살아나면 자동으로 잡히도록 규칙만 남겼다.
+- **캐시는 `asset-cache/`** (URL sha1 앞 16자 + 확장자). 커밋하지 않는다(.gitignore).
+  비우려면 `npm run assets:clean`. 확장자는 URL이 아니라 **응답 content-type**으로 정한다 —
+  드라이브 URL엔 확장자가 없다.
+- **출력은 `_site/` 로 직접 쓴다.** `src/assets/` 에 쓰면 `--serve` 가 그 폴더를 감시해
+  빌드→파일생성→재빌드 **무한 루프**가 돈다. 감시 대상 밖에 써야 한다.
+- **실패는 빌드를 죽이지 않는다.** 한 장이 실패하면 그 항목만 원격 URL로 남아 예전처럼
+  핫링크로라도 보인다(실측: 4건 실패 시 나머지 1건만 로컬화, 종료코드 0).
+  이미지가 아닌 응답(드라이브 비공개 → 로그인 HTML 200)은 content-type 으로 걸러낸다.
+- `ASSETS=off` 로 파이프라인을 끄면 예전처럼 원격 URL을 쓴다(디버깅용).
+- ⚠️ **`asset-cache/` 를 커밋하지 않기로 한 대가**: CI 는 매번 새로 받는다. 드라이브가
+  비공개로 바뀌거나 죽은 날에는 새 빌드가 핫링크로 되돌아간다(사진이 깨질 수 있다).
+  완전한 재현성이 필요해지면 캐시를 커밋하는 쪽으로 바꿀 것.
+
+### 반응형 (2026-09-02 점검)
+- 전역 안전장치 `img, svg, video { max-width: 100% }`. 시트 사진은 크기가 제각각이라
+  (353px ~ 1500px) 규칙이 빠지면 좁은 화면에서 가로 스크롤이 생긴다.
+- 히어로는 `<picture>` 로 640px 이하에서 **세로형**(`hero-portrait.svg` 860×980)으로 바뀐다.
+  가로 아트를 폰 폭에 cover 로 자르면 구도가 무너진다. `<picture>` 는 인라인이라
+  `.hero__media picture { display:block; height:100% }` 가 없으면 안쪽 img 높이가 풀리지 않는다.
+- 점검 결과: **7개 폭(360·390·640·768·860·1024·1440) × 12개 페이지에서 가로 넘침 0px,
+  칸을 넘는 이미지 0개.**
+
 ### 남아 있는 것
 - **폴백 캐시는 수동 갱신**: `data-cache/` 는 `npm run cache:refresh` 로만 갱신된다. 갱신을 빠뜨리면 API 장애일 때 옛 내용이 조용히 배포된다. 8단계에서 CI 에 넣을 것.
-- **에셋 자체 호스팅 미구현**: 시트의 이미지 URL을 빌드 시 내려받아 `/assets/`에 두는 파이프라인이 없다. 지금은 시트 URL을 그대로 `<img src>`에 쓴다 — Drive 직링크가 들어오면 throttling에 걸린다. (HOW_TO_BUILD 7단계)
+- ~~에셋 자체 호스팅 미구현~~ → **해소됨 (2026-09-02)**. `src/_data/asset-pipeline.js` 참고(아래).
 - **`Collaborators` 탭이 어떤 페이지에도 안 쓰인다**: 확정 디자인에 협력기관 섹션이 없다. 섹션 부활 vs 탭 폐기 결정 필요.
 - **Home About 제목만 템플릿 하드코딩**: `Site_Config`에 대응 키가 없어서다. 키를 추가하면 시트로 뺄 수 있다.
 

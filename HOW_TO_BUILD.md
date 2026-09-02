@@ -137,7 +137,7 @@ src/_data/cms.js 의 데이터 소스를 로컬 xlsx에서 Google Sheets API(읽
 
 ---
 
-## 7단계 — 에셋 처리 (이미지·로고·PDF)
+## 7단계 — 에셋 처리 (이미지·로고·PDF)  ✅ 완료 (2026-09-02)
 
 ```text
 DESIGN_SPEC.md §8에 따라 에셋 파이프라인을 추가해라:
@@ -147,6 +147,17 @@ DESIGN_SPEC.md §8에 따라 에셋 파이프라인을 추가해라:
 - 반응형: 이미지 max-width, 좁은 화면 레이아웃 점검.
 ```
 **확인**: 이미지가 로컬에서 서빙(핫링크 X), 히어로·인물·파트너 로고 표시.
+
+**결과**
+- `src/_data/asset-pipeline.js` — 빌드 때 이미지 URL을 받아 `_site/assets/media/`
+  (파트너 로고는 `.../partners/`)에 자체 호스팅하고, 데이터의 URL을 로컬 경로로 바꾼다.
+  캐시는 `asset-cache/`(커밋 안 함, `npm run assets:clean` 으로 비움).
+- `partner_logo_url` · `Collaborators.logo_url` 은 **시트에서 이미 폐기**된 열·탭이라
+  실제로 받을 것이 없다. 되살아나면 자동으로 잡히도록 규칙만 남겨뒀다.
+- 히어로는 이전 단계에서 이미 배치돼 있었다(`/assets/hero.svg`). 이번에 좁은 화면용
+  세로판(`hero-portrait.svg`)을 `<picture>` 로 연결했다.
+- 실측: 출력 HTML에 **원격 이미지 참조 0건**, 7개 폭 × 12개 페이지에서 **가로 넘침 0px**.
+- 한 장이 실패해도 그 항목만 원격 URL로 남고 빌드는 성공한다(`ASSETS=off` 로 전체 끄기 가능).
 
 ---
 

@@ -8,7 +8,15 @@ description: Design, analysis and testing of electrified propulsion systems.
 
 <section class="hero">
   <div class="hero__media">
-    <img src="/assets/hero.svg" alt="" width="1600" height="760">
+    {#
+      좁은 화면에서는 세로형 히어로로 바꾼다. 가로 1600×760 아트를 폰 폭에 맞춰
+      cover 로 자르면 가운데 몇 개체만 남고 구도가 무너진다.
+      hero-portrait.svg(860×980)는 hero-illustration.js 가 같은 소스로 뽑아 둔 세로 판이다.
+    #}
+    <picture>
+      <source srcset="/assets/hero-portrait.svg" media="(max-width: 640px)" width="860" height="980">
+      <img src="/assets/hero.svg" alt="" width="1600" height="760">
+    </picture>
   </div>
   <div class="hero__scrim"></div>
   <div class="hero__body">

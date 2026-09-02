@@ -15,7 +15,8 @@
     "clean": "node -e \"fs.rmSync('_site',{recursive:true,force:true})\"",
     "cache:refresh": "node scripts/sheets-to-cache.js",
     "hero": "node scripts/hero-illustration.js",
-    "report": "node scripts/content-report.js"
+    "report": "node scripts/content-report.js",
+    "assets:clean": "node -e \"fs.rmSync('asset-cache',{recursive:true,force:true})\""
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6"

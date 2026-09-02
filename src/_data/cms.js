@@ -65,6 +65,7 @@ import 'dotenv/config';
 import { TABS, IGNORED_TABS, validateTab, expectedHeaders, preferred } from './cms-schema.js';
 import { loadFromXlsx } from './xlsx-source.js';
 import { loadFromSheetsApi, loadFromCache } from './sheets-source.js';
+import { localizeAssets } from './asset-pipeline.js';
 
 // ═══ SOURCE ADAPTER ═══════════════════════════════════════════════════════
 //
@@ -223,6 +224,19 @@ export default async function () {
   result.configEn = Object.fromEntries(
     (result.Site_Config ?? []).map((r) => [r.key, r.value_en || r.value_ko || ''])
   );
+
+  // 시트의 원격 이미지 URL을 내려받아 자체 호스팅으로 바꾼다 (DESIGN_SPEC §8).
+  // 검증이 끝난 뒤에 돌린다 — 게시되지 않거나 버려진 행의 사진까지 받을 이유가 없다.
+  // 실패한 것은 원격 URL 그대로 남으므로 빌드는 계속된다.
+  const assets = await localizeAssets(result, { warn: (m) => console.warn(`  [cms]   ! 에셋: ${m}`) });
+  if (assets.total) {
+    const parts = [`${assets.total}개`];
+    if (assets.downloaded) parts.push(`새로 받음 ${assets.downloaded}`);
+    if (assets.cached) parts.push(`캐시 ${assets.cached}`);
+    if (assets.failed) parts.push(`실패 ${assets.failed}(원격 URL 유지)`);
+    console.log(`  [cms]   에셋 ${parts.join(' · ')}`);
+    totalWarnings += assets.failed;
+  }
 
   result.stats = buildStats(result);
 

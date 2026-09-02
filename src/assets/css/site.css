@@ -63,6 +63,13 @@
 
 * { box-sizing: border-box; }
 
+/* 반응형 안전장치: 어떤 이미지도 담긴 칸보다 넓어지지 않는다.
+   시트로 들어오는 사진은 크기가 제각각이라(증명사진 353px ~ 갤러리 1500px)
+   규칙이 빠진 자리가 하나라도 있으면 좁은 화면에서 가로 스크롤이 생긴다.
+   height:auto 를 같이 줘야 width/height 속성이 붙은 이미지의 비율이 안 깨진다. */
+img, svg, video { max-width: 100%; }
+img:not([height]) { height: auto; }
+
 /* 이 파일이 .datalist{display:flex} · .cardgrid{display:grid} 처럼 display 를 지정하기
    때문에, 작성자 스타일이 UA 스타일시트의 [hidden]{display:none} 을 덮어쓴다.
    그러면 site.js 가 el.hidden = true 로 접어도 화면에는 그대로 남는다. 명시적으로 이긴다. */
@@ -243,6 +250,9 @@ a:hover { color: var(--accent-2); }
   background: repeating-linear-gradient(135deg, #131315 0 10px, #0F0F11 10px 20px);
   overflow: hidden;
 }
+/* <picture> 는 인라인이라 그대로 두면 안쪽 img 의 height:100% 가 풀리지 않는다.
+   picture 를 블록으로 만들어 슬롯 높이를 그대로 물려준다. */
+.hero__media picture { display: block; width: 100%; height: 100%; }
 .hero__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* 좌측이 짙은 그라디언트 — 히어로 문구의 가독성을 확보한다 */
 .hero__scrim {
