@@ -64,7 +64,7 @@
       <span class="site-footer__label">CONTACT</span>
       <a href="mailto:{{ cms.config.email }}">{{ cms.config.email }}</a>
       <span>{{ cms.config.tel }}</span>
-      {% if cms.config.scholar_url %}<a href="{{ cms.config.scholar_url }}">Google Scholar</a>{% endif %}
+      {% if cms.config.scholar_url %}<a href="{{ cms.config.scholar_url }}" target="_blank" rel="noopener">Google Scholar</a>{% endif %}
     </div>
 
     <div class="site-footer__legal">
@@ -74,6 +74,12 @@
 </footer>
 
 </div>
-{% if hasScript %}<script src="/assets/js/site.js" defer></script>{% endif %}
+{#
+  site.js 는 **모든 페이지에** 싣는다. 예전엔 hasScript 프론트매터가 있는 페이지에만
+  실었는데, 이미지 우클릭 차단이 전 페이지에 필요해졌고 — 무엇보다 그 플래그를
+  빠뜨리면 토글이 조용히 죽는 함정이었다(실제로 겪었다).
+  스크립트 안쪽은 전부 querySelectorAll 기반이라 해당 요소가 없는 페이지에선 아무 일도 안 한다.
+#}
+<script src="/assets/js/site.js" defer></script>
 </body>
 </html>

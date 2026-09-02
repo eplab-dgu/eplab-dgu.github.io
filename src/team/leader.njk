@@ -30,7 +30,7 @@ permalink: /team/leader/
         <div><span class="dim">e-mail&nbsp;&nbsp;</span>{{ leader.email or cms.config.email }}</div>
         <div><span class="dim">tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ cms.config.tel }}</div>
         {% set scholar = leader.scholar_url or cms.config.scholar_url %}
-        {% if scholar %}<a class="leader__scholar" href="{{ scholar }}">GOOGLE SCHOLAR →</a>{% endif %}
+        {% if scholar %}<a class="leader__scholar" href="{{ scholar }}" target="_blank" rel="noopener">GOOGLE SCHOLAR →</a>{% endif %}
       </div>
     </div>
 

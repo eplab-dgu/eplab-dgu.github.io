@@ -70,6 +70,10 @@
 img, svg, video { max-width: 100%; }
 img:not([height]) { height: auto; }
 
+/* 이미지 드래그 차단 — site.js 의 우클릭 차단과 같은 목적이고, JS 가 꺼져도
+   드래그만은 막힌다. 저작권 보호가 아니라 무심코 저장하는 것을 줄이는 정도다. */
+img { -webkit-user-drag: none; -webkit-touch-callout: none; user-select: none; }
+
 /* 이 파일이 .datalist{display:flex} · .cardgrid{display:grid} 처럼 display 를 지정하기
    때문에, 작성자 스타일이 UA 스타일시트의 [hidden]{display:none} 을 덮어쓴다.
    그러면 site.js 가 el.hidden = true 로 접어도 화면에는 그대로 남는다. 명시적으로 이긴다. */

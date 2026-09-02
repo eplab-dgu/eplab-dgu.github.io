@@ -4,6 +4,7 @@
  * 원본 SPA 의 동작 중 정적 페이지에 필요한 것만 옮겼다 (DESIGN_SPEC §6):
  *   1. News "지난 News" · Talks "이전 Talks" 토글
  *   2. Gallery 페이지네이션(8개/페이지) + 항목별 사진 캐러셀
+ *   3. 이미지 우클릭·드래그 차단 (2026-09-03 추가)
  *
  * 네비 드롭다운은 CSS :hover 로 처리하므로 여기 없다.
  *
@@ -30,6 +31,25 @@
       btn.setAttribute('aria-expanded', String(open));
       btn.textContent = open ? btn.dataset.labelHide : btn.dataset.labelShow;
     });
+  });
+
+  // ── 3. 이미지 우클릭 · 드래그 차단 ─────────────────────────────────────
+  //
+  // ⚠️ 이건 **저작권 보호가 아니라 문턱 낮추기**다. 개발자도구·소스보기·JS 끄기·
+  //    화면 캡처로는 그대로 가져갈 수 있고, 이미지 URL 자체가 공개돼 있다.
+  //    "실수로/무심코 저장"을 줄이는 정도로만 기대할 것.
+  //
+  // 문서 전체에 리스너 하나만 건다(이벤트 위임). 나중에 추가되는 이미지에도 적용되고,
+  // 이미지 수만큼 리스너가 늘지 않는다.
+  const isImage = (el) => el && (el.tagName === 'IMG' || el.tagName === 'PICTURE');
+
+  document.addEventListener('contextmenu', (e) => {
+    if (isImage(e.target)) e.preventDefault();
+  });
+
+  // 드래그해서 바탕화면·다른 탭으로 끌어다 놓는 경로도 같이 막는다.
+  document.addEventListener('dragstart', (e) => {
+    if (isImage(e.target)) e.preventDefault();
   });
 
   // ── 2. Gallery ─────────────────────────────────────────────────────────
