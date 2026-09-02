@@ -2,12 +2,45 @@
 layout: base.njk
 title: Publications
 permalink: /achievements/publications/
+hasScript: true
 ---
 {#
   Achievements > Publications — dc.html L316–340 이식.
   연도별 그룹 → 제목 / 저자(S. H. Park 오렌지 볼드) / 게재지 / 지표 칩 + DOI.
   강조·칩 판정은 .eleventy.js 의 highlightAuthor · isHotMetric 필터가 한다.
+
+  최근 2개년만 펼쳐 두고 그 이전은 토글로 접는다 (News 와 같은 방식, site.js 담당).
+  기준 연도는 **데이터에 실제로 있는 연도**에서 뽑는다 — 오늘 날짜로 자르면
+  해가 바뀌는 순간 최근 목록이 비어버린다.
 #}
+{% set years = cms.Publications | distinctYears %}
+{% set cutoff = years[1] if years.length > 1 else (years[0] or 0) %}
+{% set recent = cms.Publications | yearFrom(cutoff) %}
+{% set past = cms.Publications | yearBefore(cutoff) %}
+
+{% macro pubYears(items) %}
+  {% for y in items | groupBy("year") | sortGroups("desc") %}
+  <div class="pub-year">
+    <div class="pub-year__label">{{ y.key }}</div>
+    <div class="pub-year__items">
+      {% for p in y.items %}
+      <div class="pub">
+        <span class="pub__title">{{ p.title }}</span>
+        <span class="pub__authors">{{ p.authors | highlightAuthor | safe }}</span>
+        <span class="pub__venue">{{ p.venue }}</span>
+        <span class="pub__meta">
+          {% for m in p.metricsList %}
+          <span class="chip{{ " chip-hot" if m | isHotMetric else "" }}">{{ m }}</span>
+          {% endfor %}
+          {% if p.doi %}<a class="pub__doi" href="{{ p.doi }}">DOI ↗</a>{% endif %}
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+{% endmacro %}
+
 <div class="page">
   <span class="eyebrow">Achievements</span>
   <h1 class="h-page">Publications</h1>
@@ -17,25 +50,17 @@ permalink: /achievements/publications/
     <a class="pub-scholar" href="{{ cms.config.scholar_url }}">GOOGLE SCHOLAR →</a>
     {% endif %}
 
-    {% for y in cms.Publications | groupBy("year") | sortGroups("desc") %}
-    <div class="pub-year">
-      <div class="pub-year__label">{{ y.key }}</div>
-      <div class="pub-year__items">
-        {% for p in y.items %}
-        <div class="pub">
-          <span class="pub__title">{{ p.title }}</span>
-          <span class="pub__authors">{{ p.authors | highlightAuthor | safe }}</span>
-          <span class="pub__venue">{{ p.venue }}</span>
-          <span class="pub__meta">
-            {% for m in p.metricsList %}
-            <span class="chip{{ " chip-hot" if m | isHotMetric else "" }}">{{ m }}</span>
-            {% endfor %}
-            {% if p.doi %}<a class="pub__doi" href="{{ p.doi }}">DOI ↗</a>{% endif %}
-          </span>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    {% endfor %}
+    {{ pubYears(recent) }}
   </div>
+
+  {% if past.length %}
+  <button type="button" class="btn-line toggle" data-toggle="old-pubs" style="margin-top:24px"
+          data-label-show="+ {{ cutoff - 1 }}년 이전 Publications 보기 ({{ past.length }})"
+          data-label-hide="− {{ cutoff - 1 }}년 이전 Publications 접기">
+    + {{ cutoff - 1 }}년 이전 Publications 보기 ({{ past.length }})
+  </button>
+  <div class="pub-years" id="old-pubs" style="margin-top:24px">
+    {{ pubYears(past) }}
+  </div>
+  {% endif %}
 </div>

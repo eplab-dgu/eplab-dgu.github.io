@@ -80,7 +80,8 @@ Contact
 - **Team / Researchers** (L212–258): Graduate(카드 그리드, 사진+이름+역할+이메일), Undergraduate(카드 그리드), Alumni(행 리스트: 이름 · 재학기간/역할 · 진로).
 - **Research / Topics** (L269–288): 6개 주제, 각 행 = 이미지 슬롯 + 번호 + 영문/국문 제목 + 설명 + 태그 칩. **원본에 설명·태그가 이미 작성됨**(§5 참조).
 - **Research / Projects** (L290–305): 표(STATUS / ROLE / PERIOD / PARTNER / PROJECT). `ROLE` 은 2026-09-02 추가된 열(PI / Co-I / Advisor). ONGOING은 오렌지 배지, COMPLETED는 회색. **PARTNER 칸은 이름만** — 원본의 로고 placeholder(dc.html L299)와 `partner_logo_url` 열은 2026-09-02 폐기했다.
-- **Achievements / Publications** (L316–340): 연도 헤더(오렌지) + 논문 리스트. 각 논문: 제목 → 저자(**"S. H. Park" 자동 오렌지 볼드 강조**) → 게재지 → 지표 칩(Q1/JCR≤10% 오렌지) + DOI 버튼.
+- **Achievements / Conferences**: 2026-09-02 부터 Publications 와 **같은 `.pub-*` 마크업**을 쓴다(연도 그룹 · 저자 오렌지 강조 · Google Scholar 링크). 발표지 줄은 `venue, location, 년월`.
+- **Achievements / Publications** (L316–340): 연도 헤더(오렌지) + 논문 리스트. **최근 2개년만 펼치고 그 이전은 토글로 접는다**(2026-09-02, News 와 같은 방식). 각 논문: 제목 → 저자(**"S. H. Park" 자동 오렌지 볼드 강조**) → 게재지 → 지표 칩(Q1/JCR≤10% 오렌지) + DOI 버튼.
 - **Achievements / Conferences** (L342–358): **placeholder — 데이터 없음**. 연도별 리스트 레이아웃만 존재.
 - **Achievements / Patents** (L360–376): **placeholder — 표 레이아웃만**(NO./STATUS/TITLE). 실제 특허 데이터는 시트 `Patents`(US 2건)로 채운다.
 - **Achievements / Invited Talks** (L378–398): 2025+ 최근 리스트 + "이전 보기" 토글로 2024 이전 표시(흐리게).

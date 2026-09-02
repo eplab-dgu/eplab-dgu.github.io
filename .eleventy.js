@@ -34,6 +34,16 @@ export default function (eleventyConfig) {
     (list ?? []).filter((item) => item?.[key] === value).length
   );
 
+  /**
+   * 목록에 실제로 있는 연도를 큰 것부터 중복 없이. "최근 N개년" 을 고정 연도가 아니라
+   * **데이터 기준**으로 정하려고 쓴다 — 올해 논문이 아직 없어도 최근 목록이 비지 않는다.
+   *   {% set years = cms.Publications | distinctYears %}  → [2026, 2025, 2024, …]
+   */
+  eleventyConfig.addFilter('distinctYears', (list) =>
+    [...new Set((list ?? []).map((item) => item?.year).filter((y) => y != null))]
+      .sort((a, b) => b - a)
+  );
+
   /** year 필드가 기준 이상/미만인 항목만. Talks 의 "최근 vs 이전" 분기용. */
   eleventyConfig.addFilter('yearFrom', (list, from) =>
     (list ?? []).filter((item) => (item?.year ?? 0) >= from)
@@ -79,6 +89,15 @@ export default function (eleventyConfig) {
    */
   eleventyConfig.addFilter('lines', (text, sep = '|') =>
     String(text ?? '').split(sep).map((s) => s.trim()).filter(Boolean)
+  );
+
+  /**
+   * 빈 값(빈 문자열·null·undefined)을 걸러낸다. 여러 조각을 구분자로 이을 때,
+   * 비어 있는 조각 때문에 ", , " 같은 자국이 남지 않게 한다.
+   *   {{ [c.venue, c.location, c.date] | compact | join(", ") }}
+   */
+  eleventyConfig.addFilter('compact', (list) =>
+    (list ?? []).filter((v) => v !== null && v !== undefined && String(v).trim() !== '')
   );
 
   /** 리스트를 n개씩 끊어 페이지 배열로. Gallery 페이지네이션(8개/페이지)에 쓴다. */

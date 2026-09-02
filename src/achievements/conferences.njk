@@ -5,32 +5,43 @@ permalink: /achievements/conferences/
 ---
 {#
   Achievements > Conferences — dc.html L342–358 이식.
-  원본은 데이터가 없어 회색 막대 placeholder 였다. 시트에 행이 들어오면 실제
-  목록이 나오고, 비어 있으면 원본과 같은 안내 박스만 남는다.
+
+  2026-09-02: Publications 와 **같은 마크업**(.pub-years / .pub-year / .pub)을 쓴다.
+  글자 크기·연도 라벨·행 간격을 따로 맞출 필요 없이 한 곳(.pub*)에서 같이 관리된다.
+  발표지 줄은 Publications 의 게재지 줄과 같은 형식으로 "venue, location, 년월".
+
+  시트에 행이 없으면 원본 디자인과 같은 안내 박스만 남는다.
 #}
 <div class="page">
   <span class="eyebrow">Achievements</span>
   <h1 class="h-page">Conferences</h1>
 
-  <div class="talks">
-    {% if cms.Conferences.length %}
-    <div class="conf-list">
-      {% for c in cms.Conferences | groupBy("year") | sortGroups("desc") %}
-        {% for item in c.items %}
-        <div class="conf-row">
-          <span class="conf-row__year">{{ item.date or item.year }}</span>
-          <div class="conf-row__body">
-            <span class="conf-row__title">{{ item.title }}</span>
-            <span class="conf-row__meta">{{ item.authors }}</span>
-            <span class="conf-row__meta">{{ item.venue }}{% if item.location %} · {{ item.location }}{% endif %}</span>
-          </div>
+  {% if cms.Conferences.length %}
+  <div class="pub-years">
+    {% if cms.config.scholar_url %}
+    <a class="pub-scholar" href="{{ cms.config.scholar_url }}">GOOGLE SCHOLAR →</a>
+    {% endif %}
+
+    {% for y in cms.Conferences | groupBy("year") | sortGroups("desc") %}
+    <div class="pub-year">
+      <div class="pub-year__label">{{ y.key }}</div>
+      <div class="pub-year__items">
+        {% for c in y.items %}
+        <div class="pub">
+          <span class="pub__title">{{ c.title }}</span>
+          <span class="pub__authors">{{ c.authors | highlightAuthor | safe }}</span>
+          {# venue · location · 년월을 쉼표로 이어 Publications 의 게재지 줄과 같은 모양으로 #}
+          <span class="pub__venue">{{ [c.venue, c.location, c.date] | compact | join(", ") }}</span>
         </div>
         {% endfor %}
-      {% endfor %}
+      </div>
     </div>
-    {% else %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="talks">
     <p style="margin:0;font-size:14px;color:var(--text-label)">국내/국제 학술대회 발표 목록이 들어갈 영역입니다. 시트의 <code>Conferences</code> 탭에 행을 추가하고 <code>publish</code>를 체크하면 연도별 목록이 표시됩니다.</p>
     <div class="note">[ CONFERENCE LIST — 발표 목록 데이터 필요 ]</div>
-    {% endif %}
   </div>
+  {% endif %}
 </div>
