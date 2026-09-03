@@ -1,0 +1,107 @@
+# eP Lab 홈페이지 — 빌드 & GitHub Pages 배포
+#
+# 언제 도는가
+#   - push       : main/master 에 코드가 올라갈 때
+#   - schedule   : 30분마다 (시트를 고쳐도 저절로 반영되게 하는 유일한 장치)
+#   - dispatch   : Actions 탭에서 수동 실행 — 시트 고치고 바로 반영하고 싶을 때
+#
+# 시트 편집이 "즉시" 게시되지는 않는다. 빌드 방식이라 트리거가 필요하다(CLAUDE.md §3).
+# 급하면 수동 실행(Run workflow)이 가장 빠르다.
+name: Deploy
+
+on:
+  push:
+    branches: [main, master]
+  schedule:
+    # 30분마다. GitHub 의 예약 실행은 혼잡하면 수 분~수십 분 밀리고 가끔 건너뛴다.
+    # "정확히 30분"을 보장하지 않는다 — 급한 반영은 수동 실행을 쓸 것.
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 배포는 한 번에 하나만. 새 실행이 오면 진행 중인 것을 취소하지 않고 줄을 세운다
+# (취소하면 절반만 올라간 상태가 남을 수 있다).
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # xlsx 는 npm 레지스트리가 아니라 cdn.sheetjs.com 에서 받는다(package.json 참고).
+      # lock 파일에 integrity 가 있어 npm ci 로 재현 가능하게 설치된다.
+      - run: npm ci
+
+      # 내려받은 이미지를 실행 간에 재사용한다. 이게 없으면 30분마다 구글 드라이브에
+      # 사진을 새로 받아 하루 수백 번 요청하게 되고, 드라이브 쪽 제한에 걸릴 수 있다.
+      - name: Restore asset cache
+        uses: actions/cache@v4
+        with:
+          path: asset-cache
+          key: asset-cache-${{ github.run_id }}
+          restore-keys: asset-cache-
+
+      - uses: actions/configure-pages@v5
+
+      - name: Build
+        env:
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: npm run build 2>&1 | tee build.log
+
+      # 빌드는 어떤 경우에도 성공한다(설계). 그래서 "초록불 = 최신 내용"이 아니다 —
+      # 시크릿이 없거나 만료되면 코드가 data-cache 폴백으로 조용히 넘어가
+      # **옛 내용이 배포된다.** 로그의 source= 를 직접 확인해서 그 경우를 드러낸다.
+      #
+      # 배포 자체는 막지 않는다. 옛 내용이라도 사이트가 살아 있는 편이 낫고,
+      # 여기서 실패시키면 시트 장애가 곧 사이트 장애가 된다.
+      - name: Check which source the build used
+        run: |
+          if [ ! -s _site/index.html ]; then
+            echo "::error::빌드 산출물이 없다"; exit 1
+          fi
+          echo "산출된 페이지: $(find _site -name '*.html' | wc -l)개"
+
+          SOURCE=$(grep -o 'source=[a-z-]*' build.log | tail -1 | cut -d= -f2)
+          echo "데이터 소스: ${SOURCE:-알 수 없음}"
+          case "$SOURCE" in
+            sheets-api)
+              echo "시트에서 직접 읽었다 — 최신 내용이다." ;;
+            cache-fallback|cache)
+              echo "::warning::시트를 못 읽어 data-cache 로 빌드했다. **방금 고친 시트 내용은 반영되지 않았다.** 서비스 계정 키 만료·공유 해제·API 장애를 확인할 것." ;;
+            xlsx)
+              echo "::warning::시크릿(SHEET_ID / GOOGLE_SERVICE_ACCOUNT_JSON)이 없어 저장소의 xlsx 로 빌드했다. Settings > Secrets 를 확인할 것." ;;
+            *)
+              echo "::warning::데이터 소스를 판별하지 못했다. 빌드 로그를 확인할 것." ;;
+          esac
+
+          # 스킵된 행이 있으면 눈에 띄게 남긴다 (시트에 잘못 입력된 행)
+          grep -E '\[cms\].*(!!|SKIPPED)' build.log | while read -r line; do
+            echo "::warning::$line"
+          done || true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
