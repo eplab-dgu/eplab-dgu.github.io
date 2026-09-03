@@ -64,11 +64,17 @@
 | **Leader_CV** | publish, section**, order, date, title, detail | Team > Leader (교수 이력) |
 | **Research_Topics** | publish, order, no, title_en, title_ko, description, image_url | Research > Topics |
 | **Research_Projects** | publish, order, status(Ongoing/Completed), role(PI/Co-I/Advisor), title_ko, partner, period_start, period_end, notes | Research > Projects |
-| **Publications** | publish, order, year, authors, title, venue, details, metrics, doi, featured, raw_citation | Achievements > Publications |
-| **Patents** | publish, order, country, title, year, patent_no, inventors, notes | Achievements > Patents |
-| **Teaching** | publish, order, level(Undergraduate/Graduate), title_en, title_ko, course_code, notes | Teaching |
-| **News** | publish, order, date, category***, title_en, source_ko, image_url | News |
-| **Collaborators** | publish, order, name, logo_url, url, notes | About > Collaborator |
+| **Publications** | publish, order, year, authors, title, venue, metrics, doi | Achievements > Publications |
+| **Patents** | publish, order, country, status(Registered/Filed/Pending), title, year, patent_no, inventors, notes | Achievements > Patents |
+| **Teaching** | publish, order, level(Undergraduate/Graduate), title_en, title_ko, course_code, term, description, notes | Teaching |
+| **News** | publish, order, date, category***, text_ko, text_en, image_url | News |
+| **Conferences** | publish, order, year, authors, title, venue, location, date, notes | Achievements > Conferences |
+| **Invited_Talks** | publish, order, date, title, host | Achievements > Invited Talks |
+| **Gallery** | publish, order, date, title, participants, photo_count, image_urls, notes | News > Gallery |
+| ~~Collaborators~~ | (2026-09-01 탭 삭제 — 확정 디자인에 협력기관 섹션이 없다) | — |
+
+> 이 표는 **2026-09-04 기준 실제 시트 헤더와 대조해 맞춘 것**이다. 시트를 고치면 여기도 같이 고칠 것 —
+> 어긋나면 빌드가 "구조 드리프트" 경고로 알려준다.
 
 - `*` category: Faculty / Graduate / Undergraduate / Alumni
 - `**` section: ResearchInterest / Education / Experience / Award / Activity / InvitedTalk

@@ -1,6 +1,6 @@
 {
   "source": "google-sheets",
-  "generatedAt": "2026-09-01T16:37:48.767Z",
+  "generatedAt": "2026-09-03T22:37:48.022Z",
   "presentTabs": [
     "README",
     "Site_Config",
@@ -81,7 +81,7 @@
       ]
     },
     "Publications": {
-      "rows": 34,
+      "rows": 38,
       "headers": [
         "publish",
         "order",
@@ -90,12 +90,11 @@
         "title",
         "venue",
         "metrics",
-        "doi",
-        "featured"
+        "doi"
       ]
     },
     "Conferences": {
-      "rows": 3,
+      "rows": 43,
       "headers": [
         "publish",
         "order",
@@ -109,7 +108,7 @@
       ]
     },
     "Patents": {
-      "rows": 2,
+      "rows": 3,
       "headers": [
         "publish",
         "order",
@@ -123,7 +122,7 @@
       ]
     },
     "Invited_Talks": {
-      "rows": 24,
+      "rows": 27,
       "headers": [
         "publish",
         "order",

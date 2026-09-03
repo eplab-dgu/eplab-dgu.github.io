@@ -1,7 +1,7 @@
 [
   {
     "publish": "TRUE",
-    "order": "10",
+    "order": "30",
     "country": "US",
     "status": "Registered",
     "title": "End Coil Cooling Structure for an Induction Motor",
@@ -18,6 +18,17 @@
     "title": "Apparatus for Controlling Variable Magnetic Flux Motor",
     "year": "2023",
     "patent_no": "US 11,757,383 B2",
+    "inventors": "",
+    "notes": ""
+  },
+  {
+    "publish": "TRUE",
+    "order": "10",
+    "country": "KOR",
+    "status": "Filed",
+    "title": "매입형 영구자석 모터의 회전자(Rotor for Interior Permanent Magnet Motor)",
+    "year": "2026",
+    "patent_no": "10-2026-0034283",
     "inventors": "",
     "notes": ""
   }

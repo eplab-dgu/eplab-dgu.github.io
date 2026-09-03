@@ -61,7 +61,7 @@
   },
   {
     "key": "stat_researchers",
-    "value_en": "11",
+    "value_en": "12",
     "value_ko": "",
     "notes": "통계 타일(자동집계 권장)"
   },
@@ -73,7 +73,7 @@
   },
   {
     "key": "stat_projects",
-    "value_en": "13",
+    "value_en": "11",
     "value_ko": "",
     "notes": "통계 타일"
   },

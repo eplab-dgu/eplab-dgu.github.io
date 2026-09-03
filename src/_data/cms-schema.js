@@ -151,7 +151,6 @@ export const SCHEMAS = {
       venue: {},
       metrics: {},
       doi: { type: 'url' },
-      featured: { type: 'boolean' },
     },
     // 지표 칩은 "IF 4.2 · Q1 · JCR 13.0%" 를 가운뎃점으로 쪼갠 것 (DESIGN_SPEC §4-1).
     // 쪼개는 것까지가 정규화. 어느 칩을 오렌지로 칠할지는 템플릿/필터의 몫.

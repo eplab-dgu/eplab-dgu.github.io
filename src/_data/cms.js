@@ -46,8 +46,7 @@
  *   Research_Projects status(Ongoing|Completed), role(PI|Co-I|Advisor), title_ko,
  *                     partner, period_start, period_end, notes,
  *                     +title, +period("시작 – 끝"), +isOngoing
- *   Publications      year(number), authors, title, venue, metrics, doi,
- *                     featured(boolean), +metricsList[]
+ *   Publications      year(number), authors, title, venue, metrics, doi, +metricsList[]
  *   Conferences       year(number), authors, title, venue, location, date, notes
  *   Patents           country, status, title, year(number), patent_no, inventors, notes
  *   Invited_Talks     date, title, host, +year(number|null)
