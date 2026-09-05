@@ -1,6 +1,6 @@
 {
   "source": "google-sheets",
-  "generatedAt": "2026-09-03T22:37:48.022Z",
+  "generatedAt": "2026-09-05T19:24:56.009Z",
   "presentTabs": [
     "README",
     "Site_Config",
@@ -146,7 +146,7 @@
       ]
     },
     "News": {
-      "rows": 34,
+      "rows": 42,
       "headers": [
         "publish",
         "order",

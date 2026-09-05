@@ -106,7 +106,11 @@ export const SCHEMAS = {
     // 디자인의 Education 항목은 지도교수/학위논문이 줄바꿈되어 있다(dc.html L170).
     // 셀 안에서 줄을 나누는 규칙: ` | ` 로 구분한다. 시트에 HTML 을 넣게 하면
     // 학생 입력이 그대로 마크업이 되므로 구분자 방식을 쓴다.
-    derive: (r) => ({ detailLines: splitList(r.detail, ' | ') }),
+    //
+    // 다만 "Advisor: … . Dissertation: …" 처럼 마침표로만 이어 쓰는 게 자연스러워서
+    // 구분자를 빠뜨리기 쉽다. 그래서 `Dissertation:` 앞에서는 구분자가 없어도 줄을 나눈다.
+    // (학생이 어느 쪽으로 쓰든 결과가 같게 — 2026-09-05)
+    derive: (r) => ({ detailLines: splitCvDetail(r.detail) }),
   },
 
   // ── Research ──────────────────────────────────────────────────────────────
@@ -337,6 +341,23 @@ export function endOfPeriod(period) {
   if (!m) return '';
   const [, y, mo] = m;
   return `${y.length === 2 ? `20${y}` : y}.${mo.padStart(2, '0')}`;
+}
+
+/**
+ * Leader_CV 의 detail 을 줄 단위로 나눈다.
+ *
+ * 기본 규칙은 ` | ` 구분자. 여기에 더해 `Dissertation:` 앞에서도 줄을 나눈다 —
+ * 사람이 쓰기엔 "…Hong. Dissertation: …" 처럼 마침표로 잇는 게 자연스러워서
+ * 구분자를 빠뜨리기 쉽고, 그러면 지도교수와 학위논문이 한 줄에 뭉친다.
+ *
+ * 앞 조각 끝의 마침표는 떼어 낸다("…Jung-Pyo Hong." → "…Jung-Pyo Hong").
+ * 줄이 나뉘면 문장 끝 마침표가 어색하기 때문이다.
+ */
+export function splitCvDetail(detail) {
+  return splitList(detail, ' | ')
+    .flatMap((piece) => piece.split(/\s*(?=Dissertation\s*:)/i))
+    .map((s) => s.trim().replace(/\.$/, '').trim())
+    .filter(Boolean);
 }
 
 /** 구분자로 나눈 뒤 공백 정리. 빈 조각은 버린다. */

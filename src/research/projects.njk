@@ -7,7 +7,25 @@ permalink: /research/projects/
   Research > Projects — dc.html L290–305 이식.
   원본 PARTNER 칸은 로고 placeholder + 이름이었다. 로고 열(partner_logo_url)은
   2026-09-02 폐기했고, PARTNER 칸은 이름만 쓴다.
+
+  진행 중(Ongoing)만 펼쳐 두고 완료(Completed)는 토글로 접는다
+  (2026-09-05, Publications·News 와 같은 방식 — site.js 의 [data-toggle] 재사용).
 #}
+{% set ongoing = cms.Research_Projects | where("isOngoing", true) %}
+{% set completed = cms.Research_Projects | where("isOngoing", false) %}
+
+{% macro projRows(items) %}
+  {% for p in items %}
+  <div class="proj-row">
+    <span class="badge {{ "badge-on" if p.isOngoing else "" }}">{{ p.status | upper }}</span>
+    <span class="proj-row__role">{{ p.role }}</span>
+    <span class="proj-row__period">{{ p.period }}</span>
+    <span class="proj-row__partner">{{ p.partner }}</span>
+    <span class="proj-row__title">{{ p.title }}</span>
+  </div>
+  {% endfor %}
+{% endmacro %}
+
 <div class="page">
   <span class="eyebrow">Research</span>
   <h1 class="h-page">Research Projects</h1>
@@ -16,14 +34,21 @@ permalink: /research/projects/
     <div class="proj-head">
       <span>STATUS</span><span>ROLE</span><span>PERIOD</span><span>PARTNER</span><span>PROJECT</span>
     </div>
-    {% for p in cms.Research_Projects %}
-    <div class="proj-row">
-      <span class="badge {{ "badge-on" if p.isOngoing else "" }}">{{ p.status | upper }}</span>
-      <span class="proj-row__role">{{ p.role }}</span>
-      <span class="proj-row__period">{{ p.period }}</span>
-      <span class="proj-row__partner">{{ p.partner }}</span>
-      <span class="proj-row__title">{{ p.title }}</span>
-    </div>
-    {% endfor %}
+    {{ projRows(ongoing) }}
   </div>
+
+  {% if completed.length %}
+  <button type="button" class="btn-line toggle" data-toggle="old-projects" style="margin-top:24px"
+          data-label-show="+ 완료된 과제 보기 ({{ completed.length }})"
+          data-label-hide="− 완료된 과제 접기">
+    + 완료된 과제 보기 ({{ completed.length }})
+  </button>
+  {# 접히는 쪽에도 머리글을 둔다 — 펼쳤을 때 어느 칸이 무엇인지 다시 보이게 #}
+  <div class="projects" id="old-projects" style="margin-top:24px">
+    <div class="proj-head">
+      <span>STATUS</span><span>ROLE</span><span>PERIOD</span><span>PARTNER</span><span>PROJECT</span>
+    </div>
+    {{ projRows(completed) }}
+  </div>
+  {% endif %}
 </div>
