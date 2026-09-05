@@ -82,12 +82,22 @@ permalink: /team/researchers/
               현대자동차 연구개발본부      ← 주황색 볼드
             학위·취득년월을 이름 줄에 괄호로 붙이므로 재학생 카드와 줄 구성이 다르다.
           #}
+          {#
+            졸업생 카드 세 줄 (2026-09-05 확정):
+              김찬우 Chan-Woo Kim        ← 영문 이름은 같은 줄에 회색으로
+              석사 (26.08)
+              현대자동차 연구개발본부
+            학부연구생 졸업생 줄(.alumni__row)과 같은 읽기 순서로 맞춘 것이다.
+          #}
           <div class="person__lines">
             <span class="person__ko">
-              {{- p.name_ko or p.name_en -}}
-              {%- if p.position or p.degreeDate %} ({{ p.position }}{% if p.position and p.degreeDate %}, {% endif %}{{ p.degreeDate }}){% endif -%}
+              {{- p.name_ko or p.name_en }} <span class="person__en">{{ p.name_en }}</span>
             </span>
-            <span class="person__en">{{ p.name_en }}</span>
+            {% if p.position or p.degreeDate %}
+            <span class="person__role">
+              {{- p.position }}{% if p.position and p.degreeDate %} {% endif %}{% if p.degreeDate %}({{ p.degreeDate }}){% endif -%}
+            </span>
+            {% endif %}
             <span class="person__affil">{{ p.current_affiliation }}</span>
           </div>
         </div>

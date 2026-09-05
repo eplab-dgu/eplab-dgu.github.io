@@ -203,9 +203,25 @@ a:hover { color: var(--accent-2); }
   padding: 8px 0; text-transform: none; letter-spacing: .02em;
   box-shadow: var(--shadow-panel);
 }
-/* 드롭다운은 CSS :hover 만으로 (support.js 의 onMouseEnter/Leave 대체) */
-.nav__item:hover > .nav__panel,
-.nav__item:focus-within > .nav__panel { display: flex; }
+/*
+  좁은 화면에서 네비가 두 줄로 접히면 드롭다운이 **아랫줄 메뉴 위에 겹친다.**
+  이때 z-index 가 없으면 뒤에 오는 형제(NEWS·CONTACT)가 앞 항목의 패널보다 위에
+  그려져서, 패널을 눌러도 뒤쪽 링크가 눌린다(2026-09-05 실제로 겪었다).
+  열린 항목만 위로 띄워 패널이 항상 먼저 잡히게 한다.
+*/
+.nav__panel { z-index: 20; }
+.nav__item:hover,
+.nav__item:focus-within,
+.nav__item.is-open { z-index: 20; }
+
+/* 호버가 되는 기기에서만 hover 로 펼친다. 터치 기기에서는 "탭 = 호버"라
+   의도치 않게 열리고 닫히지 않는다 — 거기선 site.js 가 .is-open 을 붙인다. */
+@media (hover: hover) {
+  .nav__item:hover > .nav__panel { display: flex; }
+}
+/* 키보드 접근성은 기기와 무관하게 유지한다 */
+.nav__item:focus-within > .nav__panel,
+.nav__item.is-open > .nav__panel { display: flex; }
 
 .nav__sub { padding: 9px 18px; font-size: 12.5px; color: var(--text-body); white-space: nowrap; }
 .nav__sub:hover { color: var(--accent); background: var(--bg-hover-2); }

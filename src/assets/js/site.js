@@ -33,6 +33,43 @@
     });
   });
 
+  // ── 4. 터치 기기의 네비 드롭다운 ───────────────────────────────────────
+  //
+  // 데스크톱은 CSS :hover 로 충분하다. 터치 기기에는 호버가 없어서, 상위 메뉴를
+  // 탭하면 곧바로 링크로 이동해 버려 하위 메뉴를 볼 기회가 없었다.
+  // 그래서 (hover: none) 인 기기에서만:
+  //   첫 탭  → 이동하지 않고 하위 메뉴를 편다
+  //   두 번째 탭 → 그대로 이동한다 (상위 페이지로 갈 길도 남겨 둔다)
+  const canHover = window.matchMedia('(hover: hover)');
+  const navItems = [...document.querySelectorAll('.nav__item')];
+
+  const closeAllNav = (except) => {
+    for (const it of navItems) if (it !== except) it.classList.remove('is-open');
+  };
+
+  for (const item of navItems) {
+    const link = item.querySelector(':scope > .nav__link');
+    const panel = item.querySelector(':scope > .nav__panel');
+    if (!link || !panel) continue; // 하위 메뉴 없는 항목은 그대로 링크로 둔다
+
+    link.addEventListener('click', (e) => {
+      if (canHover.matches) return;              // 데스크톱: 원래대로 이동
+      if (item.classList.contains('is-open')) return; // 두 번째 탭: 이동 허용
+      e.preventDefault();
+      closeAllNav(item);
+      item.classList.add('is-open');
+    });
+  }
+
+  // 메뉴 밖을 누르면 닫는다
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav__item')) closeAllNav(null);
+  });
+  // Esc 로도 닫는다
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAllNav(null);
+  });
+
   // ── 3. 이미지 우클릭 · 드래그 차단 ─────────────────────────────────────
   //
   // ⚠️ 이건 **저작권 보호가 아니라 문턱 낮추기**다. 개발자도구·소스보기·JS 끄기·
