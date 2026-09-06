@@ -132,9 +132,10 @@ a:hover { color: var(--accent-2); }
 /* 작은 슬롯은 줄무늬 간격도 좁다 (원본 8px/16px) */
 .imgslot-sm { background: repeating-linear-gradient(135deg, var(--stripe-1) 0 8px, var(--stripe-2) 8px 16px); }
 
-/* 증명사진은 세로로 길다(대개 2:3). 정사각 슬롯에 cover 로 넣으면 가운데를 잡느라
-   머리 위가 잘린다. 위쪽 기준으로 잡아 얼굴이 남게 한다. */
-.imgslot img, .photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+.imgslot img, .photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+/* 증명사진만 예외: 세로로 길어(대개 2:3) 정사각 슬롯에 가운데로 넣으면 머리 위가 잘린다.
+   위쪽 기준으로 잡아 얼굴이 남게 한다. 도표·지도에는 적용하지 않는다 — 가운데가 맞다. */
+.person__photo img, .leader__portrait img { object-position: center 20%; }
 /* 이미지가 들어온 슬롯은 점선 테두리를 없앤다.
    배경(줄무늬)은 **일부러 남긴다** — 이미지는 100%×100% object-fit:cover 라 정상일 때
    줄무늬를 완전히 덮는다. 대신 링크가 깨지면(권한·오타) 빈 칸 대신 줄무늬 placeholder 가
@@ -322,7 +323,10 @@ a:hover { color: var(--accent-2); }
 }
 .topic-card:hover { background: var(--bg-hover); color: var(--text); }
 .topic-card__no { font-size: 12px; color: var(--accent); letter-spacing: .16em; }
-.topic-card__slot { height: 120px; }
+/* 원본 디자인은 높이만 120px 로 고정했다. 그러면 폭에 따라 비율이 2.3:1~4.6:1 로 널뛰어
+   **어떤 비율로 만든 그림도 잘린다.** Topics 페이지(.topic__slot)와 같은 16:10 으로 맞춰
+   그림 한 장이 두 곳 모두에서 안 잘리게 한다 (2026-09-06). */
+.topic-card__slot { aspect-ratio: 16/10; }
 .topic-card__en { font-size: 15px; line-height: 1.4; }
 .topic-card__ko { font-size: 12px; color: var(--text-label); }
 
