@@ -557,23 +557,21 @@ a:hover { color: var(--accent-2); }
 .contact__map { display: flex; flex-direction: column; gap: 12px; }
 .contact__map .imgslot { aspect-ratio: 4/3; }
 
-/* 네이버 지도 컨테이너. API 가 이 안에 타일을 그리므로 **크기가 먼저 정해져 있어야** 한다
-   (높이가 0이면 지도가 안 보인다). 비율은 예전 이미지 슬롯과 같게 4:3.
-   지도 타일은 밝기 때문에 다크 테마에서 튄다 — 테두리로 눌러 준다. */
+/* 구글 지도 임베드 자리. iframe 은 스스로 높이를 갖지 않으므로 **여기서 크기를 준다.**
+   비율은 예전 이미지 슬롯과 같게 4:3. */
 .contact__mapbox {
-  position: relative;
   width: 100%; aspect-ratio: 4/3;
   border: 1px solid var(--line-box);
   background: var(--bg-alt);
   overflow: hidden;
 }
-/* 키가 없거나 API 로드 실패 시 남는 안내. 지도가 뜨면 API 가 이 내용을 덮어쓴다. */
-.contact__mapfallback {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-  font-size: 12px; color: var(--text-ghost); letter-spacing: .12em; text-align: center;
+.contact__mapbox iframe {
+  width: 100%; height: 100%; border: 0; display: block;
+  /* 밝은 지도 타일이 다크 테마에서 튄다. 색을 뒤집으면 지도가 읽히지 않으므로
+     밝기·채도만 살짝 눌러 주변과 붙인다(글자는 그대로 읽힌다). */
+  filter: brightness(0.92) saturate(0.92);
 }
-.contact__mapfallback a { font-size: 12.5px; letter-spacing: .04em; }
+.contact__maplink { font-size: 12.5px; letter-spacing: .04em; }
 .contact__subway { font-size: 11.5px; color: var(--text-faint); }
 
 /* ─── 반응형 ────────────────────────────────────────────────────────────── */

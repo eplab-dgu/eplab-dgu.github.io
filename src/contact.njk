@@ -31,29 +31,29 @@ permalink: /contact/
 
     <div class="contact__map">
       {#
-        네이버 지도 (JavaScript API v3).
-        map.naver.com 은 x-frame-options: DENY 라 iframe 으로는 못 넣는다 — API 를 써야 하고,
-        그래서 **Client ID 가 있어야 지도가 뜬다**(Site_Config 의 naver_map_client_id).
-        좌표·확대율도 시트에서 조정한다: map_lat / map_lng / map_zoom.
+        구글 지도 임베드.
 
-        키가 없으면 스크립트를 아예 안 부르고, 아래 안내 문구가 그대로 남는다.
+        왜 네이버가 아닌가: map.naver.com 은 x-frame-options: DENY 라 iframe 이 안 되고,
+        JavaScript API 를 쓰면 **Client ID 발급·도메인 등록·키 관리**가 따라온다.
+        키가 만료되면 학생은 못 고친다(CLAUDE.md §3 버스 팩터). 구글 임베드는
+        키가 없고 만료도 없다 — 장소 이름만으로 찾는다("동국대학교 원흥관" 확인함).
+
+        ⚠️ 대신 **그냥 휠로는 확대되지 않는다. Ctrl+휠 · 더블클릭 · +/− 버튼**을 쓴다.
+        구글이 일부러 막아둔 것으로, 페이지를 스크롤하다 지도 위에서 확대돼 버리는 것을
+        막는다. 세로로 긴 이 페이지에는 오히려 맞는 동작이다.
       #}
-      {% set mapKey = cms.config.naver_map_client_id %}
-      <div class="contact__mapbox" id="naver-map"
-           data-lat="{{ cms.config.map_lat or '37.5582' }}"
-           data-lng="{{ cms.config.map_lng or '127.0001' }}"
-           data-zoom="{{ cms.config.map_zoom or '17' }}"
-           data-label="{{ cms.config.contact_lab }}">
-        <div class="contact__mapfallback">
-          <span>{{ "지도를 불러오지 못했습니다" if mapKey else "[ MAP ]" }}</span>
-          <a href="https://map.naver.com/p/search/{{ cms.config.contact_lab | urlencode }}" target="_blank" rel="noopener">네이버 지도에서 보기 →</a>
-        </div>
+      {% set mapQuery = cms.config.map_query or "동국대학교 원흥관" %}
+      {% set mapZoom  = cms.config.map_zoom or "17" %}
+      <div class="contact__mapbox">
+        <iframe
+          src="https://maps.google.com/maps?q={{ mapQuery | urlencode }}&output=embed&hl=ko&z={{ mapZoom }}"
+          title="{{ cms.config.contact_lab }} 위치 지도"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
       </div>
-      {% if mapKey %}
-      {# 두 스크립트 모두 defer — 순서가 보장되어 naver-map.js 가 돌 때 API 가 준비돼 있다 #}
-      <script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId={{ mapKey }}" defer></script>
-      <script src="/assets/js/naver-map.js" defer></script>
-      {% endif %}
+      <a class="contact__maplink"
+         href="https://www.google.com/maps/search/?api=1&query={{ mapQuery | urlencode }}"
+         target="_blank" rel="noopener">큰 지도에서 보기 · 길찾기 →</a>
       <span class="contact__subway">{{ cms.config.subway }}</span>
     </div>
   </div>
