@@ -20,6 +20,7 @@
  * 감시하고 있어서 **빌드 → 파일 생성 → 재빌드** 무한 루프가 돈다. 감시 대상 바깥에 쓴다.
  */
 import { createHash } from 'node:crypto';
+import { driveDirect } from './cms-schema.js';
 import { mkdir, writeFile, access, copyFile, readdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 
@@ -42,6 +43,13 @@ const TARGETS = [
   { tab: 'Research_Projects', field: 'partner_logo_url', dir: 'partners' },
   { tab: 'Collaborators',     field: 'logo_url',         dir: 'partners' },
 ];
+
+/**
+ * Site_Config 의 key 중 **값이 이미지 주소**인 것들.
+ * 이름 규칙(_url 로 끝남)으로 잡으면 scholar_url 까지 내려받으므로 명시적으로 나열한다.
+ * 새 이미지 설정을 추가하면 여기에도 키를 넣을 것.
+ */
+const CONFIG_IMAGE_KEYS = new Set(['map_url']);
 
 /** content-type → 확장자. 드라이브 URL 에는 확장자가 없어서 응답 헤더로 정한다. */
 const EXT = {
@@ -124,6 +132,21 @@ export async function localizeAssets(result, { outDir = '_site', warn = console.
     if (!jobs.has(url)) jobs.set(url, { dir, slots: [] });
     jobs.get(url).slots.push(setter);
   };
+
+  // Site_Config 는 key/value 표라 TARGETS(열 이름 기준)로는 잡을 수 없다.
+  // 값이 이미지 주소인 **키만** 골라 따로 처리한다 — scholar_url 처럼 이미지가 아닌
+  // URL 까지 내려받으면 안 되므로 이름 규칙이 아니라 명시적 목록을 쓴다.
+  for (const row of result.Site_Config ?? []) {
+    if (!CONFIG_IMAGE_KEYS.has(row.key)) continue;
+    for (const field of ['value_ko', 'value_en']) {
+      // Site_Config 값은 스키마상 그냥 문자열이라 'image' 타입 변환을 안 거친다.
+      // 드라이브 공유 링크가 그대로 들어오므로 여기서 직접 정규화한다.
+      const url = driveDirect(row[field]);
+      if (!url) continue;
+      row[field] = url;
+      addJob(url, 'media', (local) => { row[field] = local; });
+    }
+  }
 
   for (const { tab, field, dir, list } of TARGETS) {
     for (const row of result[tab] ?? []) {

@@ -210,6 +210,22 @@ export default async function () {
     for (const w of warnings) console.warn(`  [cms]     ! ${w}`);
   }
 
+  // 시트의 원격 이미지 URL을 내려받아 자체 호스팅으로 바꾼다 (DESIGN_SPEC §8).
+  // 검증이 끝난 뒤에 돌린다 — 게시되지 않거나 버려진 행의 사진까지 받을 이유가 없다.
+  // 실패한 것은 원격 URL 그대로 남으므로 빌드는 계속된다.
+  //
+  // **config 맵을 만들기 전에** 돌려야 한다. 파이프라인은 Site_Config 행의 값도
+  // 바꾸는데(지도 이미지 등), 맵을 먼저 만들면 그 사본에는 옛 URL 이 남는다.
+  const assets = await localizeAssets(result, { warn: (m) => console.warn(`  [cms]   ! 에셋: ${m}`) });
+  if (assets.total) {
+    const parts = [`${assets.total}개`];
+    if (assets.downloaded) parts.push(`새로 받음 ${assets.downloaded}`);
+    if (assets.cached) parts.push(`캐시 ${assets.cached}`);
+    if (assets.failed) parts.push(`실패 ${assets.failed}(원격 URL 유지)`);
+    console.log(`  [cms]   에셋 ${parts.join(' · ')}`);
+    totalWarnings += assets.failed;
+  }
+
   // Site_Config 는 key/value 표다. 템플릿에서 쓰기 쉽게 맵으로도 제공한다.
   // 언어 선택은 preferred() 한 곳을 거친다 — 한글 우선 (CLAUDE.md §2).
   result.config = Object.fromEntries(
@@ -223,19 +239,6 @@ export default async function () {
   result.configEn = Object.fromEntries(
     (result.Site_Config ?? []).map((r) => [r.key, r.value_en || r.value_ko || ''])
   );
-
-  // 시트의 원격 이미지 URL을 내려받아 자체 호스팅으로 바꾼다 (DESIGN_SPEC §8).
-  // 검증이 끝난 뒤에 돌린다 — 게시되지 않거나 버려진 행의 사진까지 받을 이유가 없다.
-  // 실패한 것은 원격 URL 그대로 남으므로 빌드는 계속된다.
-  const assets = await localizeAssets(result, { warn: (m) => console.warn(`  [cms]   ! 에셋: ${m}`) });
-  if (assets.total) {
-    const parts = [`${assets.total}개`];
-    if (assets.downloaded) parts.push(`새로 받음 ${assets.downloaded}`);
-    if (assets.cached) parts.push(`캐시 ${assets.cached}`);
-    if (assets.failed) parts.push(`실패 ${assets.failed}(원격 URL 유지)`);
-    console.log(`  [cms]   에셋 ${parts.join(' · ')}`);
-    totalWarnings += assets.failed;
-  }
 
   result.stats = buildStats(result);
 

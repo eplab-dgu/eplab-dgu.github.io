@@ -59,7 +59,7 @@
 | 탭 | 컬럼 | 대응 페이지 |
 |---|---|---|
 | **README** | (사용 안내) | — |
-| **Site_Config** | key, value_en, value_ko, notes | 전역 설정(랩명, 배너, 연구영역4, 연락처, 채용문구, 푸터) |
+| **Site_Config** | key, value_en, value_ko, notes | 전역 설정(랩명, 배너, 연구영역4, 연락처, 채용문구, 푸터, `map_url`) |
 | **Members** | publish, order, category*, name_en, name_ko, position, email, cohort_period, current_affiliation, photo_url, scholar_url, notes | Team (Leader/Researchers) |
 | **Leader_CV** | publish, section**, order, date, title, detail | Team > Leader (교수 이력) |
 | **Research_Topics** | publish, order, no, title_en, title_ko, description, image_url | Research > Topics |
