@@ -59,7 +59,7 @@
 | 탭 | 컬럼 | 대응 페이지 |
 |---|---|---|
 | **README** | (사용 안내) | — |
-| **Site_Config** | key, value_en, value_ko, notes | 전역 설정(랩명, 배너, 연구영역4, 연락처, 채용문구, 푸터, `map_url`) |
+| **Site_Config** | key, value_en, value_ko, notes | 전역 설정(랩명, 배너, 연구영역4, 연락처, 채용문구, 푸터, 네이버 지도 `naver_map_client_id`·`map_lat`·`map_lng`·`map_zoom`) |
 | **Members** | publish, order, category*, name_en, name_ko, position, email, cohort_period, current_affiliation, photo_url, scholar_url, notes | Team (Leader/Researchers) |
 | **Leader_CV** | publish, section**, order, date, title, detail | Team > Leader (교수 이력) |
 | **Research_Topics** | publish, order, no, title_en, title_ko, description, image_url | Research > Topics |
@@ -278,6 +278,20 @@ Contact
 - `cache-refresh.yml` 워크플로는 함께 삭제했다. 그대로 두면 매주 `data-cache/` 를 다시 만들어
   커밋해 방금 내린 것을 되돌린다.
 - 로컬 오프라인 작업용 사본은 `npm run cache:refresh` 로 만들 수 있다(커밋되지 않음).
+
+### Contact 지도 = 네이버 지도 API (2026-09-06)
+- **iframe 은 불가능하다.** `map.naver.com` 이 `x-frame-options: DENY` 를 보낸다(실측).
+  구글 지도처럼 끼워 넣을 수 없어 **JavaScript API v3** 를 쓴다 → **Client ID 필수**.
+- 키·좌표는 전부 시트(`Site_Config`)에서 온다: `naver_map_client_id` · `map_lat` · `map_lng` · `map_zoom`.
+  `src/assets/js/naver-map.js` 는 시트를 모르고 컨테이너의 `data-*` 만 읽는다 —
+  좌표를 바꾸려고 코드를 고칠 일이 없게 하려는 것.
+- **키가 없으면 스크립트를 아예 안 부른다.** 컨테이너 안 안내 문구(네이버 지도 링크)가 남는다.
+  키가 틀려 API 로드가 실패해도 같은 문구가 남는다 — 페이지가 깨지지 않는다.
+- 스크립트 두 개(API, 초기화)는 **둘 다 `defer`** 로 넣어 실행 순서를 보장한다.
+- 컨테이너에 `aspect-ratio: 4/3` 로 **크기를 먼저 준다.** 높이가 0이면 지도가 안 그려진다.
+- 이전에 있던 SVG 약도(`src/assets/map.svg`)와 이미지 경로(`map_url`)는 이때 걷어냈다.
+- ⚠️ 실제 지도 렌더는 **Client ID 가 없어 검증하지 못했다.** 키 없는 경로(안내 문구)와
+  키 있는 경로(스크립트·data-* 출력)까지만 확인했다.
 
 ### 남아 있는 것
 - ~~폴백 캐시는 수동 갱신~~ → **폐기 (2026-09-06)**. 아래 참고.

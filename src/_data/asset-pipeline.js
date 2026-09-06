@@ -47,9 +47,11 @@ const TARGETS = [
 /**
  * Site_Config 의 key 중 **값이 이미지 주소**인 것들.
  * 이름 규칙(_url 로 끝남)으로 잡으면 scholar_url 까지 내려받으므로 명시적으로 나열한다.
- * 새 이미지 설정을 추가하면 여기에도 키를 넣을 것.
+ *
+ * 2026-09-06 현재 비어 있다 — Contact 지도를 이미지에서 네이버 지도 임베드로 바꾸면서
+ * map_url 이 빠졌다. 값이 이미지 주소인 설정 키가 생기면 여기에 넣으면 된다.
  */
-const CONFIG_IMAGE_KEYS = new Set(['map_url']);
+const CONFIG_IMAGE_KEYS = new Set([]);
 
 /** content-type → 확장자. 드라이브 URL 에는 확장자가 없어서 응답 헤더로 정한다. */
 const EXT = {
