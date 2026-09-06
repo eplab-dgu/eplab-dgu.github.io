@@ -19,14 +19,13 @@ permalink: /teaching/
       <span class="course__name">{{ c.title_en }}</span>
       {% if c.title_ko %}<span class="course__code">{{ c.title_ko }}</span>{% endif %}
       <span class="course__code">{{ c.course_code }}{% if c.term %} · {{ c.term }}{% endif %}</span>
+      {# 개요가 있을 때만 구분선과 본문을 낸다. 없는데 내면 카드 아래에
+         선 하나와 빈 자리만 남아 미완성으로 보인다. #}
+      {% if c.description %}
       <span class="rule"></span>
       <span class="course__desc">{{ c.description }}</span>
+      {% endif %}
     </div>
     {% endfor %}
   </div>
-
-  {% set missing = cms.Teaching | countWhere("description", "") %}
-  {% if missing %}
-  <div class="note" style="margin-top:24px">[ COURSE LIST — {{ missing }}개 과목의 학기·강의 개요 입력 필요 ]</div>
-  {% endif %}
 </div>
