@@ -90,7 +90,7 @@
 | 연구주제 이미지 | `Research_Topics` 탭의 `image_url` |
 | 소식 이미지 | `News` 탭의 `image_url` |
 | 갤러리 사진(여러 장) | `Gallery` 탭의 `image_urls` — 쉼표로 구분 |
-| **Contact 지도** | **`Site_Config` 탭에 `key` = `map_url` 행을 추가하고 `value_ko` 에 링크** |
+| **Contact 지도** | 기본은 직접 그린 약도(`src/assets/map.svg`). 다른 이미지로 바꾸려면 `Site_Config` 탭에 `key` = `map_url` 행을 추가하고 `value_ko` 에 링크 |
 
 주소 모양이 `https://drive.google.com/file/d/…/view?usp=…` 여도 괜찮습니다.
 홈페이지를 만들 때 알아서 이미지 주소로 바꾸고, 사진을 홈페이지 안으로 복사해 옵니다.

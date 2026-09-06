@@ -34,3 +34,7 @@ asset-cache/
 # 아래 둘은 로컬에서 오프라인 작업용으로 만들 수는 있다(npm run cache:refresh) — 커밋만 안 한다.
 data-cache/
 /eplab_website_content.xlsx
+
+# 약도(src/assets/map.svg)를 그릴 때 참고한 구글 지도 스크린샷.
+# 공개 저장소라 커밋하지 않는다 — 지도 이미지는 제3자 저작물이다.
+/map.png

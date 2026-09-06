@@ -30,11 +30,14 @@ permalink: /contact/
     </div>
 
     <div class="contact__map">
-      {# 지도 이미지: Site_Config 의 map_url 키에 구글 드라이브 링크를 넣으면 나온다.
-         빌드 때 내려받아 자체 호스팅한다(다른 사진들과 같은 경로). #}
-      <div class="imgslot{% if cms.config.map_url %} has-img{% endif %}">
-        {% if cms.config.map_url %}<img src="{{ cms.config.map_url }}" alt="{{ cms.config.contact_lab }} 위치 지도" loading="lazy">
-        {% else %}[ MAP / 캠퍼스 위치 이미지 ]{% endif %}
+      {#
+        지도. 기본은 히어로와 같은 화풍으로 그린 약도(/assets/map.svg)다.
+        시트 Site_Config 에 map_url 을 넣으면 그것으로 갈아끼운다(사진 등으로 바꾸고 싶을 때).
+        언어 선택이 아니라 단순 기본값이라 preferred() 규칙과 무관하다.
+      #}
+      {% set mapSrc = cms.config.map_url or "/assets/map.svg" %}
+      <div class="imgslot has-img">
+        <img src="{{ mapSrc }}" alt="{{ cms.config.contact_lab }} 위치 약도 — 충무로역에서 도보 약 10분" loading="lazy">
       </div>
       <span class="contact__subway">{{ cms.config.subway }}</span>
     </div>
