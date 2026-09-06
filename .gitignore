@@ -43,6 +43,4 @@ data-cache/
 # 사이트 소스가 아니고 공개 저장소라 커밋하지 않는다.
 *.pptx
 *.docx
-*.xlsx
-!/eplab_website_content.xlsx
 ~$*
