@@ -390,14 +390,23 @@ a:hover { color: var(--accent-2); }
 .person__en { font-size: 13px; color: var(--text-label); }
 .person__role { font-size: 12px; color: var(--accent); letter-spacing: .06em; }
 .person__email { font-size: 12.5px; color: var(--text-faint); word-break: break-all; }
-/* 졸업생 카드의 현 소속 — 오렌지 볼드로 강조한다 (2026-09-02 확정) */
-.person__affil { font-size: 12.5px; color: var(--accent); font-weight: 700; text-wrap: pretty; }
+/* 졸업생 카드의 현 소속 — 오렌지. 크기·굵기는 아래 학부연구생 졸업생 줄(.alumni__next)과
+   같게 맞춘다 (2026-09-05: 한 페이지 안에서 같은 성격의 정보가 다르게 보이지 않도록). */
+.person__affil { font-size: 13.5px; color: var(--accent); text-wrap: pretty; }
+
+/* 졸업생 카드의 학위 표기(석사 (26.08))도 학부연구생 줄의 구분 칸과 같은 크기·색으로.
+   재학생 카드의 .person__role(석사과정, 오렌지)은 건드리지 않는다. */
+.person--alumni .person__role { font-size: 13.5px; color: var(--text-label); letter-spacing: 0; }
 
 .alumni__row {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr);
   gap: 20px; padding: 16px 0; border-top: 1px solid var(--line-soft);
   font-size: 13.5px; color: var(--text-body);
 }
+/* 이름 줄만 졸업생 카드와 같은 크기·색으로 (나머지 칸은 행 기본 13.5px 유지).
+   크기만 맞추면 색이 --text-body 로 남아 카드 이름보다 살짝 흐려 보인다. */
+.alumni__name { font-size: 15px; color: var(--text); }
+.alumni__en { font-size: 13px; color: var(--text-label); }
 .alumni__role { color: var(--text-label); }
 .alumni__next { color: var(--accent); }
 

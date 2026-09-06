@@ -70,7 +70,9 @@ permalink: /team/researchers/
       <div class="cv__label">ALUMNI</div>
       <div class="cardgrid team-grid-grad">
         {% for p in degreeAlumni %}
-        <div class="person">
+        {# person--alumni: 학위·소속 표기를 아래 학부연구생 졸업생 줄과 같은 크기·색으로
+           맞추기 위한 것. 재학생 카드(.person)는 그대로 둔다. #}
+        <div class="person person--alumni">
           <div class="imgslot imgslot-sm person__photo{% if p.photo_url %} has-img{% endif %}">
             {% if p.photo_url %}<img src="{{ p.photo_url }}" alt="{{ p.name_en }}" loading="lazy">
             {% else %}[ PHOTO ]{% endif %}
@@ -112,7 +114,8 @@ permalink: /team/researchers/
       <div class="datalist">
         {% for p in ugAlumni %}
         <div class="alumni__row">
-          <span>{{ p.name_ko or p.name_en }} <span class="dim">{{ p.name_en }}</span></span>
+          {# 이름 줄은 졸업생 카드와 같은 크기로 (2026-09-05) #}
+          <span class="alumni__name">{{ p.name_ko or p.name_en }} <span class="alumni__en">{{ p.name_en }}</span></span>
           <span class="alumni__role">{{ p.position }}{% if p.cohort_period %} ({{ p.cohort_period }}){% endif %}</span>
           <span class="alumni__next">{{ p.current_affiliation }}</span>
         </div>
