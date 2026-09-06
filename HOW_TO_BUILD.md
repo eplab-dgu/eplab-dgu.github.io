@@ -133,7 +133,10 @@ src/_data/cms.js 의 데이터 소스를 로컬 xlsx에서 Google Sheets API(읽
 
 > 소스 우선순위: ① Sheets API(키 있을 때) → ② `data-cache/`(API 실패 시 폴백) → ③ 로컬 xlsx(키 없음/오프라인).
 > `CMS_SOURCE=xlsx` 로 시트를 건너뛸 수 있다. 넷 중 어느 경로에서도 빌드는 exit 0.
-> **폴백 캐시는 `npm run cache:refresh` 로 갱신한다** — 갱신을 안 하면 API 장애 시 옛 내용이 배포된다. 8단계에서 CI 에 넣을 것.
+> **⚠️ 2026-09-06 변경**: `data-cache/` 와 로컬 xlsx 를 **저장소에서 내렸다**(코드·경로는 유지, 파일만 gitignore).
+> 공개 저장소라 미게시 행까지 노출됐고, 사본이 있으면 시트를 못 읽은 빌드가 옛 내용으로 조용히 배포됐기 때문이다.
+> 이제 CI 는 `source=sheets-api` 가 아니면 **배포를 중단**하고, GitHub Pages 가 직전 배포본을 계속 서빙한다.
+> 로컬 오프라인 작업이 필요하면 `npm run cache:refresh` 로 사본을 만들 수 있다(커밋되지 않음).
 
 ---
 

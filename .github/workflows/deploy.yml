@@ -61,12 +61,13 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: npm run build 2>&1 | tee build.log
 
-      # 빌드는 어떤 경우에도 성공한다(설계). 그래서 "초록불 = 최신 내용"이 아니다 —
-      # 시크릿이 없거나 만료되면 코드가 data-cache 폴백으로 조용히 넘어가
-      # **옛 내용이 배포된다.** 로그의 source= 를 직접 확인해서 그 경우를 드러낸다.
+      # 빌드(eleventy)는 어떤 경우에도 성공한다 — 로컬 작업이 데이터 문제로 멈추지 않게
+      # 일부러 그렇게 설계했다. 그래서 "빌드 초록불"은 "내용이 멀쩡하다"는 뜻이 아니다.
       #
-      # 배포 자체는 막지 않는다. 옛 내용이라도 사이트가 살아 있는 편이 낫고,
-      # 여기서 실패시키면 시트 장애가 곧 사이트 장애가 된다.
+      # **배포 여부는 여기서 정한다.** 시트를 못 읽었으면 올리지 않고 실패시킨다.
+      # 저장소에 시트 사본을 두지 않기로 했으므로(2026-09-06), 못 읽은 빌드는
+      # 옛 내용이 아니라 **텅 빈 사이트**가 된다. 그걸 배포하면 홈페이지가 지워진다.
+      # 여기서 멈추면 GitHub Pages 가 직전 배포본을 계속 서빙한다 = 진짜 fail-safe.
       - name: Check which source the build used
         run: |
           if [ ! -s _site/index.html ]; then
@@ -80,14 +81,25 @@ jobs:
             sheets-api)
               echo "시트에서 직접 읽었다 — 최신 내용이다." ;;
             cache-fallback|cache)
-              echo "::warning::시트를 못 읽어 data-cache 로 빌드했다. **방금 고친 시트 내용은 반영되지 않았다.** 서비스 계정 키 만료·공유 해제·API 장애를 확인할 것." ;;
+              echo "::error::시트를 못 읽어 로컬 캐시로 빌드했다. 배포하지 않는다(직전 배포본 유지). 서비스 계정 키 만료·시트 공유 해제·API 장애를 확인할 것."; exit 1 ;;
             xlsx)
-              echo "::warning::시크릿(SHEET_ID / GOOGLE_SERVICE_ACCOUNT_JSON)이 없어 저장소의 xlsx 로 빌드했다. Settings > Secrets 를 확인할 것." ;;
+              echo "::error::시크릿(SHEET_ID / GOOGLE_SERVICE_ACCOUNT_JSON)을 읽지 못했다. 배포하지 않는다(직전 배포본 유지). Settings > Secrets 를 확인할 것."; exit 1 ;;
+            none|'')
+              echo "::error::데이터를 전혀 읽지 못했다. 배포하지 않는다(직전 배포본 유지)."; exit 1 ;;
             *)
-              echo "::warning::데이터 소스를 판별하지 못했다. 빌드 로그를 확인할 것." ;;
+              echo "::error::알 수 없는 데이터 소스($SOURCE). 안전을 위해 배포하지 않는다."; exit 1 ;;
           esac
 
-          # 스킵된 행이 있으면 눈에 띄게 남긴다 (시트에 잘못 입력된 행)
+          # 내용이 통째로 빈 채 배포되는 것도 막는다 (시트는 읽었는데 탭이 비었거나
+          # 권한이 바뀌어 빈 응답이 온 경우). 사람 수는 항상 1명 이상이어야 한다.
+          PEOPLE=$(grep -c 'class="person"' _site/team/researchers/index.html || true)
+          if [ "${PEOPLE:-0}" -lt 1 ]; then
+            echo "::error::구성원이 0명으로 나왔다 — 데이터가 비어 있다. 배포하지 않는다."; exit 1
+          fi
+          echo "구성원 카드: ${PEOPLE}개 — 내용 있음"
+
+          # 스킵된 행이 있으면 눈에 띄게 남긴다 (시트에 잘못 입력된 행).
+          # 이건 경고까지만 — 한 행이 잘못됐다고 전체 배포를 막지는 않는다.
           grep -E '\[cms\].*(!!|SKIPPED)' build.log | while read -r line; do
             echo "::warning::$line"
           done || true
