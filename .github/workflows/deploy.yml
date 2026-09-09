@@ -46,12 +46,16 @@ jobs:
 
       # 내려받은 이미지를 실행 간에 재사용한다. 이게 없으면 30분마다 구글 드라이브에
       # 사진을 새로 받아 하루 수백 번 요청하게 되고, 드라이브 쪽 제한에 걸릴 수 있다.
+      #
+      # 키의 v2 는 **캐시를 한 번 버리려고** 붙였다. 캐시 파일명은 URL 해시라서,
+      # 변환 규칙을 바꿔도 예전에 받아둔 PNG 가 "이미 있다"로 그냥 재사용된다.
+      # 인코딩 방식을 또 바꾸면 이 번호를 올려야 새로 만들어진다.
       - name: Restore asset cache
         uses: actions/cache@v4
         with:
           path: asset-cache
-          key: asset-cache-${{ github.run_id }}
-          restore-keys: asset-cache-
+          key: asset-cache-v2-${{ github.run_id }}
+          restore-keys: asset-cache-v2-
 
       - uses: actions/configure-pages@v5
 

@@ -9,7 +9,10 @@
  * 동작:
  *   1. 정규화된 데이터를 훑어 이미지 URL을 모은다 (아래 TARGETS).
  *   2. URL 해시로 파일명을 정해 `asset-cache/` 에 받아 둔다. 이미 있으면 다시 안 받는다.
- *   3. 캐시에서 출력 폴더로 복사하고, 데이터의 URL을 로컬 경로로 바꿔치기한다.
+ *   3. 받는 김에 **화면 크기에 맞춰 줄이고 WebP 로 다시 인코딩**한다 (transcode 참고).
+ *      캐시에는 변환이 끝난 것이 들어가므로, 변환 비용은 **새 사진이 시트에 들어온
+ *      그 빌드 한 번**만 든다. 30분마다 도는 예약 빌드는 캐시를 그대로 쓴다.
+ *   4. 캐시에서 출력 폴더로 복사하고, 데이터의 URL을 로컬 경로로 바꿔치기한다.
  *
  * 설계 원칙 (CLAUDE.md §8 — 빌드는 항상 성공한다):
  *   - 한 장이라도 실패하면 **그 항목만 원격 URL 그대로 둔다.** 예전처럼 핫링크로
@@ -19,6 +22,7 @@
  * 출력 위치를 `_site/` 로 직접 잡은 이유: `src/assets/` 에 쓰면 `--serve` 가 그 폴더를
  * 감시하고 있어서 **빌드 → 파일 생성 → 재빌드** 무한 루프가 돈다. 감시 대상 바깥에 쓴다.
  */
+import sharp from 'sharp';
 import { createHash } from 'node:crypto';
 import { driveDirect } from './cms-schema.js';
 import { mkdir, writeFile, access, copyFile, readdir } from 'node:fs/promises';
@@ -63,6 +67,52 @@ const EXT = {
   'image/svg+xml': '.svg',
 };
 
+/**
+ * 내려받은 사진을 **화면에 필요한 크기의 WebP 로 다시 인코딩**한다.
+ *
+ * 왜: 시트의 이미지는 구글 드라이브 `thumbnail?id=…&sz=w1000` 에서 오는데, 드라이브는
+ * 원본이 JPG 여도 **PNG 로 변환해서** 돌려준다. 사진을 PNG 로 담으면 한 장이 1~1.5MB 가
+ * 되고(실측: 980×655 → 1.2MB), PNG 는 이미 압축 포맷이라 서버 gzip 도 듣지 않는다.
+ * 갤러리 한 페이지에 사진 6장이면 4.5MB 를 그냥 내보내게 된다.
+ *
+ * MAX_W 를 800 으로 잡은 근거 — 데스크톱에서 이미지가 가장 크게 그려지는 자리는
+ * 연구주제 카드다(콘텐츠 폭 1184px / `minmax(300px,1fr)` → 3열 ≈ 394px).
+ * 고해상도 화면(2x)까지 감안해 394×2 ≈ 788 → 800. 갤러리는 4열이라 ≈295px(2x=590),
+ * Leader 인물 사진은 294px(2x=588) 로 전부 여유 있게 덮인다. 레이아웃을 넓히면
+ * 이 숫자도 같이 올려야 한다.
+ *
+ * 건드리지 않는 것:
+ *   - SVG — 벡터라 리사이즈가 의미 없고, 래스터로 바꾸면 오히려 나빠진다.
+ *   - GIF — 움직이는 그림일 수 있는데 여기서 첫 프레임만 남기면 조용히 망가진다.
+ *
+ * `.rotate()` 를 빼먹지 말 것: sharp 는 기본적으로 메타데이터를 버리는데, 휴대폰으로
+ * 찍은 사진은 EXIF 회전값에 의존한다. 인자 없는 `.rotate()` 가 EXIF 대로 실제 픽셀을
+ * 돌려놓는다. 이게 없으면 세로로 찍은 사진이 눕는다.
+ */
+const MAX_W = 800;
+const NO_TRANSCODE = new Set(['.svg', '.gif']);
+
+/**
+ * @returns {{ buf: Buffer, ext: string }} 변환에 실패하면 받은 것을 그대로 돌려준다.
+ *   사진 한 장 때문에 빌드가 죽지 않는다는 원칙(CLAUDE.md §8)은 여기에도 적용된다.
+ */
+async function transcode(buf, ext, url, warn) {
+  if (NO_TRANSCODE.has(ext)) return { buf, ext };
+  try {
+    const out = await sharp(buf)
+      .rotate()
+      .resize({ width: MAX_W, withoutEnlargement: true })
+      .webp({ quality: 80 })
+      .toBuffer();
+    // 이미 잘 압축된 원본이 더 작을 수도 있다(작은 JPG 등). 그럴 땐 굳이 바꾸지 않는다.
+    if (out.length >= buf.length) return { buf, ext };
+    return { buf: out, ext: '.webp' };
+  } catch (err) {
+    warn(`변환 실패, 원본을 그대로 쓴다 (${String(err.message).split('\n')[0]}) — ${url}`);
+    return { buf, ext };
+  }
+}
+
 const exists = (p) => access(p).then(() => true, () => false);
 
 /** URL → 캐시 파일명. 확장자는 모르니 앞부분만 정하고, 실제 파일은 glob 으로 찾는다. */
@@ -85,10 +135,13 @@ async function fetchToCache(url, key, warn) {
     // 드라이브 비공개 파일은 로그인 HTML 을 200 으로 돌려준다. 이미지가 아니면 안 받는다.
     if (!ext) { warn(`이미지가 아니라 건너뜀 (content-type: ${type || '없음'}) — ${url}`); return null; }
 
-    const buf = Buffer.from(await res.arrayBuffer());
-    if (!buf.length) { warn(`빈 응답 — ${url}`); return null; }
+    const raw = Buffer.from(await res.arrayBuffer());
+    if (!raw.length) { warn(`빈 응답 — ${url}`); return null; }
 
-    const name = key + ext;
+    // 캐시에는 **변환이 끝난 것**을 넣는다. 그래야 다음 빌드에서 변환도 건너뛴다.
+    const { buf, ext: outExt } = await transcode(raw, ext, url, warn);
+
+    const name = key + outExt;
     await writeFile(join(CACHE_DIR, name), buf);
     return name;
   } catch (err) {
